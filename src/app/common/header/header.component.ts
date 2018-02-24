@@ -18,9 +18,9 @@ export class HeaderComponent implements OnInit {
     loginError: boolean =  false;
 
   login(loginForm){
-    console.log("form log", loginForm);
+    console.log("form log", loginForm.value);
     
-    let returnData = this.loginService.checkUserLogin(loginForm);
+    let returnData = this.loginService.checkUserLogin(loginForm.value);// JSON.stringify(loginForm.value));
     if(returnData){
       console.log('service data', returnData);
       this.loginError = false;

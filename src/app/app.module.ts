@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
 
 // import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
@@ -21,8 +22,9 @@ import { MainComponent } from './main/main.component';
     BrowserModule,
     ReUsableModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
     AppRoutingModule,
+    HttpModule
     // NgbModule.forRoot()
   ],
   exports: [
