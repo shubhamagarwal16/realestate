@@ -24,7 +24,7 @@ import { MainComponent } from './main/main.component';
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    HttpModule
+    HttpModule,
     // NgbModule.forRoot()
   ],
   exports: [
