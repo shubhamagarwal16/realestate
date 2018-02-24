@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+
+.form-control.ng-invalid.ng-touched{
+    border-color: #f5c6cb;
+}
+.mr-t-b-40{
+    margin-bottom: 40px;
+    margin-top: 40px;
+}
+.mr-t-b-60{
+    margin-bottom: 60px;
+    margin-top: 60px;
+}

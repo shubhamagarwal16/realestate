@@ -1,0 +1,87 @@
+<div class="container">
+    <form class="mr-t-b-60" [formGroup]="registrationForm"  >
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <input type="text" formControlName="fName" class="form-control" placeholder="Enter First Name" required>
+                <small class="text-danger"
+             *ngIf="fName.touched && fName.invalid"  >
+            This field is required</small>
+            </div>
+            <div class="form-group col-md-6">
+                <input type="text" formControlName="lName" class="form-control" placeholder="Enter Last Name" required>
+                <!-- ngModel name="lName" #lName="ngModel" -->
+                <small class="text-danger"
+             *ngIf="lName.touched && lName.invalid"  >
+            This field is required</small>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <input type="email" formControlName="email" (change)="log(email)"  class="form-control" placeholder="Enter Email Address" required >
+                <!-- ngModel name="email"  #email="ngModel" -->
+                <small class="text-danger"
+                    *ngIf="email.touched && email.invalid"  >
+                This field is required</small>
+            </div>
+            <div class="form-group col-md-6">
+                <input formControlName="email" type="number" (change)="log(phoneNo)"  class="form-control" maxlength="10" placeholder="Enter Phone Number" required >
+                <!-- ngModel name="phoneNo" type="number" #phoneNo="ngModel" -->
+                <small class="text-danger"
+                    *ngIf="phoneNo.touched && phoneNo.invalid"  >
+                This field is required</small>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <input  type="password" name="registrationPassword" formControlName="password"  (change)="log(registrationPassword)" class="form-control" placeholder="Enter Password" required > 
+                <!-- ngModel #registrationPassword="ngModel" -->
+                <small class="text-danger"
+                    *ngIf="registrationPassword.touched && registrationPassword.invalid"  >
+                This field is required</small>
+            </div>
+            <div class="form-group col-md-6">
+                <input  type="password" name="registrationcPassword" formControlName="cPassword"  placeholder="Re-enter Password" (change)="log(registrationcPassword)" class="form-control" required >
+                <!-- ngModel #registrationcPassword="ngModel" -->
+                <small class="text-danger"
+                    *ngIf="registrationcPassword.touched && registrationcPassword.invalid"  >
+                This field is required</small>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <select name="state" class="form-control select2-class">
+                    <option value="">Select State</option>
+                    <option value="">zxc</option>
+                    <option value="">zxc</option>
+                    <option value="zxc">zxc</option>
+                    <option value="">zxc</option>
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <select name="city" class="form-control select2-class">
+                    <option value="">Select City</option>
+                    <option value="">zxc</option>
+                    <option value="">zxc</option>
+                    <option value="zxc">zxc</option>
+                    <option value="">zxc</option>
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <input formControlName="pinCode" type="text" name="pinCode" placeholder="Enter PIN Code" class="form-control">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <h3>I am </h3>
+                <label><input type="radio" name="userType" checked> Buyer/Owner &nbsp; </label>
+                <label><input type="radio" name="userType"> Agent &nbsp; </label>
+                <label><input type="radio" name="userType"> Builder &nbsp; </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-success form-control" [disabled]="!registrationForm.valid" >Sign up</button>
+        </div>
+    </form>
+</div>
