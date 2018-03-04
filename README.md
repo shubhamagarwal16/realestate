@@ -2,6 +2,28 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.8.
 
+## Python --
+
+Run `python manage.py runserver` in the command line
+--- For CORS issue
+pip install django-cors-headers
+
+Add `corsheaders` in INSTALLED_APPS in settings.py
+Add `corsheaders.middleware.CorsMiddleware` in MIDDLEWARE
+Lastly, Add CORS_ORIGIN_WHITELIST = 'localhost:4200',  to the bottom of the settings.py (Specify the path for the ANGULAR APP)
+
+## Djongo
+To install mongoDB support via `djongo`
+`pip install djongo`
+
+
+## Superuser
+email - realestate@gmail.com
+Name: Real Estate
+Password: realestate
+
+
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.

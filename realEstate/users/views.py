@@ -1,21 +1,37 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-import json
+from django.contrib.auth.models import User
 
+import json
 # Create your views here.
 
-def index(response):
-    return HttpResponse('Working');
+from .models import *;
 
-@csrf_exempt
+def index(request):
+    return HttpResponse('working');
+
 def userLogin(request):
     if request.method == 'POST':
-        received_json_data=json.loads(request.body)
-
-        return  JsonResponse(received_json_data); #HttpResponse( data);
+        # data = json.loads(request.body)
+        # return JsonResponse(data);
+        email = request.POST['emailPhno']
+        password = request.POST['loginPassword']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return HttpResponse('- working -')
+        else:
+            return HttpResponse('invalid')
     else:
-        return HttpResponse('else');
+        return HttpResponse('-- invalid POST request --')
+
+def addUser(request):
+    newUser = User.objects.create_user(username = '', email = 'shivam2@gmail.com', password = 'zxc')
+    # newUser = Users(email="testing@gmail.com", phoneNo=1234567851)
+    # newUser.set_password('testing')
+    newUser.save()
+    return HttpResponse('-- addUser  --')
+
+def allUsers(request):
+    allUsers = User.objects.all()
+    return HttpResponse(allUsers)

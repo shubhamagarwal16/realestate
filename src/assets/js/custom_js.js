@@ -1,3 +1,3 @@
-$(document).ready(function() {
-    $('.select2-class').select2();
-});
+// $(document).ready(function() {
+//     $('.select2-class').select2();
+// });

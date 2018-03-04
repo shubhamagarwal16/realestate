@@ -1,15 +1,17 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { FormsModule } from '@angular/forms';
+// import { HttpModule } from '@angular/http';
 
-// import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { ReUsableModule } from './common/re-usable.module';
+import { AppRoutingModule } from './app-routing.module';
+import { MatComponentsModule } from './/mat-components.module';
 
 import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
-
 import { MainComponent } from './main/main.component';
 
 
@@ -20,12 +22,18 @@ import { MainComponent } from './main/main.component';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     ReUsableModule,
     FormsModule,
-    ReactiveFormsModule,
     AppRoutingModule,
-    HttpModule,
-    // NgbModule.forRoot()
+    MatComponentsModule,
+    NgbModule.forRoot()
+    // HttpModule,
+    // HttpClientModule,
+    // HttpClientXsrfModule.withOptions({
+    //   cookieName: 'csrftoken',
+    //   headerName: 'X-CSRFToken',
+    // }),
   ],
   exports: [
     FormsModule
