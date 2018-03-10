@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from "@angular/http";
 import { HttpHeaders, HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs/Observable';
+import { CommonService } from './common.service';
 
 
 const httpOptions = {
@@ -15,24 +16,15 @@ const httpOptions = {
 @Injectable()
 export class LoginService {
 
-  url = 'http://127.0.0.1:8000';
+  constructor(private http: HttpClient,
+  private commonService: CommonService ) { }
+ 
+  private url = this.commonService.base_url;
   
-  constructor(private http: HttpClient) { }
-  
-  checkUserLogin(data){
-    console.log("-- service data ", data);
-    
-    let theUrl = this.url + '/users/test' //'/users/user-login/';
-
+  checkUserLogin(data){       
     // return this.http.get(theUrl, JSON.stringify(data), httpOptions)
-
-    data = { 'name': 'testzxzxzxzx' }
-    return this.http.post(theUrl, JSON.stringify(data), httpOptions)
-    // .subscribe( response => {
-    //     response = JSON.stringify(response);
-    //     console.log('response - ', response, ' type of ', typeof response);
-    //     return response;
-    // });
+    let postData = { 'username': data.emailPhno, 'password': data.loginPassword }
+    return this.http.post(this.url + '/users/login', postData, httpOptions)    
   }
 
 }

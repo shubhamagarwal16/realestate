@@ -1,16 +1,66 @@
 from django.shortcuts import render
+from django.contrib.auth import authenticate
 
 from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response ##standard response object
 from rest_framework import status
+#from rest_framework import HTTP_401_UNAUTHORIZED, HTTP_200_OK
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.authtoken.serializers import AuthTokenSerializer
+from rest_framework.authtoken.views import ObtainAuthToken
 
 from . import serializers
 from . import models
-
+from . import permissions
+import json
 
 # Create your views here.
 
+# ------- Login ViewSet
+# class LoginViewSet(viewsets.ViewSet):
+#     """ Check email and password and returns an auth token"""
+
+#     serializer_class = AuthTokenSerializer
+
+#     def create(self, request):
+#         """User the ObtainAuthToken APIView to validate and create a token """
+        
+#         # return ObtainAuthToken().post(request)
+#         # return Response({ 'data': json.dumps(ObtainAuthToken().post(request)) })
+#         return Response({ 'data': 'test' })
+
+# ------- Login APIView
+class LoginAPIView(APIView):
+    """ Check email and password and returns an auth token"""
+
+    serializer_class = AuthTokenSerializer
+    def get(self, request):
+        return Response({ 'data': 'GET' })
+
+    def post(self, request):
+        """User the ObtainAuthToken APIView to validate and create a token """
+        username = request.data.get('username')
+        password = request.data.get('password')
+
+        user = authenticate(username=username, password=password)
+        if not user:
+            return Response({"error": "Login failed"}, status=status.HTTP_401_UNAUTHORIZED)
+        else:
+            return Response({ 'status': 'success' }, status = status.HTTP_200_OK)
+        
+
+# -------- MAIN
+class UsersViewSet(viewsets.ModelViewSet): 
+    #ModelViewSet - special view set that takes care of updating, reading and creating items
+    """Handles creating and updating profiles"""
+
+    serializer_class = serializers.UsersSerializers
+    queryset = models.Users.objects.all()
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (permissions.UpdateOwnProfile,)
+
+# -------------------------- APIView TEST-----------------------------
 class realEstateAPI(APIView):
 
     def get(self, request, format=None):
@@ -49,7 +99,7 @@ class realEstateAPI(APIView):
         """ Deletes an object """
         return Response({'method':'delete'})
 
-#TEST
+# -----------------TEST
 class HelloViewSet(viewsets.ViewSet):
     """Test API Viewset """
 
@@ -96,15 +146,6 @@ class HelloViewSet(viewsets.ViewSet):
         """Handling removing part of an object"""
 
         return Response({'http_mehod': 'DELETE'})
-
-class UsersViewSet(viewsets.ModelViewSet): 
-    #ModelViewSet - special view set that takes care of updating, reading and creating items
-    """Handles creating and updating profiles"""
-
-    serializer_class = serializers.UsersSerializers
-    queryset = models.Users.objects.all()
-
-
 
 # from django.http import HttpResponse, JsonResponse
 # from django.contrib.auth.models import User

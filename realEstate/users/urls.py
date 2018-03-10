@@ -21,9 +21,11 @@ from rest_framework.routers import DefaultRouter
 router = DefaultRouter()
 router.register('hello-viewset', views.HelloViewSet, base_name="hello_viewset")
 router.register('user', views.UsersViewSet)
+# router.register('checkLogin', views.LoginViewSet, base_name="login")
 
 urlpatterns = [
     path('test', views.realEstateAPI.as_view(), name="test"),
+    path('login', views.LoginAPIView.as_view(), name="login"),
     path('', include(router.urls))
     # path('', views.index, name="index"),
     # path('user-login/', views.userLogin, name="user-login"),

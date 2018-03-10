@@ -44,8 +44,8 @@
     </div>
     <div class="modal-body">
 
-        <div *ngIf="loginError" class="alert alert-danger">
-        <strong>Error!</strong> Invalid Login Information
+        <div *ngIf="loginError.status" class="alert alert-{{ loginError.type }}">
+            {{ loginError.message }}
         </div>
 
         <form #loginForm="ngForm" (ngSubmit)="login(loginForm)"  >
