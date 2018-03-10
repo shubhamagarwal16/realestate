@@ -7,6 +7,8 @@ import { Observable } from 'rxjs/Observable';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':  'application/json',
+    // 'xsrfCookieName':  'csrftoken',
+    // 'xsrfHeaderName': 'X-CSRFToken'
   })
 };
 
@@ -20,7 +22,11 @@ export class LoginService {
   checkUserLogin(data){
     console.log("-- service data ", data);
     
-    let theUrl = this.url + '/users/user-login/';
+    let theUrl = this.url + '/users/test' //'/users/user-login/';
+
+    // return this.http.get(theUrl, JSON.stringify(data), httpOptions)
+
+    data = { 'name': 'testzxzxzxzx' }
     return this.http.post(theUrl, JSON.stringify(data), httpOptions)
     // .subscribe( response => {
     //     response = JSON.stringify(response);
