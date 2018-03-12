@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"realEstate.django_session"},{"v":2,"unique":true,"key":{"session_key":1},"name":"__primary_key__","ns":"realEstate.django_session"}],"uuid":"a2ab2e35a14a43b8b6741b7c08ef9f60"}

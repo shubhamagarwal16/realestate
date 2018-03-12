@@ -1,49 +1,46 @@
-# RealEstate
+# RealEstate using Angular, Django and MongoDB
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.8.
+# Services used / Minimum Requirements - 
 
-## Python --
+Angular 5 - This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.8.
+Python 3.6.3
+MongoDb v3.6.3
+Django 2.0.2
 
-Run `python manage.py runserver` in the command line
---- For CORS issue
-pip install django-cors-headers
+I have used Ubuntu 16.04 for the development of this project, conflicts may arrive when running it in other OS.
 
-Add `corsheaders` in INSTALLED_APPS in settings.py
-Add `corsheaders.middleware.CorsMiddleware` in MIDDLEWARE
-Lastly, Add CORS_ORIGIN_WHITELIST = 'localhost:4200',  to the bottom of the settings.py (Specify the path for the ANGULAR APP)
+# Installation / Configuration -
 
-## Djongo
-To install mongoDB support via `djongo`
-`pip install djongo`
+Install 'djongo' `pip install djongo` https://github.com/nesdis/djongo 
+-- For connecting Django with MongoDB (check doc and minimum requirement from link for configuration)
 
+Install 'Django rest framework' `pip install djangorestframework` http://www.django-rest-framework.org/
+-- Add 'rest_framework', 'rest_framework.authtoken' to the INSTALLED_APPS in Django
 
-## Superuser
+FOR CORS / Access-Control-Allow-Origin issue  -
+Install `pip install django-cors-headers`
+-- Add 'corsheaders' to the INSTALLED_APPS and 'corsheaders.middleware.CorsMiddleware' to MIDDLEWARE and CORS_ORIGIN_WHITELIST = 'localhost:4200' at the bottom of the file  in Django
+
+## Superuser Django details
+
 email - realestate@gmail.com
 Name: Real Estate
 Password: realestate
 
+# Running the project
+
+`ng serve` in the root directory - Angular 
+-- open http://localhost:4200/ 
+
+`sudo service mongod start` for starting mongoDB server
+-- Note: this command may vary acc to the OS, please check mongodb for the right command for your system 
+
+`python manage.py runserver` in the ~/realEstate directory  - Python  
+-- open http://localhost:8000/ 
+-- Note: Mongodb must be running before running python server
+-- Note: python3/ python3.6 command may vary in different os according to the python version configured in your OS
 
 
-## Development server
+THANKS
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+HOPE YOU WILL LIKE MY EFFORTS
