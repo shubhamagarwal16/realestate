@@ -1,17 +1,11 @@
 from django.db import models
+from common.models import *
 
-from django.contrib.auth.models import AbstractBaseUser
-from django.contrib.auth.models import PermissionsMixin
-from django.contrib.auth.models import BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+# from django.contrib.auth.models import PermissionsMixin
+# from django.contrib.auth.models import BaseUserManager
 
 # Create your models here.
-
-# class Users(models.Model):
-#     fullName = models.CharField(max_length=500, default="Shubham Agarwal")
-#     email = models.EmailField(max_length=254)
-#     phoneNo = models.IntegerField()
-#     password = models.CharField(max_length=500, default="password")
-#     userType = models.IntegerField(default=1)
 
 class UsersManager(BaseUserManager):
     """Helps django with our custom user model"""
@@ -65,4 +59,10 @@ class Users(AbstractBaseUser, PermissionsMixin):
         """Used by django to convert object to string"""
         return self.email
 
-
+class UsersData(models.Model):
+    user_id = models.ForeignKey(Users, on_delete = models.CASCADE)
+    phoneNo = models.IntegerField(default=0)
+    state = models.ForeignKey(StateList, null=True, on_delete=models.SET_NULL, default=0)
+    city = models.ForeignKey(CityList, null=True, on_delete=models.SET_NULL, default=0)
+    pincode = models.IntegerField(default=0)
+    user_type = models.IntegerField(default=1)

@@ -9,6 +9,7 @@ from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.authtoken.models import Token
 
 from . import serializers
 from . import models
@@ -47,7 +48,11 @@ class LoginAPIView(APIView):
         if not user:
             return Response({"error": "Login failed"}, status=status.HTTP_401_UNAUTHORIZED)
         else:
-            return Response({ 'status': 'success' }, status = status.HTTP_200_OK)
+            # token = Token.objects.create
+            token = ObtainAuthToken().post(request)
+            # Returning the Auth token if login is successful
+            return token 
+            # return Response({ 'status': 'success', 'token': token.token }, status = status.HTTP_200_OK)
         
 
 # -------- MAIN

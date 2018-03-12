@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { CommonService } from '../../../../common/services/common.service';
 
 @Component({
   selector: 'app-registration',
@@ -9,7 +10,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class RegistrationComponent implements OnInit {
 
-  constructor() { }
+  constructor(private commonSerive: CommonService) { }
 
   registrationForm = new FormGroup({
     fName: new FormControl('', [Validators.required]),
@@ -18,10 +19,24 @@ export class RegistrationComponent implements OnInit {
     phoneNo: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required]),
     cPassword: new FormControl('', [Validators.required]),
-    pinCode: new FormControl('', [Validators.required])
+    state: new FormControl('', [Validators.required]),
+    city: new FormControl('', [Validators.required]),
+    pinCode: new FormControl('', [Validators.required]),
+    userType: new FormControl('', [Validators.required])
   });
 
+  stateList;
+
   ngOnInit() {
+    this.commonSerive.getStatelist()
+    .subscribe(response => {
+      console.log('-- ', response, response['statelist']);
+      // return response['statelist'];
+      if(response['statelist']){
+        this.stateList = response['statelist'];
+      }
+    });
+    // console.log('---', getStateList);
   }
   
 
@@ -30,7 +45,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   log(data) {
-    console.log(data);
+    console.log('--',data);
   }
 
   get fName() {
@@ -50,6 +65,18 @@ export class RegistrationComponent implements OnInit {
   }
   get registrationcPassword() {
     return this.registrationForm.get('cPassword');
+  }
+  get pinCode() {
+    return this.registrationForm.get('pinCode');
+  }
+  get state() {
+    return this.registrationForm.get('state');
+  }
+  get city() {
+    return this.registrationForm.get('city');
+  }
+  get userType() {
+    return this.registrationForm.get('userType');
   }
 
 }

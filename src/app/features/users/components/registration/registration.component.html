@@ -1,8 +1,8 @@
 <div class="container">
-    <form class="mr-t-b-60" [formGroup]="registrationForm"  >
+    <form class="mr-t-b-60" [formGroup]="registrationForm" (ngSubmit)="registration(registrationForm)" >
         <div class="form-row">
             <div class="form-group col-md-6">
-                <input type="text" formControlName="fName" class="form-control" placeholder="Enter First Name" required>
+                <input type="text" formControlName="fName" class="form-control" (change)="log(fName)" placeholder="Enter First Name" required>
                 <small class="text-danger"
              *ngIf="fName.touched && fName.invalid"  >
             This field is required</small>
@@ -21,7 +21,9 @@
                 <!-- ngModel name="email"  #email="ngModel" -->
                 <small class="text-danger"
                     *ngIf="email.touched && email.invalid"  >
-                This field is required</small>
+                    <small *ngIf="email.errors.required" >This field is required</small>
+                    <small *ngIf="email.errors.email" >Please enter a valid email address</small>
+                </small>
             </div>
             <div class="form-group col-md-6">
                 <input formControlName="phoneNo" type="number" (change)="log(phoneNo)"  class="form-control" maxlength="10" placeholder="Enter Phone Number" required >
@@ -49,33 +51,41 @@
         </div>
         <div class="form-row">
             <div class="form-group col-md-4">
-                <select name="state" class="form-control select2-class">
+                <select name="state" formControlName="state" class="form-control">
                     <option value="">Select State</option>
-                    <option value="">zxc</option>
-                    <option value="">zxc</option>
-                    <option value="zxc">zxc</option>
-                    <option value="">zxc</option>
+                    <option *ngFor="let state of stateList" value="{{state.id}}">{{state.name}}</option>
                 </select>
+                <small class="text-danger"
+                    *ngIf="state.touched && state.invalid"  >
+                This field is required</small>
             </div>
             <div class="form-group col-md-4">
-                <select name="city" class="form-control select2-class">
+                <select name="city" formControlName="city"  class="form-control">
                     <option value="">Select City</option>
-                    <option value="">zxc</option>
-                    <option value="">zxc</option>
                     <option value="zxc">zxc</option>
-                    <option value="">zxc</option>
+                    <option value="zxc">zxc</option>
+                    <option value="zxc">zxc</option>
                 </select>
+                <small class="text-danger"
+                    *ngIf="city.touched && city.invalid"  >
+                This field is required</small>
             </div>
             <div class="form-group col-md-4">
                 <input formControlName="pinCode" type="text" name="pinCode" placeholder="Enter PIN Code" class="form-control">
+                <small class="text-danger"
+                    *ngIf="pinCode.touched && pinCode.invalid"  >
+                This field is required</small>
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-12">
                 <h3>I am </h3>
-                <label><input type="radio" name="userType" checked> Buyer/Owner &nbsp; </label>
-                <label><input type="radio" name="userType"> Agent &nbsp; </label>
-                <label><input type="radio" name="userType"> Builder &nbsp; </label>
+                <label><input type="radio" formControlName="userType" value="1" (change)="log(userType)" name="userType" checked> Buyer/Owner &nbsp; </label>
+                <label><input type="radio" formControlName="userType" value="2" (change)="log(userType)" name="userType"> Agent &nbsp; </label>
+                <label><input type="radio" formControlName="userType" value="3" (change)="log(userType)" name="userType"> Builder &nbsp; </label>
+                <small class="text-danger"
+                    *ngIf="userType.touched && userType.invalid"  >
+                This field is required</small>
             </div>
         </div>
 

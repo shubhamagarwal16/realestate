@@ -44,7 +44,7 @@ export class HeaderComponent implements OnInit {
     .subscribe( response => {
         console.log('== response - ', response, ' type of ', typeof response);
         
-        if(response['status'] === 'success'){
+        if(response['token'] !== ''){
           this.loginError = {
             type : 'success',
             status: true,
@@ -52,6 +52,14 @@ export class HeaderComponent implements OnInit {
           }
           this.loginSuccess();
         }
+        // if(response['status'] === 'success'){
+        //   this.loginError = {
+        //     type : 'success',
+        //     status: true,
+        //     message: 'Logged In successfully'
+        //   }
+        //   this.loginSuccess();
+        // }
         
     },
     (error: Response) => {
