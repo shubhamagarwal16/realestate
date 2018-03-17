@@ -4,9 +4,10 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from "@angular/router";
 import { HttpClientXsrfModule, HttpClientModule } from "@angular/common/http";
 
-import { HeaderComponent } from './header/header.component';
-import { FooterComponent } from './footer/footer.component';
+import { HeaderComponent } from './components/header/header.component';
+import { FooterComponent } from './components/footer/footer.component';
 import { LoginService } from './services/login.service';
+import { RegistrationValidators } from './validators/registration.validators';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { LoginService } from './services/login.service';
     FooterComponent
   ],
   providers: [
-    LoginService
+    LoginService,
+    RegistrationValidators
   ]
 })
 export class ReUsableModule { }

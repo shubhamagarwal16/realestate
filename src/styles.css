@@ -13,3 +13,12 @@
     margin-bottom: 60px;
     margin-top: 60px;
 }
+
+.input-with-icon{
+    position: relative;
+}
+.input-icon{
+    position: absolute;
+    top: 4px;
+    right: 2px;
+}

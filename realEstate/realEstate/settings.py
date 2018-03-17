@@ -31,24 +31,24 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
     'users',
-    'common',
+    'common'
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -130,5 +130,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 CORS_ORIGIN_WHITELIST = 'localhost:4200',
+# CORS_ORIGIN_WHITELIST = 'http://localhost:4200/',
 
 AUTH_USER_MODEL = "users.Users"

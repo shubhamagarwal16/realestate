@@ -2,6 +2,16 @@
 
 from rest_framework import serializers
 from . import models
+from users.models import *
+
+class CheckEmailAvailability(serializers.ModelSerializer):
+    # email = serializers.CharField()
+
+    class Meta:
+        model = Users
+        fields = ('email',)
+        # fields = '__all__'   For all-
+
 
 # class StateAPIView(serializers.ModelSerializer):
 

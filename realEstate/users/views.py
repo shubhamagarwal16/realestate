@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth import authenticate
+from django.http import JsonResponse
 
 from rest_framework import viewsets
 from rest_framework.views import APIView
@@ -31,6 +32,7 @@ import json
 #         # return Response({ 'data': json.dumps(ObtainAuthToken().post(request)) })
 #         return Response({ 'data': 'test' })
 
+
 # ------- Login APIView
 class LoginAPIView(APIView):
     """ Check email and password and returns an auth token"""
@@ -54,14 +56,30 @@ class LoginAPIView(APIView):
             return token 
             # return Response({ 'status': 'success', 'token': token.token }, status = status.HTTP_200_OK)
         
+# ----------------- REGISTRATION
+
+class RegistrationAPIView(APIView):
+    """Creates a new user """
+
+    def get(self, request):
+        UserData = models.Users.objects.all()
+        serializer_class = serializers.UsersSerializers(UserData, many = True)
+        return JsonResponse(serializer_class.data, safe=False) #Response({ 'type': 'GET', 'data': format(serializer_class.data) })
+
+    def post(self, request):
+        serializer_class = serializers.UsersDataSerializers(data=request.data)
+        if serializer_class.is_valid():
+            return Response({ 'status': 'POST', 'message': serializer_class.data.get('userData') })
+        else:
+            return Response(serializer_class.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # -------- MAIN
 class UsersViewSet(viewsets.ModelViewSet): 
     #ModelViewSet - special view set that takes care of updating, reading and creating items
     """Handles creating and updating profiles"""
 
-    serializer_class = serializers.UsersSerializers
-    queryset = models.Users.objects.all()
+    serializer_class = serializers.UsersDataSerializers#UsersSerializers
+    queryset = models.UsersData.objects.all()
     authentication_classes = (TokenAuthentication,)
     permission_classes = (permissions.UpdateOwnProfile,)
 

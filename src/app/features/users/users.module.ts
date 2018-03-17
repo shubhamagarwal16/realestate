@@ -14,6 +14,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     FormsModule,
     ReactiveFormsModule
   ],
-  declarations: [RegistrationComponent, DashboardComponent]
+  declarations: [RegistrationComponent, DashboardComponent],
+  providers: [
+  ]
 })
 export class UsersModule { }

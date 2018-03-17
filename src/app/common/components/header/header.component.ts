@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService } from '../services/login.service';
 import { Router } from '@angular/router';
 
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import { LoginService } from '../../services/login.service';
 
 @Component({
   selector: 'app-header',

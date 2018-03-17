@@ -61,8 +61,10 @@ class Users(AbstractBaseUser, PermissionsMixin):
 
 class UsersData(models.Model):
     user_id = models.ForeignKey(Users, on_delete = models.CASCADE)
-    phoneNo = models.IntegerField(default=0)
+    phoneNo = models.CharField(max_length=10)
     state = models.ForeignKey(StateList, null=True, on_delete=models.SET_NULL, default=0)
     city = models.ForeignKey(CityList, null=True, on_delete=models.SET_NULL, default=0)
     pincode = models.IntegerField(default=0)
     user_type = models.IntegerField(default=1)
+    slug = models.SlugField(max_length=100)
+    timestamp = models.DateTimeField(auto_now_add = True)

@@ -18,7 +18,7 @@ export class CommonService {
   }
 
   getCitylistByState(stateId): Observable<any>{
-    return this.http.get(this.base_url+ '/common/citylist?stateId='+stateId );
+    return this.http.get(this.base_url+ '/common/citylist/'+stateId );
   }
 
 }
