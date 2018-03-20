@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"realEstate.users_usersdata"},{"v":2,"unique":true,"key":{"id":1},"name":"__primary_key__","ns":"realEstate.users_usersdata"}],"uuid":"465dfb4d41904950a8b34c562bdc5a86"}
