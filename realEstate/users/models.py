@@ -57,7 +57,7 @@ class Users(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         """Used by django to convert object to string"""
-        return self.email
+        return self.name
 
 class UsersData(models.Model):
     user_id = models.ForeignKey(Users, on_delete = models.CASCADE)
@@ -68,3 +68,6 @@ class UsersData(models.Model):
     user_type = models.IntegerField(default=1)
     slug = models.SlugField(max_length=100)
     timestamp = models.DateTimeField(auto_now_add = True)
+
+    def __str__(self):
+        return self.slug

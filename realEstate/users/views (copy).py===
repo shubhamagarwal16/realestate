@@ -71,7 +71,10 @@ class RegistrationAPIView(APIView):
         serializer_class = serializers.UsersSerializers(data=request.data)
         if serializer_class.is_valid():
             serializer_class.save()
-            return Response(serializer_class.data, status=status.HTTP_200_OK) #HTTP_201_CREATED
+            serializer_userdata = serializers.UsersDataSerializers(data=request.data)
+            if serializer_userdata.is_valid():
+                serializer_userdata.save(userD = serializer_class.data)
+            return Response(serializer_class.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer_class.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -80,7 +83,7 @@ class UsersViewSet(viewsets.ModelViewSet):
     #ModelViewSet - special view set that takes care of updating, reading and creating items
     """Handles creating and updating profiles"""
 
-    serializer_class = serializers.UsersSerializers#UsersSerializers
+    serializer_class = serializers.UsersDataSerializers#UsersSerializers
     queryset = models.UsersData.objects.all()
     authentication_classes = (TokenAuthentication,)
     permission_classes = (permissions.UpdateOwnProfile,)

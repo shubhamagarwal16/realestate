@@ -28,30 +28,30 @@ class UsersSerializers(serializers.ModelSerializer):
         return user
         # return Users.objects.latest('id')
 
-# class UsersDataSerializers(serializers.ModelSerializer):
-#     """ Serializers for user's additional data """
+class UsersDataSerializers(serializers.ModelSerializer):
+    """ Serializers for user's additional data """
 
-#     class Meta:  # Tells djano what fields we wana take from models
-#         model = models.UsersData
-#         fields = ('id', 'user_id', 'phoneNo', 'state', 'city', 'pincode', 'user_type')
-#         depth = 1
-#         # extra_kwargs = { 'password': { 'write_only': True } }
+    class Meta:  # Tells djano what fields we wana take from models
+        model = models.UsersData
+        fields = ('id', 'user_id', 'phoneNo', 'state', 'city', 'pincode', 'user_type')
+        depth = 1
+        # extra_kwargs = { 'password': { 'write_only': True } }
     
-#     def create(self, validated_data):
-#         """ Creates and returns a new user """
+    def create(self, validated_data):
+        """ Creates and returns a new user """
 
-#         userData = models.UsersData(
-#             user_id = validated_data['userD'],
-#             phoneNo = int(validated_data['phoneNo']),
-#             state = validated_data['state'],
-#             city = validated_data['city'],
-#             pincode = validated_data['pinCode'],
-#             user_type = validated_data['userType']
-#         )
+        userData = models.UsersData(
+            user_id = validated_data['userD'],
+            phoneNo = int(validated_data['phoneNo']),
+            state = validated_data['state'],
+            city = validated_data['city'],
+            pincode = validated_data['pinCode'],
+            user_type = validated_data['userType']
+        )
 
-#         userData.save()
+        userData.save()
 
-#         return userData
+        return userData
 
         
 # TEST

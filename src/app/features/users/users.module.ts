@@ -5,7 +5,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserRoutingModule } from './user-routing.module';
 
 import { RegistrationComponent } from './components/registration/registration.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { DashboardComponent } from './components/dashboard/dashboard-main/dashboard.component';
+import { EditProfileComponent } from './components/profile/edit-profile/edit-profile.component';
+import { DashboardHomeComponent } from './components/dashboard/dashboard-home/dashboard-home.component';
 
 @NgModule({
   imports: [
@@ -14,7 +16,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     FormsModule,
     ReactiveFormsModule
   ],
-  declarations: [RegistrationComponent, DashboardComponent],
+  declarations: [RegistrationComponent, DashboardComponent, EditProfileComponent, DashboardHomeComponent],
   providers: [
   ]
 })

@@ -1,27 +1,24 @@
 <div class="container">
     <form class="mr-t-b-60" [formGroup]="registrationForm" (ngSubmit)="registration(registrationForm)" (change)="log(registrationForm)" >
+        <div *ngIf="mainErrorMessage">
+            <p class="alert alert-{{ mainErrorMessage.type }}">{{ mainErrorMessage.message }}</p>
+        </div>
         <div class="form-row">
             <div class="form-group col-md-6">
-                <input type="text" formControlName="fName" class="form-control" (change)="log(fName)" placeholder="Enter First Name" required>
+                <input type="text" formControlName="name" class="form-control"  placeholder="Enter Full Name" required>
                 <small class="text-danger"
-             *ngIf="fName.touched && fName.invalid"  >
+             *ngIf="name.touched && name.invalid"  >
             This field is required</small>
             </div>
-            <div class="form-group col-md-6">
-                <input type="text" formControlName="lName" class="form-control" placeholder="Enter Last Name" required>
-                <!-- ngModel name="lName" #lName="ngModel" -->
-                <small class="text-danger"
-             *ngIf="lName.touched && lName.invalid"  >
-            This field is required</small>
-            </div>
+            <!-- (change)="log(name)" -->
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
                 <div class="input-with-icon">                    
-                    <input type="email" formControlName="email" (change)="log(email)"  class="form-control" placeholder="Enter Email Address" required >
+                    <input type="email" formControlName="email" class="form-control" placeholder="Enter Email Address" required >
                     <span *ngIf="email.pending" class="input-icon"><i class="fa fa-spinner fa-spin fa-2x fa-fw" ></i></span>
                 </div>
-                <!-- ngModel name="email" fa-spin  #email="ngModel" -->
+                <!-- ngModel name="email" fa-spin  #email="ngModel" (change)="log(email)"   -->
                 <small class="text-danger"
                     *ngIf="email.touched && email.invalid"  >
                     <small *ngIf="email.errors.required" >This field is required</small>
@@ -29,25 +26,20 @@
                     <small *ngIf="email.errors.checkEmailAvailability" >This email address is already taken</small>
                 </small>
             </div>
+        </div>
+        <div class="form-row">
             <div class="form-group col-md-6">
-                <input formControlName="phoneNo" type="number" (change)="log(phoneNo)"  class="form-control" maxlength="10" placeholder="Enter Phone Number" required >
-                <!-- ngModel name="phoneNo" type="number" #phoneNo="ngModel" -->
+                <input  type="password" name="registrationPassword" formControlName="password"   class="form-control" placeholder="Enter Password" required > 
+                <!-- ngModel #registrationPassword="ngModel" (change)="log(registrationPassword)" -->
                 <small class="text-danger"
-                    *ngIf="phoneNo.touched && phoneNo.invalid"  >
+                    *ngIf="registrationPassword.touched && registrationPassword.invalid"  >
                 This field is required</small>
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
-                <input  type="password" name="registrationPassword" formControlName="password"  (change)="log(registrationPassword)" class="form-control" placeholder="Enter Password" required > 
-                <!-- ngModel #registrationPassword="ngModel" -->
-                <small class="text-danger"
-                    *ngIf="registrationPassword.touched && registrationPassword.invalid"  >
-                This field is required</small>
-            </div>
-            <div class="form-group col-md-6">
-                <input  type="password" name="registrationcPassword" formControlName="cPassword"  placeholder="Re-enter Password" (change)="log(registrationcPassword)" class="form-control" required >
-                <!-- ngModel #registrationcPassword="ngModel" -->
+                <input  type="password" name="registrationcPassword" formControlName="cPassword"  placeholder="Re-enter Password" class="form-control" required >
+                <!-- ngModel #registrationcPassword="ngModel" (change)="log(registrationcPassword)"  -->
                 <small class="text-danger"
                     *ngIf="registrationcPassword.touched && registrationcPassword.invalid"  >
                 This field is required</small>
@@ -60,47 +52,10 @@
                 
             </div>
         </div>
-        <div class="form-row">
-            <div class="form-group col-md-4">
-                    <!-- #cityList (change)="getCityList(cityList.value)" -->
-                <select name="state" formControlName="state" (change)="getCityList(state.value)" class="custom-select">
-                    <option value="">Select State</option>
-                    <option *ngFor="let state of stateList" value="{{state.id}}">{{state.name}}</option>
-                </select>
-                <small class="text-danger"
-                    *ngIf="state.touched && state.invalid"  >
-                This field is required</small>
-            </div>
-            <div class="form-group col-md-4">
-                <select name="city" formControlName="city" class="custom-select">
-                    <option value="">Select City</option>
-                    <option *ngFor="let city of cityList" value="{{city.id}}">{{city.name}}</option>
-                </select>
-                <small class="text-danger"
-                    *ngIf="city.touched && city.invalid"  >
-                This field is required</small>
-            </div>
-            <div class="form-group col-md-4">
-                <input formControlName="pinCode" type="text" name="pinCode" placeholder="Enter PIN Code" class="form-control">
-                <small class="text-danger"
-                    *ngIf="pinCode.touched && pinCode.invalid"  >
-                This field is required</small>
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-12">
-                <strong>I am </strong> &nbsp;
-                <label><input type="radio" formControlName="userType" value="1" (change)="log(userType)" name="userType" checked> Buyer/Owner &nbsp; </label>
-                <label><input type="radio" formControlName="userType" value="2" (change)="log(userType)" name="userType"> Agent &nbsp; </label>
-                <label><input type="radio" formControlName="userType" value="3" (change)="log(userType)" name="userType"> Builder &nbsp; </label>
-                <small class="text-danger"
-                    *ngIf="userType.touched && userType.invalid"  >
-                This field is required</small>
-            </div>
-        </div>
-
         <div class="form-group">
-            <button class="btn btn-success form-control" [disabled]="!registrationForm.valid" >Sign up</button>
+            <div class="col-md-6">                
+                <button class="btn btn-success form-control" [disabled]="!registrationForm.valid" >Sign up</button>
+            </div>
         </div>
 
         <p>{{ registrationForm.value | json }}</p>

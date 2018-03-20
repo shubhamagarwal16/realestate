@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import { LoginService } from '../../services/login.service';
@@ -11,8 +11,11 @@ import { LoginService } from '../../services/login.service';
 })
 export class HeaderComponent implements OnInit {
 
+  @ViewChild('content') private content;
+
   constructor(private loginService: LoginService,
     private router: Router,
+    private route: ActivatedRoute,
     private modalService: NgbModal  ) {}
 
   // ---- Login Modal
@@ -20,11 +23,7 @@ export class HeaderComponent implements OnInit {
 
   openloginModal(content) {
     this.loginModalRef = this.modalService.open(content);
-    this.loginModalRef.result.then((result) => {
-      // this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      // this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
+    this.loginModalRef.result.then((result) => { }, (reason) => { });
   }
   // ---- Login Modal
 
@@ -37,9 +36,7 @@ export class HeaderComponent implements OnInit {
   };
 	  
 
-  login(loginForm){
-    // console.log("form log", loginForm.value);
-    
+  login(loginForm){    
     let returnData = this.loginService.checkUserLogin(loginForm.value)
     .subscribe( response => {
         console.log('== response - ', response, ' type of ', typeof response);
@@ -51,16 +48,7 @@ export class HeaderComponent implements OnInit {
             message: 'Logged In successfully'
           }
           this.loginSuccess();
-        }
-        // if(response['status'] === 'success'){
-        //   this.loginError = {
-        //     type : 'success',
-        //     status: true,
-        //     message: 'Logged In successfully'
-        //   }
-        //   this.loginSuccess();
-        // }
-        
+        }        
     },
     (error: Response) => {
       this.loginError.type = 'danger';
@@ -73,24 +61,13 @@ export class HeaderComponent implements OnInit {
       }
       this.loginError.status = true;
     });
-    // .subscribe( response => {
-    //   console.log('response - ', response, ' type of ', typeof response);
-    //   response = JSON.stringify(response);
-    //   console.log('response - ', response, ' type of ', typeof response);
-
-    //   if(response){
-		//     this.loginError = false;
-    //     this.loginModalRef.close(); // closing modal
-    //     this.router.navigate(['/users/dashboard']);
-    //   }
-    //   else{
-    //     this.loginError = true;
-    //   }
-    // });
   }
 
   loginSuccess(){
     this.loginModalRef.close(); // closing modal
+
+    this.changeHeaderMessage('success', 'You have logged in successfully');
+
     this.router.navigate(['/users/dashboard']);
 
   }
@@ -101,7 +78,36 @@ export class HeaderComponent implements OnInit {
 
   // ------------- LOGIN
 
+  // Main header alert message
+  HeaderMessage = {
+    type: '',
+    message: ''
+  }
+
+  closeHeaderMessage(){
+    this.HeaderMessage = null;    
+  }
+
+  changeHeaderMessage(type, message){
+    this.HeaderMessage = { type: type, message: message }
+    var self = this;
+    setTimeout(function(){
+      self.closeHeaderMessage();
+    }, 5000);
+  }
+
+
   ngOnInit() {
+    // this.closeHeaderMessage();
+
+    this.route.queryParamMap.subscribe((data)=>{
+      console.log('--- ', data);
+      if(data.get('action') === 'signUpsuccess'){
+        this.loginError = { status: true, type: 'success', message: 'Please login to continue' }
+        this.changeHeaderMessage('success', 'Congratulations, you have been successfully registered');
+        this.openloginModal(this.content);
+      }
+    });
   }
 
 }
