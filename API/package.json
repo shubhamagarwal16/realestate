@@ -1,0 +1,17 @@
+{
+  "name": "realestate-api",
+  "version": "1.0.0",
+  "description": "Backend API service for the project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Shubham Agarwal",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3",
+    "mongoose": "^5.0.11"
+  }
+}
