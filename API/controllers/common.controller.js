@@ -7,10 +7,12 @@ var city_model = require('../models/city');
 module.exports = {
     // STATES
     getStateList: (req, res) => {
+        console.log('GET statelist');
+        
         state_model.find((err, data) => {
             if(err)
                 res.send(err);
-            res.send(data);
+            res.status(200).send(data);
         });
     },
     addState: (req, res) => {

@@ -6,16 +6,9 @@ var authC  =require('../controllers/auth.controller');
 
 var router = express.Router();
 
-router.post('/user/login', (req, res) => {
-    // console.log('user auth login');    
-    res.json({ message: 'user auth login' });
-});
+router.post('/user/login', authC.userLogin);
 //registration
 router.post('/user/register', authC.userRegistration);
-// (req, res) =>    {
-//     // console.log('user auth register');  
-//     res.json({ message: 'user auth register' });
-// });
 
 // console.log(app);
 
