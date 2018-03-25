@@ -1,8 +1,8 @@
-<header style="margin-bottom: 0px;" class="jumbotron jumbotron-fluid">
+    <header style="margin-bottom: 0px;" class="jumbotron jumbotron-fluid">
     <div class="container">
         <div class="row">
             <div class="col-md-6">DATA</div>
-            <div class="col-md-6">data data</div>
+            <div class="col-md-6 text-right">data data</div>
         </div>
     </div>
 </header>
@@ -16,7 +16,7 @@
         <a class="nav-link" href="#">Link</a>
         </li>
         <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
+        <a class="nav-link"  >Link</a>
         </li>
     </ul>
     <!-- right side -->
@@ -32,7 +32,7 @@
 
 <!-- ---------- NAV BAR ---------- -->
 
-<div *ngIf="HeaderMessage" class="container header-message">
+<div *ngIf="HeaderMessage.message != ''" class="container header-message">
     <div class="alert alert-{{HeaderMessage.type}}" >{{HeaderMessage.message}}
     <button type="button" class="close" (click)="closeHeaderMessage()" aria-label="Close">
     <span aria-hidden="true">&times;</span>

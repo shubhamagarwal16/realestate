@@ -22,20 +22,13 @@ export class RegistrationValidators{
     checkEmailAvailability(control: AbstractControl): Promise <ValidationErrors | null> { 
         return new Promise((resolve, reject) => {
             // console.log('checkEmailAvailability', control.value);
-            this.http.get(this.commonService.base_url + '/common/checkemail-availability?email='+control.value).subscribe(data => {
-                // console.log('--! ', data['status']);
-                if(data['status'].length > 0)
+            this.http.get(this.commonService.base_url + '/common/checkemail-availability/email/'+control.value).subscribe(data => {
+                // console.log('--! ', data, data['response']);
+                if(data['response'])
                     resolve({ checkEmailAvailability: true });
-                // {
-                //     if (control.value === data['status'][0].email)
-                //         resolve({ checkEmailAvailability: true });                    
-                //     else
-                //         resolve (null); 
-                // }                    
                 else
-                    resolve (null);                
-            });
-            
-        })
+                    resolve (null);             
+            });            
+        });
     }
 }

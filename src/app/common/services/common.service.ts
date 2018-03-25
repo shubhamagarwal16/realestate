@@ -7,18 +7,14 @@ export class CommonService {
 
   constructor(private http: HttpClient) { }
 
-  base_url = 'http://127.0.0.1:8000';
+  base_url = 'http://localhost:8080/api';
 
   getStatelist(): Observable<any>{
-    return this.http.get(this.base_url+ '/common/statelist');
-    // .subscribe(response => {
-    //   console.log('-- ', response, response['statelist']);
-    //   return response['statelist'];
-    // });
+    return this.http.get(this.base_url+ '/common/state');
   }
 
   getCitylistByState(stateId): Observable<any>{
-    return this.http.get(this.base_url+ '/common/citylist/'+stateId );
+    return this.http.get(this.base_url+ '/common/cities/'+stateId );
   }
 
 }

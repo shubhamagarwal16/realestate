@@ -2,7 +2,7 @@ const express = require('express');
 var app = express();
 const bodyParser = require('body-parser');
 const mongoose   = require('mongoose');
-
+const morgan = require('morgan');
 // Routing
 var indexR = require('./routes/indexR'); 
 var users = require('./routes/users');
@@ -24,7 +24,8 @@ db.once('open', function() {
 // this will let us get the data from a POST
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
+// use morgan to log requests to the console
+app.use(morgan('dev'));
 //CORS
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");

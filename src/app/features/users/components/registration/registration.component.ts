@@ -21,62 +21,118 @@ export class RegistrationComponent implements OnInit {
   ) { }
 
   registrationForm = new FormGroup({
-    name: new FormControl('', [Validators.required]),
-    // lName: new FormControl('', [Validators.required]),
+    fname: new FormControl('', [Validators.required]),
+    lName: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.email, Validators.required], this.registrationValidators.checkEmailAvailability.bind(this.registrationValidators)), 
+    phoneNo: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required]),
-    cPassword: new FormControl('', [Validators.required])
-  }, 
-  { validators: this.registrationValidators.passwordMatch } );
+    cPassword: new FormControl('', [Validators.required]),
+    state: new FormControl('', [Validators.required]),
+    city: new FormControl('', [Validators.required]),
+    pincode: new FormControl('', [Validators.required]),
+    user_type: new FormControl('', [Validators.required])
+  }, { validators: this.registrationValidators.passwordMatch }
+);
 
   mainErrorMessage = {
     type: '',
     message: ''
   }
 
+  stateList;
+  private cityList = [];
+
   ngOnInit() {
+    this.commonSerive.getStatelist()
+    .subscribe(response => {
+      // console.log('-- ', response);
+      // return response['statelist'];
+      if(response.length > 0){
+        this.stateList = response;
+      }
+    });
+    // console.log('---', getStateList);
+  }
+  
+  getCityList(stateId){
+    // console.log(' - stateID -- ', stateId);
+    this.cityList = [];
+
+    if(stateId != 0){
+      this.commonSerive.getCitylistByState(stateId)
+      .subscribe(response => {
+        // console.log('-- ', response['citylist']);
+        // return response['statelist'];
+        if(response.length > 0){
+          this.cityList = response;
+        }
+      });
+    }
+    else{
+      this.cityList = [];
+    }
   }
 
   registration(data) {
     console.log(data);
-    this.router.navigate(['/'],{
-      queryParams: { action: 'signUpsuccess' }
-    });
-    // this.http.post(this.commonSerive.base_url + '/users/registration', data.value)
-    // .subscribe(response => {
-    //   console.log('--- reg form -- ', response, response['email'], data.value['email']); 
-    //   if(response['email'] === data.value['email']){
-    //     this.router.navigate(['/?action=signUpsuccess']);
-    //   }
-    // },
-    // (error: Response) => {
-    //   this.mainErrorMessage.type = 'danger';
-
-    //   if(error.status === 400 ){
-    //     this.mainErrorMessage.message = error.statusText;
-    //   }
-    //   else if(error.status){
-    //     this.mainErrorMessage.message = 'Something went wrong';
-    //   }
+    // this.router.navigate(['/'],{
+    //   queryParams: { action: 'signUpsuccess' }
     // });
+    this.http.post(this.commonSerive.base_url + '/auth/user/register', data.value)
+    .subscribe(response => {
+      console.log('--- reg form -- ', response); 
+      if(response && response['message']){
+        this.router.navigate(['/'], {
+          queryParams: { action: 'signUpsuccess' }
+        });
+      }
+    },
+    (error: Response) => {
+      this.mainErrorMessage.type = 'danger';
+
+      if(error.status === 400 ){
+        this.mainErrorMessage.message = 'Your request is invalid';
+      }
+      else if(error.status){
+        this.mainErrorMessage.message = 'Something went wrong';
+      }
+    });
   }
 
   log(data) {
-    console.log('--',data);
+    // console.log('--',data);
   }
 
-// --------  Get fields for Form
-  get name() {
-    return this.registrationForm.get('name');
+  // --------  Get fields for Form
+  get fname() {
+    return this.registrationForm.get('fname');
+  }
+  get lName() {
+    return this.registrationForm.get('lName');
   }
   get email() {
     return this.registrationForm.get('email');
+  }
+  get phoneNo() {
+    return this.registrationForm.get('phoneNo');
   }
   get registrationPassword() {
     return this.registrationForm.get('password');
   }
   get registrationcPassword() {
     return this.registrationForm.get('cPassword');
+  }
+  get pincode() {
+    return this.registrationForm.get('pincode');
+  }
+  get state() {
+    return this.registrationForm.get('state');
+  }
+  get city() {
+    return this.registrationForm.get('city');
+  }
+  get user_type() {
+    return this.registrationForm.get('user_type');
   }
 
 }

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 var state_model = require('../models/state');
 var city_model = require('../models/city');
+var users = require('../models/users');
 
 
 
@@ -11,7 +12,7 @@ module.exports = {
         
         state_model.find((err, data) => {
             if(err)
-                res.send(err);
+                res.status(400).send(err);
             res.status(200).send(data);
         });
     },
@@ -29,8 +30,8 @@ module.exports = {
     getCityList: (req, res) => {
         city_model.find({ state_id: req.params.state_id }, (err, data) => {
             if(err)
-                res.send(err);
-            res.json(data);
+                res.status(400).send(err);
+            res.status(200).json(data);
         });
     },
     addCity: (req, res) => {
@@ -41,8 +42,22 @@ module.exports = {
         city.save((err) => {
             if(err)
                 res.send(err);
-            res.json({ message: 'city added successfully' });
+            res.status(400).json({ message: 'city added successfully' });
         })
     },
+    checkemailAvailability: (req, res) => {
+        // res.send(req.params.email);
+        var email = req.params.email;
+
+        users.find({email: email}, (err, result) => {
+            if(err)
+                res.status(400).send(err);
+            else if(result.length > 0)
+                res.status(200).json({  response: true});
+            else
+                res.status(200).json({  response: false});
+        });
+
+    }
 
 } 

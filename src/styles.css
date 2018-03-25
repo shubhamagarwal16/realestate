@@ -22,3 +22,6 @@
     top: 4px;
     right: 2px;
 }
+.remove-numbr-icn::-webkit-inner-spin-button, .remove-numbr-icn::-webkit-outer-spin-button{
+    -webkit-appearance: none;
+}
