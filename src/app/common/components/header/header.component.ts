@@ -36,7 +36,9 @@ export class HeaderComponent implements OnInit {
   };
 	  
 
-  login(loginForm){    
+  login(loginForm){ 
+    console.log('loginform ', loginForm);
+       
     let returnData = this.loginService.checkUserLogin(loginForm.value)
     .subscribe( response => {
         console.log('== response - ', response, ' type of ', typeof response);

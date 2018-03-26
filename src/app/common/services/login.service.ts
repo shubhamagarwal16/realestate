@@ -23,8 +23,8 @@ export class LoginService {
   
   checkUserLogin(data){       
     // return this.http.get(theUrl, JSON.stringify(data), httpOptions)
-    let postData = { 'username': data.emailPhno, 'password': data.loginPassword }
-    return this.http.post(this.url + '/users/login', postData, httpOptions)    
+    let postData = { 'emailPhone': data.emailPhno, 'password': data.loginPassword }
+    return this.http.post(this.url + '/auth/user/login', postData, httpOptions)    
   }
 
 }

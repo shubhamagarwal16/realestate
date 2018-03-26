@@ -4,13 +4,15 @@ import { MatCheckboxModule,
   MatDialogModule
  } from '@angular/material';
 
- import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   exports: [
     MatCheckboxModule,
     MatDialogModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatMenuModule
   ]
 })
 export class MatComponentsModule { }

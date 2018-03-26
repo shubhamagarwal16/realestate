@@ -1,34 +1,39 @@
-<header style="margin-bottom: 0px;" class="jumbotron jumbotron-fluid">
+<header style="margin-bottom: 0px;" class="">
     <div class="container">
         <div class="row">
-            <div class="col-md-6">DATA</div>
-            <div class="col-md-6 text-right">data data</div>
+            <div class="col-md-4"> <p routerLink="/">LOGO</p></div>
+            <div class="col-md-8">
+                <div class="header-ryt text-right">
+                    <button type="button" (click)="openloginModal(content)" class="btn btn-outline-primary btn-sm">Login</button>
+                    <button type="button" routerLink="/users/sign-up" class="btn btn-outline-primary btn-sm">Register</button>
+                </div>
+                <!-- <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
+                    <a class="navbar-brand" routerLink=''>Logo</a>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Link</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link">Link</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav text-right">
+                        <li class="nav-item">
+                            <a class="nav-link" (click)="openloginModal(content)">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/users/sign-up">Register</a>
+                        </li>
+                    </ul>
+                </nav> -->
+            </div>
         </div>
     </div>
 </header>
 
 <!-- ---------- NAV BAR ---------- -->
 
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
-    <a class="navbar-brand" routerLink='' >Logo</a>
-    <ul class="navbar-nav">
-        <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-        <a class="nav-link"  >Link</a>
-        </li>
-    </ul>
-    <!-- right side -->
-    <ul class="navbar-nav text-right">
-        <li class="nav-item">
-        <a class="nav-link" (click)="openloginModal(content)" >Login</a>
-        </li>
-        <li class="nav-item">
-        <a class="nav-link" routerLink="/users/sign-up" >Register</a>
-        </li>
-    </ul>
-</nav>    
+  
 
 <!-- ---------- NAV BAR ---------- -->
 
