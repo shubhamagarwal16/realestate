@@ -1,3 +1,6 @@
 .dash-head{
     padding-bottom: 30px;
 }
+.show-collapsed-menu{
+    display: block;
+}

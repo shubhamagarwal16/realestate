@@ -3,7 +3,7 @@ import { Http } from "@angular/http";
 import { HttpHeaders, HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs/Observable';
 import { CommonService } from './common.service';
-
+import { JwtHelper } from "angular2-jwt";
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -25,6 +25,11 @@ export class LoginService {
     // return this.http.get(theUrl, JSON.stringify(data), httpOptions)
     let postData = { 'emailPhone': data.emailPhno, 'password': data.loginPassword }
     return this.http.post(this.url + '/auth/user/login', postData, httpOptions)    
+  }
+
+  isLoggedIn(){
+    let jwtHelper = new JwtHelper();
+    jwtHelper.getTokenExpirationDate('cskdsndssd8779999');
   }
 
 }

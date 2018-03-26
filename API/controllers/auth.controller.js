@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 var userM = require('../models/users');
+var tokenProvider = require('../providers/token.provider');
 
 module.exports = {
     userLogin: (req, res) => {
@@ -19,8 +20,10 @@ module.exports = {
                     bcrypt.compare(req.body.password, data[0].password, function(err, passMatch) {
                         if(err)
                             res.status(400).send(err)
-                        else if (passMatch)
+                        else if (passMatch){
+                            // var token = tokenProvider.se                            
                             res.status(200).json({ message: 'Login Successful' })
+                        }
                         else
                             res.status(401).json({ message: 'Invalid Credentials' })
                     });

@@ -9,6 +9,8 @@ export class DashboardComponent implements OnInit {
 
   constructor() { }
 
+  toggleMenuItems = false;
+
   ngOnInit() {
     
   }

@@ -72,6 +72,10 @@ export class HeaderComponent implements OnInit {
 
     this.router.navigate(['/users/dashboard']);
 
+    // Adding to local storage
+    var token = 'xczxcddsfsdf88sf7ds7dsv7ds7s';
+    localStorage.setItem('token', token);
+
   }
   
   log(data){

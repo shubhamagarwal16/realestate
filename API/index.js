@@ -41,6 +41,12 @@ app.use('/api/common', common);
 
  //console.log(process.env.PORT); //.PORT, ' -port');
 
+// var tokenn = require('./config/config').secretKey;
+
+// console.log('token ', tokenn);
+
+
+
 var port =  process.env.PORT || 8080;
 
 app.listen(port, () => {
