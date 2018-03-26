@@ -12,7 +12,6 @@ import { LoginService } from '../../services/login.service';
 })
 export class HeaderComponent implements OnInit {
 
-  // @ViewChild('content') private content;
 
   constructor(private loginService: LoginService,
     private router: Router,
@@ -102,13 +101,15 @@ export class HeaderComponent implements OnInit {
     // this.closeHeaderMessage();
 
     this.route.queryParamMap.subscribe((data)=>{
-      console.log('--- ', data);
+      // console.log('--- ', data);
       if(data.get('action') === 'signUpsuccess'){
         this.loginError = { status: true, type: 'success', message: 'Please login to continue' }
-        this.changeHeaderMessage('success', 'Congratulations, you have been successfully registered');
+        this.changeHeaderMessage('success', 'Congratulations, you have been successfully registered, login to continue');
         // this.openloginModal(this.content);
       }
     });
   }
+
+
 
 }
