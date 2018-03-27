@@ -17,4 +17,8 @@ export class CommonService {
     return this.http.get(this.base_url+ '/common/cities/'+stateId );
   }
 
+  getPropertyTypeList(): Observable<any>{
+    return this.http.get(this.base_url);
+  }
+
 }

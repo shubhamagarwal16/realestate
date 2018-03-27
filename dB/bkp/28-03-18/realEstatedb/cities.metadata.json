@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"realEstatedb.cities"},{"v":2,"unique":true,"key":{"name":1},"name":"name_1","ns":"realEstatedb.cities","background":true}],"uuid":"ab579d7e20884465ab5aa64e72102c99"}

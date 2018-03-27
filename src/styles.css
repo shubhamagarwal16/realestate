@@ -30,3 +30,9 @@
     margin-top: 60px;
     margin-bottom: 60px;
 }
+.border-main{
+    border: 2px solid #efeaea;
+}
+.border-box-manage{
+    padding: 30px 25px;
+}

@@ -8,6 +8,7 @@ var indexR = require('./routes/indexR');
 var users = require('./routes/users');
 var auth = require('./routes/auth');
 var common = require('./routes/common');
+var property = require('./routes/property');
 
 // Connect with DB
 
@@ -38,6 +39,7 @@ app.use(function(req, res, next) {
 app.use('/api/users', users);
 app.use('/api/auth', auth);
 app.use('/api/common', common);
+app.use('/api/property', property);
 
  //console.log(process.env.PORT); //.PORT, ' -port');
 

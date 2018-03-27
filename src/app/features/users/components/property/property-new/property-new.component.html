@@ -1,15 +1,29 @@
-<h3>Post a New Property-</h3>
-
-<form>
-  <div class="form-row">
-    Property type: 
-    <label>
-      <input type="radio" name="type" value="1" > Sell
-      <input type="radio" name="type" value="2" > Rent
-    </label>
-  </div>
-  <div class="form-row">
-    
-  </div>
-
-</form>
+<h3 class="text-center text-danger">Post a New Property-</h3>
+<div class="container border-main border-box-manage">
+  <form>
+    <h4>Property Info- </h4>
+    <hr class="hr">
+    <div class="form-group">
+      <label for="">Property Title:</label>
+      <input type="text" name="title" placeholder="Enter property's title" class="form-control">
+    </div>
+    <div class="form-group">
+      <div class="form-row">
+        <div class="col-4">
+            <label for=""> Property For: </label> <br>
+            <label> <input type="radio" name="type" value="1" > Sell </label>
+            <label> <input type="radio" name="type" value="2" > Rent </label>
+        </div>
+        <div class="col-8">
+            <label for="">Property Type:</label>
+            <select name="type" class="custom-select">
+              <option value="">Select</option>
+              <!-- <option 
+              *ngFor="let "
+              value="{{}}">{{}}</option> -->
+            </select>
+        </div>
+      </div>
+    </div>  
+  </form>
+</div>

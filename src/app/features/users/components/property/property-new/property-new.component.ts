@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonService } from '../../../../../common/services/common.service';
 
 @Component({
   selector: 'app-property-new',
@@ -7,9 +8,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PropertyNewComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private commonService: CommonService
+  ) { }
+
+  propertyTypeList = [];
+
+  getPropertyTypeList(){
+    this.commonService.getPropertyTypeList()
+      .subscribe(result => {
+        console.log(result);
+        
+      });
+  }
 
   ngOnInit() {
+    this.getPropertyTypeList();
   }
 
 }
