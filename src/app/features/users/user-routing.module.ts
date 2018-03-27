@@ -7,6 +7,7 @@ import { RegistrationComponent } from './components/registration/registration.co
 import { DashboardComponent } from './components/dashboard/dashboard-main/dashboard.component';
 import { EditProfileComponent } from './components/profile/edit-profile/edit-profile.component';
 import { DashboardHomeComponent } from './components/dashboard/dashboard-home/dashboard-home.component';
+import { PropertyNewComponent } from './components/property/property-new/property-new.component';
 
 const Routes: Routes = [
   {
@@ -20,6 +21,20 @@ const Routes: Routes = [
       {
         path: '',
         component: DashboardHomeComponent
+      }
+    ]
+  },
+  {
+    path: 'property',
+    component: DashboardComponent,
+    children: [
+      {
+        path: 'new',
+        component: PropertyNewComponent
+      },
+      {
+        path: '',
+        redirectTo: 'new'
       }
     ]
   },

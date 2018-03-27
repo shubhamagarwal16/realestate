@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import { LoginService } from '../../services/login.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-header',
@@ -14,6 +15,7 @@ export class HeaderComponent implements OnInit {
 
 
   constructor(private loginService: LoginService,
+    private userService: UserService,
     private router: Router,
     private route: ActivatedRoute,
     private modalService: NgbModal  ) {}
@@ -41,7 +43,7 @@ export class HeaderComponent implements OnInit {
        
     let returnData = this.loginService.checkUserLogin(loginForm.value)
     .subscribe( response => {
-        console.log('== response - ', response, ' type of ', typeof response);
+      console.log('== response - ', response, ' type of ', response['token']);
         
         if(response['token'] !== ''){
           this.loginError = {
@@ -49,7 +51,7 @@ export class HeaderComponent implements OnInit {
             status: true,
             message: 'Logged In successfully'
           }
-          this.loginSuccess();
+          this.loginSuccess(response['token']);
         }        
     },
     (error: Response) => {
@@ -65,7 +67,7 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  loginSuccess(){
+  loginSuccess(token){
     this.loginModalRef.close(); // closing modal
 
     this.changeHeaderMessage('success', 'You have logged in successfully');
@@ -73,7 +75,6 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/users/dashboard']);
 
     // Adding to local storage
-    var token = 'xczxcddsfsdf88sf7ds7dsv7ds7s';
     localStorage.setItem('token', token);
 
   }
@@ -91,7 +92,7 @@ export class HeaderComponent implements OnInit {
   }
 
   closeHeaderMessage(){
-    this.HeaderMessage = null;    
+    this.HeaderMessage.message = '';    
   }
 
   changeHeaderMessage(type, message){
@@ -105,12 +106,17 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     // this.closeHeaderMessage();
-
+    console.log('header init- ');
+    
     this.route.queryParamMap.subscribe((data)=>{
       // console.log('--- ', data);
       if(data.get('action') === 'signUpsuccess'){
         this.loginError = { status: true, type: 'success', message: 'Please login to continue' }
         this.changeHeaderMessage('success', 'Congratulations, you have been successfully registered, login to continue');
+        // this.openloginModal(this.content);
+      }
+      else if (data.get('action') === 'logOut'){
+        this.changeHeaderMessage('success', 'You have logged out successfully');
         // this.openloginModal(this.content);
       }
     });

@@ -4,6 +4,7 @@ import { HttpHeaders, HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs/Observable';
 import { CommonService } from './common.service';
 import { JwtHelper } from "angular2-jwt";
+import { Router } from '@angular/router';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -17,7 +18,8 @@ const httpOptions = {
 export class LoginService {
 
   constructor(private http: HttpClient,
-  private commonService: CommonService ) { }
+  private commonService: CommonService,
+  private router: Router ) { }
  
   private url = this.commonService.base_url;
   
@@ -29,7 +31,23 @@ export class LoginService {
 
   isLoggedIn(){
     let jwtHelper = new JwtHelper();
-    jwtHelper.getTokenExpirationDate('cskdsndssd8779999');
+    var token = localStorage.getItem('token');
+    if(token){      
+      var status = jwtHelper.isTokenExpired(token);
+      // console.log('TokenExpirationDate', jwtHelper.getTokenExpirationDate(token));
+      // console.log('TokenExpired ', jwtHelper.isTokenExpired(token));
+    }
+    else
+      var status = true;
+    
+    return status;    
+  }
+
+  logOut(){
+    localStorage.removeItem('token');
+    this.router.navigate([''], {
+      queryParams: { success: 'logOut' }
+    });
   }
 
 }

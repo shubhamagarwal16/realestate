@@ -14,6 +14,7 @@ import { MatComponentsModule } from './/mat-components.module';
 import { AppComponent } from './app.component';
 import { MainComponent } from './main/main.component';
 import { CommonService } from './common/services/common.service';
+import { UserService } from './common/services/user.service';
 
 
 @NgModule({
@@ -39,7 +40,7 @@ import { CommonService } from './common/services/common.service';
   exports: [
     FormsModule
   ],
-  providers: [CommonService],
+  providers: [CommonService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

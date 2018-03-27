@@ -8,6 +8,7 @@ import { RegistrationComponent } from './components/registration/registration.co
 import { DashboardComponent } from './components/dashboard/dashboard-main/dashboard.component';
 import { EditProfileComponent } from './components/profile/edit-profile/edit-profile.component';
 import { DashboardHomeComponent } from './components/dashboard/dashboard-home/dashboard-home.component';
+import { PropertyNewComponent } from './components/property/property-new/property-new.component';
 
 @NgModule({
   imports: [
@@ -16,7 +17,7 @@ import { DashboardHomeComponent } from './components/dashboard/dashboard-home/da
     FormsModule,
     ReactiveFormsModule
   ],
-  declarations: [RegistrationComponent, DashboardComponent, EditProfileComponent, DashboardHomeComponent],
+  declarations: [RegistrationComponent, DashboardComponent, EditProfileComponent, DashboardHomeComponent, PropertyNewComponent],
   providers: [
   ]
 })

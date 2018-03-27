@@ -4,3 +4,7 @@
 .show-collapsed-menu{
     display: block;
 }
+.nav-dash{
+    top: 0px;
+    position: sticky;
+}

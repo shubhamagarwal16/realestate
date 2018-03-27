@@ -4,8 +4,10 @@
             <div class="col-md-4"> <p routerLink="/">LOGO</p></div>
             <div class="col-md-8">
                 <div class="header-ryt text-right">
-                    <button type="button" (click)="openloginModal(content)" class="btn btn-outline-primary btn-sm">Login</button>
-                    <button type="button" routerLink="/users/sign-up" class="btn btn-outline-primary btn-sm">Register</button>
+                    <span  *ngIf="!loginService.isLoggedIn()" >Welcome {{userService.currentUser.user.fname}}</span>
+                    <button type="button"  *ngIf="loginService.isLoggedIn()" (click)="openloginModal(content)" class="btn btn-outline-primary btn-sm">Login</button>
+                    <button type="button"routerLink="/users/sign-up" *ngIf="loginService.isLoggedIn()" class="btn btn-outline-primary btn-sm">Register</button>
+                    <button type="button" *ngIf="!loginService.isLoggedIn()" routerLink="/users/sign-up" (click)="loginService.logOut()" class="btn btn-outline-primary btn-sm">Logout</button>
                 </div>
                 <!-- <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">
                     <a class="navbar-brand" routerLink=''>Logo</a>
