@@ -12,7 +12,11 @@ var property = require('./routes/property');
 
 // Connect with DB
 
-mongoose.connect('mongodb://localhost/realEstatedb');
+// --- local
+// mongoose.connect('mongodb://localhost/realEstatedb');
+
+// ----- mLab
+mongoose.connect('mongodb://realEstate:realEstate@ds227119.mlab.com:27119/realestate-node');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
