@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 })
 export class RegistrationComponent implements OnInit {
 
-  constructor(private commonSerive: CommonService, 
+  constructor(private commonService: CommonService, 
     private registrationValidators: RegistrationValidators,
     private http: HttpClient,
     private router: Router
@@ -43,7 +43,7 @@ export class RegistrationComponent implements OnInit {
   private cityList = [];
 
   ngOnInit() {
-    this.commonSerive.getStatelist()
+    this.commonService.getStatelist()
     .subscribe(response => {
       // console.log('-- ', response);
       // return response['statelist'];
@@ -59,7 +59,7 @@ export class RegistrationComponent implements OnInit {
     this.cityList = [];
 
     if(stateId != 0){
-      this.commonSerive.getCitylistByState(stateId)
+      this.commonService.getCitylistByState(stateId)
       .subscribe(response => {
         // console.log('-- ', response['citylist']);
         // return response['statelist'];
@@ -78,7 +78,7 @@ export class RegistrationComponent implements OnInit {
     // this.router.navigate(['/'],{
     //   queryParams: { action: 'signUpsuccess' }
     // });
-    this.http.post(this.commonSerive.base_url + '/auth/user/register', data.value)
+    this.http.post(this.commonService.base_url + '/auth/user/register', data.value)
     .subscribe(response => {
       console.log('--- reg form -- ', response); 
       if(response && response['message']){

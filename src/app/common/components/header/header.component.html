@@ -7,6 +7,9 @@
                     <span  *ngIf="!loginService.isLoggedIn()" >Welcome {{userService.currentUser.user.fname}}</span>
                     <button type="button"  *ngIf="loginService.isLoggedIn()" (click)="openloginModal(content)" class="btn btn-outline-primary btn-sm">Login</button>
                     <button type="button"routerLink="/users/sign-up" *ngIf="loginService.isLoggedIn()" class="btn btn-outline-primary btn-sm">Register</button>
+                    <div *ngIf="!loginService.isLoggedIn()">
+                        
+                    </div>
                     <button type="button" *ngIf="!loginService.isLoggedIn()" routerLink="/users/sign-up" (click)="loginService.logOut()" class="btn btn-outline-primary btn-sm">Logout</button>
                 </div>
                 <!-- <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top">

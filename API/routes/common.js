@@ -23,6 +23,8 @@ router.route('/state')
 router.get('/cities/:state_id', commonController.getCityList)
 .post('/cities', commonController.addCity)
 
+router.delete('/city/:cityId', commonController.removeCity)
+
 //checkemail-availability
 router.get('/checkemail-availability/email/:email', commonController.checkemailAvailability)
 

@@ -28,7 +28,9 @@ module.exports = {
     },
     //CITIES
     getCityList: (req, res) => {
-        city_model.find({ state_id: req.params.state_id }, (err, data) => {
+        city_model.find({ state_id: req.params.state_id })
+            .populate('state_id', 'name')
+            .exec((err, data) => {
             if(err)
                 res.status(400).send(err);
             res.status(200).json(data);
@@ -42,7 +44,14 @@ module.exports = {
         city.save((err) => {
             if(err)
                 res.send(err);
-            res.status(400).json({ message: 'city added successfully' });
+            res.status(200).json({ message: 'city added successfully' });
+        })
+    },
+    removeCity: (req, res) => {
+        city_model.remove({_id: req.params.cityId }, (err, result) => {
+            if(err)
+                res.status(400).send(err);
+            res.status(200).json({ message: 'City removed successfully', data: result });
         })
     },
     checkemailAvailability: (req, res) => {
