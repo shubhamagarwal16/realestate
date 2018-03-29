@@ -2,8 +2,48 @@
   <div class="row">
     <div class="col-md-12">
       <div class="form-row">
-        works
+        <!-- works -->
       </div>
     </div>
   </div>
+</div>
+
+<div class="container">
+  <div *ngIf="!isEditing" >
+      <div class="float-right">    
+        <span (click)="isEditing = true" class="badge badge-success p-cursor">Edit</span>
+      </div>
+      <table class="table">
+        <tr>
+          <th>Name</th>
+          <td>{{ UserDetails.fname }} {{ UserDetails.lname }}</td>
+        </tr>
+        <tr>
+          <th>Email</th>
+          <td>{{ UserDetails.email }}</td>
+        </tr>
+        <tr>
+          <th>Phone Number</th>
+          <td>{{ UserDetails.phoneNo }}</td>
+        </tr>
+        <tr>
+          <th>Current Location</th>
+          <td>{{ UserDetails.city }}, {{ UserDetails.state }}</td>
+        </tr>
+        <tr>
+          <th>Pincode</th>
+          <td>{{ UserDetails.pincode }}</td>
+        </tr>
+      </table>
+      <small class="float-right"><b>Last Updated: </b> {{ UserDetails.updatedOn }}</small>
+  </div>
+
+  <div *ngIf="isEditing">
+      <span (click)="isEditing = false" class="btn btn-primary btn-small p-cursor">Back</span>
+
+    <form>
+      working
+    </form>
+  </div>
+  
 </div>

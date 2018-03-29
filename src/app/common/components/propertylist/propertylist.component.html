@@ -1,3 +1,27 @@
-<p>
-  propertylist works!
-</p>
+<div class="row">
+  <div 
+  *ngFor="let property of propertyList"
+  class="col-md-12">
+    <div class="row border-main border-box-manage property-box">
+      <div class="col-md-3 border-right">image</div>
+      <div class="col-md-7">
+        <h5>{{property.title}}</h5>
+        <ul style="padding-left: 0px;" class="propertyLocation">
+          <li> <b>Location: </b> {{property.locality}}, {{property.city.name}}, {{property.state.name}}</li> | 
+          <li> <b>Type: </b> {{property.type.title}}</li>
+        </ul>
+        <p>{{property.description}}</p>
+      </div>
+      <div class="col-md-2">
+        <small class="float-right" >{{property.updatedOn}}</small> 
+        <button class="btn btn-primary btn-block">View Property</button>
+        <button class="btn btn-info btn-block">Edit Property</button>
+        <button class="btn btn-success btn-block">
+          <span *ngIf="property.propertyFor == 'sell'" >Mark as Sold</span>
+          <span *ngIf="property.propertyFor == 'rent'" >Mark as Acquired</span>
+          </button>
+
+      </div>
+    </div>
+  </div>
+</div>

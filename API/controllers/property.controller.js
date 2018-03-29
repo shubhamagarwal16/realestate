@@ -52,7 +52,11 @@ module.exports = {
         })
     },
     getUserList: (req, res) => {
-        Property.find({ isActive: true, userId: req.params.userId }, (err, result) => {
+        Property.find({ isActive: true, userId: req.params.userId })
+        .populate('city', 'name')
+        .populate('state', 'name')
+        .populate('type', 'title')
+        .exec((err, result) => {
             if (err)
                 res.status(400).send(err);
             else

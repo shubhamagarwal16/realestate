@@ -13,18 +13,21 @@ export class PropertylistComponent implements OnInit {
     private commonService: CommonService
   ) { }
 
-  @Input('listType') listType;
+  @Input('listType') listType: string;
 
-  getPropertyList(){
-    this.commonService.propertyList(this.listType)
+  propertyList;
+
+  getPropertyList(params){
+    this.commonService.propertyList(params)
       .subscribe(result => {
         console.log(result);
+        this.propertyList = result;
         
       })
   }
 
   ngOnInit() {
-    this.getPropertyList();
+    this.getPropertyList(this.listType);
   }
 
 

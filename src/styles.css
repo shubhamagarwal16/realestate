@@ -26,6 +26,10 @@
     -webkit-appearance: none;
 }
 
+.p-cursor{
+    cursor: pointer;
+}
+
 .main-section{
     margin-top: 60px;
     margin-bottom: 60px;
@@ -35,4 +39,15 @@
 }
 .border-box-manage{
     padding: 30px 25px;
+}
+
+/* property */
+.property-box{
+    margin-bottom: 25px;
+}
+.property-box .propertyLocation{
+    list-style-type: none;
+}
+.property-box .propertyLocation li{
+    display: inline-block;
 }
