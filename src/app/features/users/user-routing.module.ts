@@ -40,6 +40,7 @@ const Routes: Routes = [
   },
   {
     path: 'profile',
+    component: DashboardComponent,
     children: [
       {
         path: 'edit',

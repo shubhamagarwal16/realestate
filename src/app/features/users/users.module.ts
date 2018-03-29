@@ -9,13 +9,15 @@ import { DashboardComponent } from './components/dashboard/dashboard-main/dashbo
 import { EditProfileComponent } from './components/profile/edit-profile/edit-profile.component';
 import { DashboardHomeComponent } from './components/dashboard/dashboard-home/dashboard-home.component';
 import { PropertyNewComponent } from './components/property/property-new/property-new.component';
+import { ReUsableModule } from '../../common/re-usable.module';
 
 @NgModule({
   imports: [
     CommonModule,
     UserRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ReUsableModule
   ],
   declarations: [RegistrationComponent, DashboardComponent, EditProfileComponent, DashboardHomeComponent, PropertyNewComponent],
   providers: [

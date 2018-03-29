@@ -42,6 +42,19 @@ propertySchema = new Schema({
     pincode: {
         type: String
     },
+    userId: {
+        type: Schema.Types.ObjectId,
+        ref: 'users'
+    },
+    status: {
+        type: String,
+        default: 'available', 
+        enum: [ 'available', 'sold', 'rented', 'expired' ]
+    },
+    isActive: {
+        type: Boolean,
+        default: true
+    },
     updatedOn: {
         type: Date,
         default: Date.now()

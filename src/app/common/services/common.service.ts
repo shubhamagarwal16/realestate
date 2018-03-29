@@ -18,7 +18,11 @@ export class CommonService {
   }
 
   getPropertyTypeList(): Observable<any>{
-    return this.http.get(this.base_url+ '/property/propertyType-list');
+    return this.http.get(this.base_url + '/property/type');
+  }
+
+  propertyList(param = ''){
+    return this.http.get(this.base_url + '/property/list/' + param);
   }
 
 }

@@ -96,6 +96,8 @@ export class HeaderComponent implements OnInit {
   }
 
   changeHeaderMessage(type, message){
+    console.log('changeHeaderMessage');
+    
     this.HeaderMessage = { type: type, message: message }
     var self = this;
     setTimeout(function(){

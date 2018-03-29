@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { CommonService } from '../../../../../common/services/common.service';
 import { UserService } from '../../../../../common/services/user.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-property-new',
@@ -11,7 +12,8 @@ export class PropertyNewComponent implements OnInit {
 
   constructor(
     private commonService: CommonService,
-    private userService: UserService
+    private userService: UserService,
+    private http: HttpClient
   ) { }
 
   propertyTypeList = [];
@@ -42,6 +44,36 @@ export class PropertyNewComponent implements OnInit {
     }
   }
 
+  @Output('changeHeaderMessage') changeHeaderMessage = new EventEmitter();
+  //  {
+  //   type: '',
+  //   message: ''
+  // }
+
+  submitForm(data){
+    console.log(data);
+    data.value.userId = this.userService.currentUser.user._id;
+    console.log('userid: ', data.value.userId);
+    
+    this.http.post(this.commonService.base_url + '/property/new' , data.value)
+    .subscribe(result => {
+      console.log(result);
+      if(result && result['id']){
+        this.changeHeaderMessage.emit({ type: 'success', message: 'You property has been listed successfully'  });
+      }
+    })
+
+  }
+
+  testfn(){
+    this.changeHeaderMessage.emit({ type: 'success', message: 'You property has been listed successfully' });
+  }
+
+  log(data) {
+    console.log(data);
+
+  }
+
   ngOnInit() {
     this.getPropertyTypeList();
 
@@ -50,7 +82,8 @@ export class PropertyNewComponent implements OnInit {
       if(response.length > 0){
         this.stateList = response;
       }
-    });
+      });
+
   }
 
 }
