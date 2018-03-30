@@ -2,6 +2,9 @@
 
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
 
+ul{
+    padding-left: 0px;
+}
 .form-control.ng-invalid.ng-touched{
     border-color: #f5c6cb;
 }

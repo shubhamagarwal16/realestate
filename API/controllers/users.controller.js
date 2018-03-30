@@ -4,7 +4,7 @@ var states = require('../models/state');
 
 module.exports = {
     getUserDetails: (req, res) => {
-        users.findOne({ _id: '5ab35564c56dc04cd9768900' })
+        users.findOne({ _id: req.params.userId })
             .populate('city', 'name')
             .populate('state', 'name')
             .exec((err, result) => {

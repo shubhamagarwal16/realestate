@@ -4,20 +4,22 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" [class.show-collapsed-menu]="toggleMenuItems" id="collapsibleNavbar">
-    <ul class="navbar-nav">
+    <div class="container">
+      <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="../dashboard">Dashboard</a>
+          </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="../dashboard">Dashboard</a>
+          <a class="nav-link" routerLink="../property/new">Add New Property</a>
         </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="../property/new">Add New Property</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Search</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="../profile/edit">My Profile</a>
-      </li>
-    </ul>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="../property/search">Find Property</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="../profile/edit">My Profile</a>
+        </li>
+      </ul>
+    </div>
   </div>
 </nav>
 

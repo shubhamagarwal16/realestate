@@ -25,7 +25,13 @@ module.exports = {
                         if(err)
                             res.status(400).send(err)
                         else if (passMatch){
-                            var token = jwt.sign({ user: data }, secretKey); 
+                            let jwtData = {
+                                _id: data['_id'],
+                                fname: data['fname'],
+                                lname: data['lname'],
+                                email: data['email']
+                            };
+                            var token = jwt.sign({ user: jwtData }, secretKey); 
                             res.status(200).json({ message: 'Login Successful', token: token });
                         }
                         else

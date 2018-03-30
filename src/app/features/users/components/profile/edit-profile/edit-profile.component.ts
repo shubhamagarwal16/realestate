@@ -12,12 +12,21 @@ export class EditProfileComponent implements OnInit {
     private userService: UserService
   ) { }
 
-  UserDetails;
+  UserDetails: any = {
+    city: { _id: '', name: '' },
+    state: { _id: '', name: '' }
+  };
   isEditing = false;
   
   ngOnInit() {
-    this.UserDetails = this.userService.currentUser.user;
-    console.log(this.UserDetails);
+    let userID = this.userService.currentUser.user;
+      // console.log(userID._id);
+      
+    this.userService.getcurrentUserDetails(userID._id)
+      .subscribe(result => {
+        this.UserDetails = result;
+        console.log(this.UserDetails);
+      })
     
   }
 

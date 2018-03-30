@@ -6,7 +6,9 @@
 }
 .nav-dash{
     top: 0px;
+    position: -webkit-sticky;
     position: sticky;
+    z-index: 99;
 }
 .navbar-dash .nav-link{
     color: white;

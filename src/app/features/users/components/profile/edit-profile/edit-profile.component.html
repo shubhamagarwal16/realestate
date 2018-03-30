@@ -13,7 +13,7 @@
       <div class="float-right">    
         <span (click)="isEditing = true" class="badge badge-success p-cursor">Edit</span>
       </div>
-      <table class="table">
+      <table class="table updateProfileForm">
         <tr>
           <th>Name</th>
           <td>{{ UserDetails.fname }} {{ UserDetails.lname }}</td>
@@ -28,7 +28,7 @@
         </tr>
         <tr>
           <th>Current Location</th>
-          <td>{{ UserDetails.city }}, {{ UserDetails.state }}</td>
+          <td>{{ UserDetails.city['name'] }}, {{ UserDetails.state['name'] }}</td>
         </tr>
         <tr>
           <th>Pincode</th>
@@ -39,10 +39,52 @@
   </div>
 
   <div *ngIf="isEditing">
-      <span (click)="isEditing = false" class="btn btn-primary btn-small p-cursor">Back</span>
+    <span (click)="isEditing = false" class="btn btn-primary btn-small p-cursor">Back</span>
 
-    <form>
-      working
+    <form #updateProfile="ngForm" class="" (ngSubmit)="updateProfile.value" >
+      <!-- <div *ngIf="mainErrorMessage">
+        <p class="alert alert-{{ mainErrorMessage.type }}">{{ mainErrorMessage.message }}</p>
+      </div> -->
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <input type="text" ngModel #fname="ngModel" class="form-control" placeholder="Enter First Name" required>
+          <small class="text-danger" *ngIf="fname.touched && fname.invalid">
+            This field is required</small>
+        </div>
+        <div class="form-group col-md-6">
+          <input type="text" ngModel #lname="ngModel" class="form-control" placeholder="Enter Last Name" required>
+          <small class="text-danger" *ngIf="lName.touched && lName.invalid">
+            This field is required</small>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <select name="state" formControlName="state" (change)="getCityList(state.value)" class="custom-select">
+            <option value="">Select State</option>
+            <option *ngFor="let state of stateList" value="{{state._id}}">{{state.name}}</option>
+          </select>
+          <small class="text-danger" *ngIf="state.touched && state.invalid">
+            This field is required</small>
+        </div>
+        <div class="form-group col-md-4">
+          <select name="city" formControlName="city" class="custom-select">
+            <option value="">Select City</option>
+            <option *ngFor="let city of cityList" value="{{city._id}}">{{city.name}}</option>
+          </select>
+          <small class="text-danger" *ngIf="city.touched && city.invalid">
+            This field is required</small>
+        </div>
+        <div class="form-group col-md-4">
+          <input formControlName="pincode" type="text" name="pincode" placeholder="Enter PIN Code" class="form-control">
+          <small class="text-danger" *ngIf="pincode.touched && pincode.invalid">
+            This field is required</small>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-md-12">
+          <button class="btn btn-primary" [disabled]="!registrationForm.valid">Update Profile</button>
+        </div>
+      </div>
     </form>
   </div>
   

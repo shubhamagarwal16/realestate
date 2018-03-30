@@ -8,6 +8,7 @@ import { DashboardComponent } from './components/dashboard/dashboard-main/dashbo
 import { EditProfileComponent } from './components/profile/edit-profile/edit-profile.component';
 import { DashboardHomeComponent } from './components/dashboard/dashboard-home/dashboard-home.component';
 import { PropertyNewComponent } from './components/property/property-new/property-new.component';
+import { FindPropertyComponent } from './components/property/find-property/find-property.component';
 
 const Routes: Routes = [
   {
@@ -31,6 +32,10 @@ const Routes: Routes = [
       {
         path: 'new',
         component: PropertyNewComponent
+      },
+      {
+        path: 'search',
+        component: FindPropertyComponent
       },
       {
         path: '',

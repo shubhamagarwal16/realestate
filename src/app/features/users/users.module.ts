@@ -10,6 +10,7 @@ import { EditProfileComponent } from './components/profile/edit-profile/edit-pro
 import { DashboardHomeComponent } from './components/dashboard/dashboard-home/dashboard-home.component';
 import { PropertyNewComponent } from './components/property/property-new/property-new.component';
 import { ReUsableModule } from '../../common/re-usable.module';
+import { FindPropertyComponent } from './components/property/find-property/find-property.component';
 
 @NgModule({
   imports: [
@@ -19,7 +20,7 @@ import { ReUsableModule } from '../../common/re-usable.module';
     ReactiveFormsModule,
     ReUsableModule
   ],
-  declarations: [RegistrationComponent, DashboardComponent, EditProfileComponent, DashboardHomeComponent, PropertyNewComponent],
+  declarations: [RegistrationComponent, DashboardComponent, EditProfileComponent, DashboardHomeComponent, PropertyNewComponent, FindPropertyComponent],
   providers: [
   ]
 })

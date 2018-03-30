@@ -31,13 +31,14 @@ export class HeaderComponent implements OnInit {
 
   // ----- FORM
 
+  headerDropdown: false;
+
   loginError: any = {
     status : false,
     type: 'success',
     message : 'Default text'
   };
 	  
-
   login(loginForm){ 
     console.log('loginform ', loginForm);
        
@@ -108,7 +109,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     // this.closeHeaderMessage();
-    console.log('header init- ');
+    // console.log('header init- ');
     
     this.route.queryParamMap.subscribe((data)=>{
       // console.log('--- ', data);

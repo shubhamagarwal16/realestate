@@ -2,11 +2,29 @@
     margin-top: 15px;
 }
 header {
-    padding-top: 20px;
+    padding-top: 15px;
     border-bottom: 1px solid #ccc;
-    padding-bottom: 15px;
-    box-shadow: 0px 0px 7px 0px #aaa;
+    padding-bottom: 10px;
+    -webkit-box-shadow: 0px 0px 7px 0px #aaa;
+    box-shadow: 0px 0px 9px 0px #888;
 }
 .header-ryt{
 
+}
+.user-image img {
+    width: 50px;
+    border: 1px solid #dc3544;
+    padding: 2px;
+}
+ul.header-drp-dwn {
+    position: absolute;
+    right: -10px;
+    z-index: 10;
+    list-style-type: none;
+    background-color: white;
+    border: 1px solid #eee;
+    top: 54px;
+}
+ul.header-drp-dwn li button {
+    padding: 10px 50px;
 }

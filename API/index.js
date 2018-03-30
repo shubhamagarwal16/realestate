@@ -40,7 +40,7 @@ app.use(function(req, res, next) {
 
 // Routes
 // app.use('/api', indexR);
-app.use('/api/users', users);
+app.use('/api/user', users);
 app.use('/api/auth', auth);
 app.use('/api/common', common);
 app.use('/api/property', property);
