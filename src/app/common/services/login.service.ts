@@ -34,13 +34,15 @@ export class LoginService {
     var token = localStorage.getItem('token');
     if(token){      
       var status = jwtHelper.isTokenExpired(token);
+      if(status == false)
+        return true;
+      else
+      return false;
       // console.log('TokenExpirationDate', jwtHelper.getTokenExpirationDate(token));
       // console.log('TokenExpired ', jwtHelper.isTokenExpired(token));
     }
     else
-      var status = true;
-    
-    return status;    
+      return false;   
   }
 
   logOut(){

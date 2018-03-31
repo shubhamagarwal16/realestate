@@ -9,6 +9,8 @@ import { FooterComponent } from './components/footer/footer.component';
 import { LoginService } from './services/login.service';
 import { RegistrationValidators } from './validators/registration.validators';
 import { PropertylistComponent } from './components/propertylist/propertylist.component';
+import { PageLoaderComponent } from './components/page-loader/page-loader.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 
 @NgModule({
@@ -17,6 +19,7 @@ import { PropertylistComponent } from './components/propertylist/propertylist.co
     FormsModule,
     RouterModule,
     HttpClientModule,
+    
     // HttpClientXsrfModule.withOptions({
     //   cookieName: 'csrftoken',
     //   headerName: 'X-CSRFToken',
@@ -25,12 +28,16 @@ import { PropertylistComponent } from './components/propertylist/propertylist.co
   declarations: [
     HeaderComponent,
     FooterComponent,
-    PropertylistComponent
+    PropertylistComponent,
+    PageLoaderComponent,
+    NotFoundComponent
   ],
   exports: [
     HeaderComponent,
     FooterComponent,
-    PropertylistComponent
+    PropertylistComponent,
+    PageLoaderComponent,
+    NotFoundComponent
   ],
   providers: [
     LoginService,

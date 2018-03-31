@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 
 import { MainComponent } from './main/main.component';
+import { NotFoundComponent } from './common/components/not-found/not-found.component';
 
 // const routes: Routes = [
 //   {
@@ -34,7 +35,8 @@ const routes: Routes = [
   },
   {
     path: '**',
-    component: MainComponent
+    component: NotFoundComponent,
+
   }
 ]
 

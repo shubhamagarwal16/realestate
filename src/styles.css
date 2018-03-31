@@ -44,6 +44,11 @@ ul{
     padding: 30px 25px;
 }
 
+.options-block {
+    max-height: 230px;
+    overflow-y: scroll;
+}
+
 /* property */
 .property-box{
     margin-bottom: 25px;
@@ -54,3 +59,4 @@ ul{
 .property-box .propertyLocation li{
     display: inline-block;
 }
+

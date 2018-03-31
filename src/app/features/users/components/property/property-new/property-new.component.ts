@@ -19,6 +19,7 @@ export class PropertyNewComponent implements OnInit {
   propertyTypeList = [];
   stateList;
   private cityList = [];
+  FetchingCityList = false;
 
   getPropertyTypeList(){
     this.commonService.getPropertyTypeList()
@@ -30,12 +31,14 @@ export class PropertyNewComponent implements OnInit {
 
   getCityList(stateId){
     this.cityList = [];
+    this.FetchingCityList = true;
 
     if(stateId != 0){
       this.commonService.getCitylistByState(stateId)
       .subscribe(response => {
         if(response.length > 0){
           this.cityList = response;
+          this.FetchingCityList = false;
         }
       });
     }

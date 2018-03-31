@@ -32,6 +32,7 @@ export class HeaderComponent implements OnInit {
   // ----- FORM
 
   headerDropdown: false;
+  toggleMenuItems = false;
 
   loginError: any = {
     status : false,

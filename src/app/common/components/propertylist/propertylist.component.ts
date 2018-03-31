@@ -14,6 +14,7 @@ export class PropertylistComponent implements OnInit {
   ) { }
 
   @Input('listType') listType: string;
+  @Input('blockView') blockView = false;
 
   propertyList;
 

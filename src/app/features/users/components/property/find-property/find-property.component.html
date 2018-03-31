@@ -1,18 +1,42 @@
 <div class="container find-properties">
   <div class="row">
-    <div class="col-md-4">
-      <div class="border-main border-box-manage">
-        <div class="block-margin-botm">
-          <h5 >Type:</h5>
-          <hr class="hr">
-          <label><input type="checkbox"> Sell</label> &nbsp;
-          <label><input type="checkbox"> Rent</label>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-8">
-      <div class="border-main border-box-manage">
+    <div class="col-md-3">
+      <form #filter="ngForm" (ngSubmit)="filterProperties(filter.value)" >
+        <div class="border-main border-box-manage side-bar-filter">
+          <h4><i class="fa fa-filter" aria-hidden="true"></i> Filters <button class="btn btn-success  btn-sm float-right">Search</button></h4>
 
+          <div class="form-group">
+            <h5 >Property For:</h5>
+            <hr class="hr">
+            <label><input name="propertyFor[]" [(ngModel)]="sell" type="checkbox"> Sell</label> &nbsp;
+            <label><input name="propertyFor[]" [(ngModel)]="rent" type="checkbox"> Rent</label>
+          </div>
+          <div class="form-group">
+            <h5 >Property Type:</h5>
+            <hr class="hr">
+            <div class="options-block">
+              <label class="d-block" *ngFor="let type of propertyTypeList" >
+                <input  name="type[]" ngModel value="type._id" type="checkbox"> {{type.title}}
+              </label> 
+            </div>
+          </div>
+          <div class="form-group">
+            <h5>City:</h5>
+            <hr class="hr">
+            <div class="options-block">
+              <label class="d-block" *ngFor="let city of cityList" ><input name="city[]" ngModel value="city._id" type="checkbox"> {{city.name}}</label> 
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-9">
+      <div class="text-right">
+        <button [class.btn-danger]="!blockView" (click)="blockView = false;" class="btn"><i class="fa fa-list" aria-hidden="true"></i></button>
+        <button [class.btn-danger]="blockView" (click)="blockView = true;" class="btn"><i class="fa fa-th-large" aria-hidden="true"></i></button>
+      </div>
+      <div class="border-main border-box-manage">
+          <app-propertylist [blockView]="blockView" ></app-propertylist>
       </div>
     </div>
   </div>
