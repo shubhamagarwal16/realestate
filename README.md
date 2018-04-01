@@ -13,7 +13,7 @@ I have used Ubuntu 16.04 for the development of this project, conflicts may arri
 -- real-estate/ (root direcory for **Angular front-end** )
    -- API/ (directory for **Node-express back-end** )
 
-## Installation / Configuration -
+## Installation / Configuration - 
 
 - Install the above required services
 - After clonning the repo use `npm install` under the root directory &&
