@@ -70,5 +70,15 @@ module.exports = {
             else
                 res.status(200).json(result);
         });
-    } 
+    },
+    filterProperties: (req, res) => {
+        Property.find()
+        .where('isActive', true)
+        .exec((err, result) => {
+            if (err)
+                res.status(400).send(err);
+            else
+                res.status(200).json(result);
+        });
+    },
 }

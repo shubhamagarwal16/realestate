@@ -7,6 +7,7 @@ import { HttpClientXsrfModule, HttpClientModule } from "@angular/common/http";
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { LoginService } from './services/login.service';
+import { AuthGuardService } from './services/auth-guard.service';
 import { RegistrationValidators } from './validators/registration.validators';
 import { PropertylistComponent } from './components/propertylist/propertylist.component';
 import { PageLoaderComponent } from './components/page-loader/page-loader.component';
@@ -41,7 +42,8 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
   ],
   providers: [
     LoginService,
-    RegistrationValidators
+    RegistrationValidators,
+    AuthGuardService
   ]
 })
 export class ReUsableModule { }

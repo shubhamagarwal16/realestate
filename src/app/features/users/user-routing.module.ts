@@ -9,6 +9,7 @@ import { EditProfileComponent } from './components/profile/edit-profile/edit-pro
 import { DashboardHomeComponent } from './components/dashboard/dashboard-home/dashboard-home.component';
 import { PropertyNewComponent } from './components/property/property-new/property-new.component';
 import { FindPropertyComponent } from './components/property/find-property/find-property.component';
+import { AuthGuardService } from '../../common/services/auth-guard.service';
 
 const Routes: Routes = [
   {
@@ -23,7 +24,8 @@ const Routes: Routes = [
         path: '',
         component: DashboardHomeComponent
       }
-    ]
+    ],
+    canActivate: [AuthGuardService]
   },
   {
     path: 'property',
@@ -41,7 +43,8 @@ const Routes: Routes = [
         path: '',
         redirectTo: 'new'
       }
-    ]
+    ],
+    canActivate: [AuthGuardService]
   },
   {
     path: 'profile',
@@ -51,7 +54,8 @@ const Routes: Routes = [
         path: 'edit',
         component: EditProfileComponent
       }
-    ]
+    ],
+    canActivate: [AuthGuardService]
   }
 ]
 

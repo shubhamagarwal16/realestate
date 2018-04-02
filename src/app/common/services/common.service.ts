@@ -29,4 +29,8 @@ export class CommonService {
     return this.http.get(this.base_url + '/property/list/' + param);
   }
 
+  filterProperties(param = ''){
+    return this.http.get(this.base_url + '/property/filter' + param);
+  }
+
 }

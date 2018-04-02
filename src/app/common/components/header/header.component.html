@@ -32,20 +32,6 @@
 
 <!-- ---------- NAV BAR ---------- -->
 
-  
-
-<!-- ---------- NAV BAR ---------- -->
-
-<div *ngIf="HeaderMessage.message != ''" class="container header-message">
-    <div class="alert alert-{{HeaderMessage.type}}" >{{HeaderMessage.message}}
-        <button type="button" class="close" (click)="closeHeaderMessage()" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-</div>
-
-<!-- navbar -->
-
 <nav *ngIf="loginService.isLoggedIn()" class="navbar navbar-expand-md bg-danger navbar-dash nav-dash">
     <!-- <a class="navbar-brand" href="#">Navbar</a> -->
     <button class="navbar-toggler" (click)="toggleMenuItems = !toggleMenuItems" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -71,18 +57,24 @@
     </div>
 </nav>
 
-<!-- navbar -->
-
+<!-- ---------- NAV BAR ---------- -->
 
 <!-- ------------------ PAGE LOADER ---------------- -->
 <app-page-loader [loaderActive] ="true" ></app-page-loader>
 <!-- ------------------ PAGE LOADER ---------------- -->
 
+<div *ngIf="HeaderMessage.message != ''" class="container header-message">
+    <div class="alert alert-{{HeaderMessage.type}}" >{{HeaderMessage.message}}
+        <button type="button" class="close" (click)="closeHeaderMessage()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+</div>
+
 
 <!-- -------------- LOGIN MODAL ----------- -->
 
-
-<ng-template #content let-c="close" let-d="dismiss">
+<ng-template #content *ngIf="!loginService.isLoggedIn()" let-c="close" let-d="dismiss">
     <div class="modal-header">
       <h4 class="modal-title">Sign In</h4>
       <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">

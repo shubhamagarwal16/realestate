@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonService } from '../../../../../common/services/common.service';
 import { HttpParams } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-find-property',
@@ -10,7 +11,8 @@ import { HttpParams } from '@angular/common/http';
 export class FindPropertyComponent implements OnInit {
 
   constructor(
-    private commonService: CommonService
+    private commonService: CommonService,
+    private route: Router
   ) { }
 
   propertyTypeList = [];
@@ -20,15 +22,18 @@ export class FindPropertyComponent implements OnInit {
 
   filterProperties(data){
     console.log(data);
-    
-    var params = new HttpParams()
-    .set('page', '2')
-    .set('page', '3')
+    this.commonService.filterProperties()
+    .subscribe(result => {
+      console.log(result);      
+    })
+    // var params = new HttpParams()
+    // .set('page', '2')
+    // .set('page', '3')
   }
 
-  // getPropertyList(){
-    
-  // }
+  log(data){
+    console.log(data);    
+  }
 
   ngOnInit() {
     this.commonService.getPropertyTypeList()

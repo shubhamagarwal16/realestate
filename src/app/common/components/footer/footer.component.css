@@ -1,0 +1,8 @@
+footer{
+    padding: 20px 0px;
+}
+footer p, footer p a{
+    color: white;
+    font-weight: bold;
+    margin-bottom: 0px;
+}

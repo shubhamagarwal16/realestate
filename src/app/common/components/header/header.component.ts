@@ -34,6 +34,8 @@ export class HeaderComponent implements OnInit {
   headerDropdown: false;
   toggleMenuItems = false;
 
+  urltoRedirect = '';
+
   loginError: any = {
     status : false,
     type: 'success',
@@ -74,7 +76,10 @@ export class HeaderComponent implements OnInit {
 
     this.changeHeaderMessage('success', 'You have logged in successfully');
 
-    this.router.navigate(['/users/dashboard']);
+    if(this.urltoRedirect != '')
+      this.router.navigate([this.urltoRedirect]);
+    else
+      this.router.navigate(['/users/dashboard']);
 
     // Adding to local storage
     localStorage.setItem('token', token);
@@ -122,6 +127,9 @@ export class HeaderComponent implements OnInit {
       else if (data.get('action') === 'logOut'){
         this.changeHeaderMessage('success', 'You have logged out successfully');
         // this.openloginModal(this.content);
+      }
+      if(data.get('urltoRedirect') != ''){
+        this.urltoRedirect = data.get('urltoRedirect');
       }
     });
   }

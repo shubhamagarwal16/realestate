@@ -8,8 +8,8 @@
           <div class="form-group">
             <h5 >Property For:</h5>
             <hr class="hr">
-            <label><input name="propertyFor[]" [(ngModel)]="sell" type="checkbox"> Sell</label> &nbsp;
-            <label><input name="propertyFor[]" [(ngModel)]="rent" type="checkbox"> Rent</label>
+            <label><input ngModel #propertyFor="ngModel" name="propertyFor" value="sell"  (change)="log(propertyFor.value)" type="checkbox"> Sell</label> &nbsp;
+            <!-- <label><input ngModel #propertyFor="ngModel" name="propertyFor" value="rent" (change)="log(propertyFor)"  type="checkbox"> Rent</label> -->
           </div>
           <div class="form-group">
             <h5 >Property Type:</h5>

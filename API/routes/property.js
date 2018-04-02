@@ -14,4 +14,7 @@ router.post('/new', propertyController.addNewProperty);
 router.get('/list/:userId', propertyController.getUserList);
 router.get('/list/', propertyController.getFullList);
 
+//filter
+router.get('/filter', propertyController.filterProperties);
+
 module.exports = router;
