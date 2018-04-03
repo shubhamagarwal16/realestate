@@ -30,7 +30,7 @@ export class CommonService {
   }
 
   filterProperties(param = ''){
-    return this.http.get(this.base_url + '/property/filter' + param);
+    return this.http.post(this.base_url + '/property/filter', param);
   }
 
 }

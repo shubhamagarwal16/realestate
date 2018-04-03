@@ -72,8 +72,13 @@ module.exports = {
         });
     },
     filterProperties: (req, res) => {
+        // console.log(req.params.para);
+        
         Property.find()
         .where('isActive', true)
+        // .where('propertyFor').in(req.params.propertyFor)
+        // .where('type').in(req.params.type)
+        // .where('city').in(req.params.city)
         .exec((err, result) => {
             if (err)
                 res.status(400).send(err);

@@ -1,22 +1,29 @@
 <div class="container find-properties">
   <div class="row">
     <div class="col-md-3">
-      <form #filter="ngForm" (ngSubmit)="filterProperties(filter.value)" >
+      <form #filter="ngForm" (ngSubmit)="filterProperties(e)" >
         <div class="border-main border-box-manage side-bar-filter">
           <h4><i class="fa fa-filter" aria-hidden="true"></i> Filters <button class="btn btn-success  btn-sm float-right">Search</button></h4>
 
           <div class="form-group">
             <h5 >Property For:</h5>
             <hr class="hr">
-            <label><input ngModel #propertyFor="ngModel" name="propertyFor" value="sell"  (change)="log(propertyFor.value)" type="checkbox"> Sell</label> &nbsp;
-            <!-- <label><input ngModel #propertyFor="ngModel" name="propertyFor" value="rent" (change)="log(propertyFor)"  type="checkbox"> Rent</label> -->
+            <label>
+              <input [value]="sell" type="checkbox" name="propertyFor" required
+               (change)="$event.target.checked? manageCheckedValue('sell', 'propertyFor', true) : manageCheckedValue('sell', 'propertyFor', false)" > Sell
+            </label> &nbsp;
+            <label>
+              <input [value]="rent" type="checkbox" name="propertyFor" required
+                (change)="$event.target.checked? manageCheckedValue('rent', 'propertyFor', true) : manageCheckedValue('rent', 'propertyFor', false)" > Rent
+            </label> &nbsp;
           </div>
           <div class="form-group">
             <h5 >Property Type:</h5>
             <hr class="hr">
             <div class="options-block">
               <label class="d-block" *ngFor="let type of propertyTypeList" >
-                <input  name="type[]" ngModel value="type._id" type="checkbox"> {{type.title}}
+                <input  name="type" type="checkbox" value="{{type._id}}" required
+                (change)="$event.target.checked? manageCheckedValue(type._id, 'type', true) : manageCheckedValue(type._id, 'type', false)" > {{type.title}}
               </label> 
             </div>
           </div>
@@ -24,13 +31,17 @@
             <h5>City:</h5>
             <hr class="hr">
             <div class="options-block">
-              <label class="d-block" *ngFor="let city of cityList" ><input name="city[]" ngModel value="city._id" type="checkbox"> {{city.name}}</label> 
+              <label class="d-block" *ngFor="let city of cityList" >
+                <input name="city" value="city._id" type="checkbox"
+                (change)="$event.target.checked? manageCheckedValue(city._id, 'city', true) : manageCheckedValue(city._id, 'city', false)" > {{city.name}}
+              </label> 
             </div>
           </div>
         </div>
       </form>
     </div>
     <div class="col-md-9">
+      <p>{{ filter.value | json }} {{ filter.status }}</p>
       <div class="text-right">
         <button [class.btn-danger]="!blockView" (click)="blockView = false;" class="btn"><i class="fa fa-list" aria-hidden="true"></i></button>
         <button [class.btn-danger]="blockView" (click)="blockView = true;" class="btn"><i class="fa fa-th-large" aria-hidden="true"></i></button>
