@@ -4,7 +4,7 @@
             <div class="col-md-4"> <img src="assets/images/Logo_SA.png" class="p-cursor" width="50px" alt="LOGO" routerLink="/"></div>
             <div class="col-md-8">
                 <div class="header-ryt text-right">                    
-                    <button type="button"  *ngIf="!loginService.isLoggedIn()" (click)="openloginModal(content)" class="btn btn-outline-primary btn-sm">Login</button>
+                    <button type="button"  *ngIf="!loginService.isLoggedIn()" (click)="openloginModal()" class="btn btn-outline-primary btn-sm">Login</button>
                     <button type="button"routerLink="/users/sign-up" *ngIf="!loginService.isLoggedIn()" class="btn btn-outline-primary btn-sm">Register</button>
 
                     <div *ngIf="loginService.isLoggedIn()">
@@ -60,7 +60,7 @@
 <!-- ---------- NAV BAR ---------- -->
 
 <!-- ------------------ PAGE LOADER ---------------- -->
-<app-page-loader [loaderActive] ="true" ></app-page-loader>
+<app-page-loader [loaderActive] ="pageloaderStatus" ></app-page-loader>
 <!-- ------------------ PAGE LOADER ---------------- -->
 
 <div *ngIf="HeaderMessage.message != ''" class="container header-message">
@@ -71,45 +71,3 @@
     </div>
 </div>
 
-
-<!-- -------------- LOGIN MODAL ----------- -->
-
-<ng-template #content *ngIf="!loginService.isLoggedIn()" let-c="close" let-d="dismiss">
-    <div class="modal-header">
-      <h4 class="modal-title">Sign In</h4>
-      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-
-        <div *ngIf="loginError.status" class="alert alert-{{ loginError.type }}">
-            {{ loginError.message }}
-        </div>
-
-        <form #loginForm="ngForm" (ngSubmit)="login(loginForm)"  >
-            <div class="form-group">
-                <label for="">Email / Phone Number</label>
-                <input ngModel name="emailPhno" type="text" #emailPhno="ngModel" (change)="log(emailPhno)"  class="form-control" required >
-                <small class="text-danger"
-                    *ngIf="emailPhno.touched && emailPhno.invalid"  >
-                This field is required</small>
-            </div>
-            <div class="form-group">
-                <label for="">Password</label>
-                <input ngModel type="password" name="loginPassword" #loginPassword="ngModel" (change)="log(loginPassword)" class="form-control" required >
-                <small class="text-danger"
-                    *ngIf="loginPassword.touched && loginPassword.invalid"  >
-                This field is required</small>
-            </div>
-            <div class="form-group">
-                <button class="btn btn-success form-control" [disabled]="!loginForm.valid" >Login</button>
-            </div>
-        </form>
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
-    </div>
-</ng-template>
-  
-  <!-- -------------- LOGIN MODAL ----------- -->

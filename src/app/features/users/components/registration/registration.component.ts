@@ -43,15 +43,13 @@ export class RegistrationComponent implements OnInit {
   private cityList = [];
 
   ngOnInit() {
+    
     this.commonService.getStatelist()
     .subscribe(response => {
-      // console.log('-- ', response);
-      // return response['statelist'];
       if(response.length > 0){
         this.stateList = response;
       }
     });
-    // console.log('---', getStateList);
   }
   
   getCityList(stateId){

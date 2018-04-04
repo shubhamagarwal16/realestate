@@ -19,10 +19,12 @@ export class PropertylistComponent implements OnInit {
   propertyList;
 
   getPropertyList(params){
+    this.commonService.togglePageLoaderFn(true);
     this.commonService.propertyList(params)
       .subscribe(result => {
-        console.log(result);
+        // console.log(result);
         this.propertyList = result;
+        this.commonService.togglePageLoaderFn(false);
         
       })
   }

@@ -12,6 +12,7 @@ import { RegistrationValidators } from './validators/registration.validators';
 import { PropertylistComponent } from './components/propertylist/propertylist.component';
 import { PageLoaderComponent } from './components/page-loader/page-loader.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { LoginModalComponent } from './components/login-modal/login-modal.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     FooterComponent,
     PropertylistComponent,
     PageLoaderComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    LoginModalComponent
   ],
   exports: [
     HeaderComponent,
@@ -44,6 +46,9 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     LoginService,
     RegistrationValidators,
     AuthGuardService
+  ],
+  entryComponents: [
+    LoginModalComponent
   ]
 })
 export class ReUsableModule { }

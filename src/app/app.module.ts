@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
@@ -40,7 +40,7 @@ import { UserService } from './common/services/user.service';
   exports: [
     FormsModule
   ],
-  providers: [CommonService, UserService],
+  providers: [CommonService, UserService, Title],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -83,7 +83,7 @@ module.exports = {
             if (err)
                 res.status(400).send(err);
             else
-                res.status(200).json(result);
+                res.status(200).json({ result: req.query.propertyFor, rest: req.query.city});
         });
     },
 }

@@ -42,12 +42,15 @@ export class FindPropertyComponent implements OnInit {
   }
 
   filterProperties(data = ''){
+    this.route.navigate([window.location.pathname], {
+      queryParams: this.filterData //{ as: 'xcvx', dfd: 'dsfsf' }
+    })
     if (this.filterData.propertyFor.length > 0)
-      data = data + '/propertyFor/'+this.filterData.propertyFor;
+      data = data + '/?propertyFor='+this.filterData.propertyFor;
     if (this.filterData.type.length > 0)
-      data = data + '/propertyFor/'+this.filterData.type;
+      data = data + '&type='+this.filterData.type;
     if (this.filterData.city.length > 0)
-      data = data + '/propertyFor/'+this.filterData.city;
+      data = data + '&city='+this.filterData.city;
     // let dat = '/propertyFor/'+this.filterData.propertyFor+'/type/'+this.filterData.type+'/city/'+this.filterData.city;
     console.log(data);
     this.commonService.filterProperties(data)

@@ -24,12 +24,15 @@ export class EditProfileComponent implements OnInit {
   private cityList = [];
 
   getcurrentUserDetails(userId){
+    this.commonService.togglePageLoaderFn(true);
     this.userService.getcurrentUserDetails(userId)
       .subscribe(result => {
         this.UserDetails = result;
-        console.log(this.UserDetails);
-
+        // console.log(this.UserDetails);
         this.getCityList(result['state']._id);
+
+        this.commonService.togglePageLoaderFn(false);
+        
       });
   }
 
