@@ -19,7 +19,7 @@ export class FindPropertyComponent implements OnInit {
   cityList = [];
   propertyList = [];
   blockView = true;
-
+  queryParams;
   filterData = {
     propertyFor: [],
     type: [],
@@ -44,7 +44,7 @@ export class FindPropertyComponent implements OnInit {
   filterProperties(data = ''){
     this.route.navigate([window.location.pathname], {
       queryParams: this.filterData //{ as: 'xcvx', dfd: 'dsfsf' }
-    })
+    });
     if (this.filterData.propertyFor.length > 0)
       data = data + '/?propertyFor='+this.filterData.propertyFor;
     if (this.filterData.type.length > 0)
@@ -53,10 +53,11 @@ export class FindPropertyComponent implements OnInit {
       data = data + '&city='+this.filterData.city;
     // let dat = '/propertyFor/'+this.filterData.propertyFor+'/type/'+this.filterData.type+'/city/'+this.filterData.city;
     console.log(data);
-    this.commonService.filterProperties(data)
-    .subscribe(result => {
-      console.log(result);      
-    })
+    this.queryParams = data;
+    // this.commonService.filterProperties(data)
+    // .subscribe((result: any) => {
+    //   console.log('filterProperties: ', result);      
+    // })
     // var params = new HttpParams()
     // .set('page', '2')
     // .set('page', '3')

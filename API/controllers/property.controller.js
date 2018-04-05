@@ -64,7 +64,12 @@ module.exports = {
         });
     },
     getFullList: (req, res) => {
-        Property.find({ isActive: true }, (err, result) => {
+        Property.find({ isActive: true })
+            .populate('city', 'name')
+            .populate('state', 'name')
+            .populate('type', 'title')
+            .populate('userId', 'name')
+            .exec((err, result) => {
             if (err)
                 res.status(400).send(err);
             else
@@ -72,18 +77,30 @@ module.exports = {
         });
     },
     filterProperties: (req, res) => {
-        // console.log(req.params.para);
-        
-        Property.find()
-        .where('isActive', true)
-        // .where('propertyFor').in(req.params.propertyFor)
-        // .where('type').in(req.params.type)
-        // .where('city').in(req.params.city)
+        // console.log('propertyFor ', req.query.propertyFor, typeof req.query.propertyFor);
+        // console.log(req.query.propertyFor.split(","));        
+        var query = {};
+        query['isActive'] = true;
+
+        if (req.query.propertyFor)
+            query['propertyFor'] = { $in: req.query.propertyFor.split(",") }
+        if (req.query.type)
+            query['type'] = { $in: req.query.type.split(",") }
+        if (req.query.city)
+            query['city'] = { $in: req.query.city.split(",") }
+        if (req.query.userId)
+            query['userId'] = req.query.userId
+            
+        Property.find(query)
+            .populate('city', 'name')
+            .populate('state', 'name')
+            .populate('type', 'title')
+            .populate('userId', 'name')
         .exec((err, result) => {
             if (err)
                 res.status(400).send(err);
             else
-                res.status(200).json({ result: req.query.propertyFor, rest: req.query.city});
+                res.status(200).json(result);
         });
     },
 }

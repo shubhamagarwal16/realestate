@@ -47,7 +47,7 @@
         <button [class.btn-danger]="blockView" (click)="blockView = true;" class="btn"><i class="fa fa-th-large" aria-hidden="true"></i></button>
       </div>
       <div class="border-main border-box-manage">
-          <app-propertylist [blockView]="blockView" ></app-propertylist>
+          <app-propertylist [queryParams]="queryParams" [blockView]="blockView" ></app-propertylist>
       </div>
     </div>
   </div>
