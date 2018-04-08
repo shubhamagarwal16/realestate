@@ -1,0 +1,52 @@
+<h3 class="container text-center text-danger">
+  <button (click)="locationBack()" class="float-left btn btn-primary btn-sm">Back</button>
+  <span>Edit Property-</span> 
+</h3>
+<!-- <p>{{ f.value | json }}</p> -->
+<div class="container border-main border-box-manage">
+  <form #f="ngForm" (ngSubmit)="submitForm(f)" >
+    <h4>Property Info- </h4>
+    <hr class="hr">
+    <div class="form-group">
+      <label for="">Property Title:</label>
+      <input type="text" [value]="propertyDetail.title"
+       ngModel #title="ngModel" name="title" (change)="log(title.value)"
+       placeholder="Enter property's title" required class="form-control">
+
+      <small class="text-danger" *ngIf="title.touched && title.invalid">
+        This field is required</small>
+    </div>
+    <div class="form-group">
+      <div class="form-row">
+        <div class="col-4">
+            <label for=""> Property For: </label> <br>
+            <label> <input type="radio" [checked]="propertyDetail.propertyFor == 'sell'"
+              ngModel #for="ngModel"  required
+              name="for" value="sell" > Sell </label> &nbsp;
+            <label> <input type="radio" [checked]="propertyDetail.propertyFor == 'rent'"
+               ngModel #for="ngModel" required
+              name="for" value="rent" > Rent </label>
+
+            <small class="text-danger" *ngIf="for.touched && for.invalid">
+              This field is required</small>
+        </div>
+        <div class="col-8">
+            <label for="">Property Type:</label>
+            <!-- <select required name="type" 
+             ngModel #type="ngModel" 
+            class="custom-select">
+              <option value="">Select Property Type</option>
+              <option *ngFor="let property of propertyTypeList" value="{{property._id}}"
+              [selected]="propertyDetail.type._id == property._id" >{{property.title}}</option>
+            </select> -->
+            
+            <!-- <small class="text-danger" *ngIf="type.touched && type.invalid">
+              This field is required</small> -->
+        </div>
+      </div>
+    </div>  
+
+
+
+  </form>
+</div>

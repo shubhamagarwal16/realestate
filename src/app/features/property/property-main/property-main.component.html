@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="border-main border-box-manage side-bar-filter">
+        <button routerLink="all" class="btn btn-primary btn-block">All Properties</button>
+        <button routerLink="active" class="btn btn-success btn-block">Active Properties</button>
+        <button routerLink="sold" class="btn btn-info btn-block">Sold/Acquired</button>
+        <button routerLink="inactive" class="btn btn-warning btn-block">Inactive Properties</button>
+      </div>      
+    </div>
+    <div class="col-md-9">
+      <button routerLink="../new" class="btn btn-primary text-right"> <i class="fa fa-plus" ></i> Add New</button>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
