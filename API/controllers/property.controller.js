@@ -63,6 +63,18 @@ module.exports = {
                 res.status(200).json(result);
         });
     },
+    getSingleProperty: (req, res) => {
+        Property.findOne({ _id: req.params.propertyId })
+        .populate('city', 'name')
+        .populate('state', 'name')
+        .populate('type', 'title')
+        .exec((err, result) => {
+            if (err)
+                res.status(400).send(err);
+            else
+                res.status(200).json(result);
+        });
+    },
     getFullList: (req, res) => {
         Property.find({ isActive: true })
             .populate('city', 'name')
@@ -80,7 +92,7 @@ module.exports = {
         // console.log('propertyFor ', req.query.propertyFor, typeof req.query.propertyFor);
         // console.log(req.query.propertyFor.split(","));        
         var query = {};
-        query['isActive'] = true;
+        // query['isActive'] = true;
 
         if (req.query.propertyFor)
             query['propertyFor'] = { $in: req.query.propertyFor.split(",") }
@@ -90,6 +102,8 @@ module.exports = {
             query['city'] = { $in: req.query.city.split(",") }
         if (req.query.userId)
             query['userId'] = req.query.userId
+        if (req.query.status)
+            query['status'] = { $in: req.query.status.split(",") }
             
         Property.find(query)
             .populate('city', 'name')

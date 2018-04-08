@@ -18,6 +18,7 @@ router.post('/type', propertyController.addPropertyType);
 router.post('/new', propertyController.addNewProperty);
 router.get('/list/:userId', propertyController.getUserList);
 router.get('/list/', propertyController.getFullList);
+router.get('/single/:propertyId', propertyController.getSingleProperty);
 
 //filter
 router.get('/filter', propertyController.filterProperties);

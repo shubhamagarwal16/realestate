@@ -7,9 +7,12 @@ import { RegistrationComponent } from './components/registration/registration.co
 import { DashboardComponent } from './components/dashboard/dashboard-main/dashboard.component';
 import { EditProfileComponent } from './components/profile/edit-profile/edit-profile.component';
 import { DashboardHomeComponent } from './components/dashboard/dashboard-home/dashboard-home.component';
-import { PropertyNewComponent } from './components/property/property-new/property-new.component';
-import { FindPropertyComponent } from './components/property/find-property/find-property.component';
 import { AuthGuardService } from '../../common/services/auth-guard.service';
+import { PropertyNewComponent } from '../property/property-new/property-new.component';
+import { FindPropertyComponent } from '../property/find-property/find-property.component';
+import { PropertyListingComponent } from '../property/property-listing/property-listing.component';
+import { EditPropertyComponent } from '../property/edit-property/edit-property.component';
+import { PropertyMainComponent } from '../property/property-main/property-main.component';
 
 const Routes: Routes = [
   {
@@ -38,6 +41,40 @@ const Routes: Routes = [
       {
         path: 'search',
         component: FindPropertyComponent
+      },
+      {
+        path: 'listing',
+        component: PropertyMainComponent,
+        children: [
+          {
+            path: 'all',
+            component: PropertyListingComponent,
+            data: { data: 'all' }
+          },
+          {
+            path: 'active',
+            component: PropertyListingComponent,
+            data: { data: 'available' }
+          },
+          {
+            path: 'sold',
+            component: PropertyListingComponent,
+            data: { data: 'sold' }
+          },
+          {
+            path: 'inactive',
+            component: PropertyListingComponent,
+            data: { data: 'expired' }
+          },
+          {
+            path: '',
+            redirectTo: 'all'
+          }
+        ]
+      },
+      {
+        path: 'edit/:propertyId',
+        component: EditPropertyComponent
       },
       {
         path: '',

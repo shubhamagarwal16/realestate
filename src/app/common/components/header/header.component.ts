@@ -59,6 +59,22 @@ export class HeaderComponent implements OnInit {
   pageloaderStatus: boolean = true;
 
   ngOnInit() {
+
+    this.route.queryParamMap.subscribe((data) => {
+      if (data.get('action') === 'signUpsuccess') {
+        this.changeHeaderMessage('success', 'Congratulations, you have been successfully registered, login to continue');       
+        this.openloginModal(); 
+      }
+      else if (data.get('action') === 'logOut') {
+        this.changeHeaderMessage('success', 'You have logged out successfully');     
+        this.openloginModal();
+      }
+      else if (data.get('action') === 'login') {
+        this.changeHeaderMessage('success', 'Please login to continue');     
+        this.openloginModal();
+      }
+    });  
+
     // HEADER MESSAGE
     this.commonService.HeaderMessage$.subscribe( (data: any) => {
       console.log('header ', data);  

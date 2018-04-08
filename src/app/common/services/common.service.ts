@@ -56,6 +56,10 @@ export class CommonService {
     return this.http.get(this.base_url + '/property/list/' + param);
   }
 
+  getSingleProperty(propertyId){
+    return this.http.get(this.base_url + '/property/single/' + propertyId);
+  }
+
   filterProperties(param = ''){
     return this.http.get(this.base_url + '/property/filter' + param );
   }

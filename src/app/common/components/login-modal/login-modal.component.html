@@ -6,8 +6,8 @@
 </div>
 <div class="modal-body">
 
-  <div *ngIf="loginError.status" class="alert alert-{{ loginError.type }}">
-    {{ loginError.message }}
+  <div *ngIf="alertMessage.message" class="alert alert-{{ alertMessage.type }}">
+    {{ alertMessage.message }}
   </div>
 
   <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
@@ -25,7 +25,9 @@
         This field is required</small>
     </div>
     <div class="form-group">
-      <button class="btn btn-success form-control" [disabled]="!loginForm.valid">Login</button>
+      <button class="btn btn-success form-control" [disabled]="!loginForm.valid || loginCheck">Login
+        <i *ngIf="loginCheck" class="fa fa-spinner fa-pulse fa-fw"></i>
+      </button>
     </div>
   </form>
 </div>

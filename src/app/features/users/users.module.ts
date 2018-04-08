@@ -8,9 +8,12 @@ import { RegistrationComponent } from './components/registration/registration.co
 import { DashboardComponent } from './components/dashboard/dashboard-main/dashboard.component';
 import { EditProfileComponent } from './components/profile/edit-profile/edit-profile.component';
 import { DashboardHomeComponent } from './components/dashboard/dashboard-home/dashboard-home.component';
-import { PropertyNewComponent } from './components/property/property-new/property-new.component';
 import { ReUsableModule } from '../../common/re-usable.module';
-import { FindPropertyComponent } from './components/property/find-property/find-property.component';
+import { PropertyNewComponent } from '../property/property-new/property-new.component';
+import { FindPropertyComponent } from '../property/find-property/find-property.component';
+import { PropertyListingComponent } from '../property/property-listing/property-listing.component';
+import { EditPropertyComponent } from '../property/edit-property/edit-property.component';
+import { PropertyMainComponent } from '../property/property-main/property-main.component';
 
 @NgModule({
   imports: [
@@ -20,7 +23,17 @@ import { FindPropertyComponent } from './components/property/find-property/find-
     ReactiveFormsModule,
     ReUsableModule
   ],
-  declarations: [RegistrationComponent, DashboardComponent, EditProfileComponent, DashboardHomeComponent, PropertyNewComponent, FindPropertyComponent],
+  declarations: [
+    RegistrationComponent,
+    DashboardComponent,
+    EditProfileComponent, 
+    DashboardHomeComponent, 
+    PropertyNewComponent, 
+    FindPropertyComponent, 
+    PropertyListingComponent, 
+    EditPropertyComponent,
+    PropertyMainComponent
+  ],
   providers: [
   ]
 })

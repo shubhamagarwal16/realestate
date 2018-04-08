@@ -3,7 +3,9 @@
         <div class="row">
             <div class="col-md-4"> <img src="assets/images/Logo_SA.png" class="p-cursor" width="50px" alt="LOGO" routerLink="/"></div>
             <div class="col-md-8">
-                <div class="header-ryt text-right">                    
+                <div class="header-ryt text-right">  
+                    <!-- <a routerLink="/" >Home</a>                  
+                    <a routerLink="/" >Find Property</a> -->
                     <button type="button"  *ngIf="!loginService.isLoggedIn()" (click)="openloginModal()" class="btn btn-outline-primary btn-sm">Login</button>
                     <button type="button"routerLink="/users/sign-up" *ngIf="!loginService.isLoggedIn()" class="btn btn-outline-primary btn-sm">Register</button>
 
@@ -44,13 +46,16 @@
                 <a class="nav-link" routerLink="/users/dashboard">Dashboard</a>
             </li>
             <li class="nav-item">
-            <a class="nav-link" routerLink="/users/property/new">Add New Property</a>
+                <a class="nav-link" routerLink="/users/property/new">Add New Property</a>
             </li>
             <li class="nav-item">
-            <a class="nav-link" routerLink="/users/property/search">Find Property</a>
+                <a class="nav-link" routerLink="/users/property/search">Find Property</a>
             </li>
             <li class="nav-item">
-            <a class="nav-link" routerLink="/users/profile/edit">My Profile</a>
+                <a class="nav-link" routerLink="/users/property/listing">My Listing</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/users/profile/edit">My Profile</a>
             </li>
         </ul>
         </div>

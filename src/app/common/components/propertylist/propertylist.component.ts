@@ -15,19 +15,23 @@ export class PropertylistComponent implements OnInit, OnChanges {
 
   // @Input('listType') listType: string;
   @Input('blockView') blockView = false;
+  @Input('blockSize') blockSize = 12;
   @Input('queryParams') queryParams = '';
 
-  propertyList;
+  propertyList = [];
 
   getPropertyList(params = ''){
     this.commonService.togglePageLoaderFn(true);
 
     this.commonService.filterProperties(params)
       .subscribe((result: any) => {
-        console.log('propertyList ', result);
-        this.propertyList = result;
+        // console.log('propertyList ', result);
+        if(result)
+          this.propertyList = result;
         this.commonService.togglePageLoaderFn(false);        
+        // console.log('propertyList: ', this.propertyList);
       });
+      
   }
 
   ngOnInit() {
@@ -35,7 +39,7 @@ export class PropertylistComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    console.log('ngOnChanges');
+    // console.log('ngOnChanges');
     
     this.getPropertyList(this.queryParams);
   }

@@ -1,39 +1,42 @@
 <div class="row">
-  <div 
-  *ngFor="let property of propertyList"
-  [ngClass]="{
+  <div *ngFor="let property of propertyList" class="col-md-{{blockSize}} pad-btm-15" >
+  <!-- [ngClass]="{
     'col-md-12': !blockView,
     'col-md-6': blockView
-  }" class="">
-    <div class="row border-main border-box-manage property-box">
-      <div [ngClass]="{
-        'col-md-3 border-right': !blockView,
-        'col-md-12 border-bottom': blockView
-      }" class="">image</div>
-      <div  [ngClass]="{
-        'col-md-7': !blockView,
-        'col-md-12 text-center': blockView
-      }" class="">
-        <h5>{{property.title}}</h5>
-        <ul style="padding-left: 0px;" class="propertyLocation">
-          <li> <b>Location: </b> {{property.locality}}, {{property.city.name}}, {{property.state.name}}</li> | 
-          <li> <b>Type: </b> {{property.type.title}}</li>
-        </ul>
-        <p>{{property.description}}</p>
-      </div>
-      <div [ngClass]="{
-          'col-md-2': !blockView,
-          'col-md-12': blockView
+  }"> -->
+    <div class="border-main mar-ryt-15">
+      <div class="row border-box-manage property-box">
+        <div [ngClass]="{
+          'col-md-3 border-right': !blockView,
+          'col-md-12 border-bottom': blockView
+        }" class="">image</div>
+        <div  [ngClass]="{
+          'col-md-7': !blockView,
+          'col-md-12 text-center': blockView
         }" class="">
-        <small class="float-right" >{{property.updatedOn}}</small> 
-        <button [class.btn-block]="!blockView" class="btn btn-primary">View Property</button>
-        <button [class.btn-block]="!blockView" class="btn btn-info">Edit Property</button>
-        <button [class.btn-block]="!blockView" class="btn btn-success">
-          <span *ngIf="property.propertyFor == 'sell'" >Mark as Sold</span>
-          <span *ngIf="property.propertyFor == 'rent'" >Mark as Acquired</span>
-          </button>
-
+          <h5>{{property.title}}</h5>
+          <ul style="padding-left: 0px;" class="propertyLocation">
+            <li><small>{{property.locality}}, {{property.city.name}}, {{property.state.name}}</small></li>
+            <li> <b>Type: </b> {{property.type.title}}</li>
+          </ul>
+          <p>{{property.description}}</p>
+        </div>
+        <div [ngClass]="{
+            'col-md-2': !blockView,
+            'col-md-12': blockView
+          }" class="">
+          <small class="float-right" >{{property.updatedOn}}</small> 
+          <button [class.btn-block]="!blockView" class="btn btn-primary btn-sm">View Property</button>
+          <button [class.btn-block]="!blockView" routerLink="/users/property/edit/{{property._id}}" class="btn btn-info btn-sm">Edit Property</button>
+          <button [class.btn-block]="!blockView" class="btn btn-success btn-sm">
+            <span *ngIf="property.propertyFor == 'sell'" >Mark as Sold</span>
+            <span *ngIf="property.propertyFor == 'rent'" >Mark as Acquired</span>
+            </button>
+        </div>
       </div>
-    </div>
+    </div>    
   </div>
+</div>
+<div>
+  <h4 *ngIf="propertyList.length <= 0" class="text-center text-warning" >No data found</h4>
 </div>
