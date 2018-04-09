@@ -29,8 +29,8 @@
           <button [class.btn-block]="!blockView" class="btn btn-primary btn-sm">View Property</button>
           <button [class.btn-block]="!blockView" routerLink="/users/property/edit/{{property._id}}" class="btn btn-info btn-sm">Edit Property</button>
           <button [class.btn-block]="!blockView" class="btn btn-success btn-sm">
-            <span *ngIf="property.propertyFor == 'sell'" >Mark as Sold</span>
-            <span *ngIf="property.propertyFor == 'rent'" >Mark as Acquired</span>
+            <span (click)="propertyService.markProperty('sold')" *ngIf="property.propertyFor == 'sell'" >Mark as Sold</span>
+            <span (click)="propertyService.markProperty('rented')" *ngIf="property.propertyFor == 'rent'" >Mark as Acquired</span>
             </button>
         </div>
       </div>

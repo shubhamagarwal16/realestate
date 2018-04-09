@@ -2,14 +2,16 @@
   <div class="row">
     <div class="col-md-3">
       <div class="border-main border-box-manage side-bar-filter">
-        <button routerLink="all" class="btn btn-primary btn-block">All Properties</button>
-        <button routerLink="active" class="btn btn-success btn-block">Active Properties</button>
-        <button routerLink="sold" class="btn btn-info btn-block">Sold/Acquired</button>
-        <button routerLink="inactive" class="btn btn-warning btn-block">Inactive Properties</button>
+        <button routerLink="all" routerLinkActive="btn-outline-danger" class="btn btn-danger btn-block">All Properties</button>
+        <button routerLink="active" routerLinkActive="btn-outline-danger" class="btn btn-danger btn-block">Active Properties</button>
+        <button routerLink="sold" routerLinkActive="btn-outline-danger" class="btn btn-danger btn-block">Sold/Acquired</button>
+        <button routerLink="inactive" routerLinkActive="btn-outline-danger" class="btn btn-danger btn-block">Inactive Properties</button>
       </div>      
     </div>
     <div class="col-md-9">
-      <button routerLink="../new" class="btn btn-primary text-right"> <i class="fa fa-plus" ></i> Add New</button>
+      <div class="text-right" >
+        <button routerLink="../new" class="btn btn-primary mar-btm-15"> <i class="fa fa-plus" ></i> Add New</button>
+      </div>
       <router-outlet></router-outlet>
     </div>
   </div>

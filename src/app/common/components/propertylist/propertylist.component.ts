@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Http } from '@angular/http';
 import { CommonService } from '../../services/common.service';
+import { PropertyService } from '../../services/property.service';
 
 @Component({
   selector: 'app-propertylist',
@@ -10,7 +11,8 @@ import { CommonService } from '../../services/common.service';
 export class PropertylistComponent implements OnInit, OnChanges {
 
   constructor(
-    private commonService: CommonService
+    private commonService: CommonService,
+    private propertyService: PropertyService
   ) { }
 
   // @Input('listType') listType: string;

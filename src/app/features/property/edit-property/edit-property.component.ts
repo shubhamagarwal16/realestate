@@ -16,11 +16,12 @@ export class EditPropertyComponent implements OnInit {
     private location: Location
   ) { }
 
-  propertyDetail;
+  propertyDetail:any = {};
   stateList;
   private cityList = [];
   FetchingCityList = false;
   propertyTypeList;
+  newPropertyData: any = {};
 
   getProperty(propertyId){
     this.commonService.getSingleProperty(propertyId)
@@ -49,7 +50,7 @@ export class EditPropertyComponent implements OnInit {
   }
 
   submitForm(data){
-
+    console.log("submitForm: ", data);     
   }
 
   locationBack(){

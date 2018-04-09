@@ -13,6 +13,7 @@ import { PropertylistComponent } from './components/propertylist/propertylist.co
 import { PageLoaderComponent } from './components/page-loader/page-loader.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { LoginModalComponent } from './components/login-modal/login-modal.component';
+import { PropertyService } from './services/property.service';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { LoginModalComponent } from './components/login-modal/login-modal.compon
   providers: [
     LoginService,
     RegistrationValidators,
-    AuthGuardService
+    AuthGuardService,
+    PropertyService
   ],
   entryComponents: [
     LoginModalComponent
