@@ -20,6 +20,17 @@ export class PropertyNewComponent implements OnInit {
   stateList;
   private cityList = [];
   FetchingCityList = false;
+  propertyFormData = {
+    type: '',
+    breadth: 0,
+    length: 0
+  }
+
+  get plotArea(){ 
+    if(this.propertyFormData.length > 0 && this.propertyFormData.breadth > 0) 
+      return this.propertyFormData.length * this.propertyFormData.breadth; 
+    return null;
+  }
 
   getPropertyTypeList(){
     this.commonService.getPropertyTypeList()

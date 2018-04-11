@@ -16,7 +16,11 @@ export class EditPropertyComponent implements OnInit {
     private location: Location
   ) { }
 
-  propertyDetail:any = {};
+  propertyDetail:any = {
+    type: {},
+    state: {},
+    city: {}
+  };
   stateList;
   private cityList = [];
   FetchingCityList = false;
@@ -59,7 +63,7 @@ export class EditPropertyComponent implements OnInit {
 
   ngOnInit() {
     let propertyId = this.activatedRoute.snapshot.paramMap.get('propertyId');
-    console.log('propertyId: ', propertyId);
+    // console.log('propertyId: ', propertyId);
 
     if(propertyId)
       this.getProperty(propertyId);

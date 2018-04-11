@@ -30,7 +30,7 @@
         <div class="col-8">
             <label for="">Property Type:</label>
             <select required name="type" 
-             ngModel #type="ngModel" 
+             [(ngModel)]="propertyFormData.type" #type="ngModel" 
             class="custom-select">
               <option value="">Select Property Type</option>
               <option 
@@ -43,6 +43,28 @@
         </div>
       </div>
     </div>  
+
+    <div *ngIf="propertyFormData.type == '5abbd8585536e81408846d6f'">
+      <h5>Additional Data -</h5>
+      <hr class="hr">
+  
+      <div class="form-row form-group">
+        <div class="col-md-4">
+          <p>Plot Dimensions - </p>
+          <div class="row">
+            <div class="col-md-3">
+              <input type="number" (keyup)="plotArea()" [(ngModel)]="propertyFormData.length" name="length" required placeholder="Plot length" class="form-control form-field-small">
+            </div>
+            <div class="col-md-3">
+              <input type="number" (keyup)="plotArea()" [(ngModel)]="propertyFormData.breadth" name="breadth" required placeholder="Plot breadth" class="form-control form-field-small">
+            </div>
+            <div class="col-md-6">
+              <h5 *ngIf="propertyFormData.length && propertyFormData.breadth" >{{ plotArea }} sqkm</h5>
+            </div>
+          </div>          
+        </div>           
+      </div>
+    </div>
 
     <h4>Location -</h4>
     <hr class="hr">
@@ -129,7 +151,7 @@
 
     <button 
     [disabled] = "f.invalid"
-    class="btn btn-primary btn-block">Post a New Property</button>
+    class="btn btn-danger btn-block">Post a New Property</button>
 
   </form>
 </div>
