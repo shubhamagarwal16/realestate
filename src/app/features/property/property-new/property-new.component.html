@@ -27,7 +27,7 @@
             <small class="text-danger" *ngIf="for.touched && for.invalid">
               This field is required</small>
         </div>
-        <div class="col-8">
+        <div class="col-4">
             <label for="">Property Type:</label>
             <select required name="type" 
              [(ngModel)]="propertyFormData.type" #type="ngModel" 
@@ -41,6 +41,10 @@
             <small class="text-danger" *ngIf="type.touched && type.invalid">
               This field is required</small>
         </div>
+        <div class="col-4">
+          <label for="">Enter Total Amount</label>
+          <input type="number" name="price" ngModel #price="ngModel" class="form-control" required >
+        </div>        
       </div>
     </div>  
 
@@ -49,20 +53,33 @@
       <hr class="hr">
   
       <div class="form-row form-group">
-        <div class="col-md-4">
+        <div class="col-md-6">
           <p>Plot Dimensions - </p>
           <div class="row">
             <div class="col-md-3">
-              <input type="number" (keyup)="plotArea()" [(ngModel)]="propertyFormData.length" name="length" required placeholder="Plot length" class="form-control form-field-small">
+              <small>Length</small>
+              <input type="number" min="0" (keyup)="plotArea()" [(ngModel)]="propertyFormData.length" name="length" required placeholder="Plot length" class="form-control form-field-small">
             </div>
             <div class="col-md-3">
-              <input type="number" (keyup)="plotArea()" [(ngModel)]="propertyFormData.breadth" name="breadth" required placeholder="Plot breadth" class="form-control form-field-small">
+              <small>Breadth</small>              
+              <input type="number" min="0" (keyup)="plotArea()" [(ngModel)]="propertyFormData.breadth" name="breadth" required placeholder="Plot breadth" class="form-control form-field-small">
             </div>
             <div class="col-md-6">
+              <p>Total-</p>
               <h5 *ngIf="propertyFormData.length && propertyFormData.breadth" >{{ plotArea }} sqkm</h5>
             </div>
           </div>          
-        </div>           
+        </div>   
+        <div class="col-md-2">
+          <p>Corner Plot?</p>
+          <div class="custom-control custom-checkbox" >
+            <input class="custom-control-input" id="cornrPlot" type="checkbox">
+            <label class="custom-control-label" for="cornrPlot" >Yes</label>
+          </div>
+        </div>
+        <div>
+
+        </div>
       </div>
     </div>
 

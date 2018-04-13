@@ -33,10 +33,12 @@ export class PropertyNewComponent implements OnInit {
   }
 
   getPropertyTypeList(){
+    this.commonService.togglePageLoaderFn(true);            
     this.commonService.getPropertyTypeList()
       .subscribe(result => {
         // console.log(result);
         this.propertyTypeList = result;
+        this.commonService.togglePageLoaderFn(false);                
       });
   }
 
