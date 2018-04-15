@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const moment = require('moment');
 
 var propertyType = require('../models/propertyTypes');
 var Property = require('../models/property');
@@ -114,7 +115,7 @@ module.exports = {
             if (err)
                 res.status(400).send(err);
             else
-                res.status(200).json(result);
+                res.status(200).json(result);                
         });
     },
 }

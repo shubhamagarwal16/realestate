@@ -1,23 +1,26 @@
 <ngb-carousel *ngIf="images">
     <ng-template *ngFor="let item of [0, 1, 2]" ngbSlide>
-      <img [src]="images[item]" width="100%" alt="Random first slide">
+      <img [src]="images[item]" class="carousal-img" width="100%" alt="Random first slide">
       <div class="carousel-caption">
         <h3>First slide label</h3>
         <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
       </div>
     </ng-template>
-    <!-- <ng-template ngbSlide>
-      <img [src]="images[1]" alt="Random second slide">
-      <div class="carousel-caption">
-        <h3>Second slide label</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-      </div>
-    </ng-template>
-    <ng-template ngbSlide>
-      <img [src]="images[2]" alt="Random third slide">
-      <div class="carousel-caption">
-        <h3>Third slide label</h3>
-        <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-      </div>
-    </ng-template> -->
 </ngb-carousel>
+
+<div class="container">
+  <h4 class="text-danger">Search Property:</h4>
+  <hr class="hr">
+
+
+
+</div>
+
+<div class="container">
+  <h4 class="text-danger">Recent Postings:</h4>
+  <hr class="hr">
+  
+  <div ngbSlide >
+    <app-propertylist [blockView]="true" [blockSize]="4" [queryParams]="queryParams" ></app-propertylist>
+  </div>
+</div>
