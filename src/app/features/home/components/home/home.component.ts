@@ -1,7 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {map} from 'rxjs/operators';
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
 import { UserService } from '../../../../common/services/user.service';
+import { CommonService } from '../../../../common/services/common.service';
+import { JSONP_ERR_WRONG_RESPONSE_TYPE } from '@angular/common/http/src/jsonp';
 
 @Component({
   selector: 'app-home',
@@ -11,11 +17,24 @@ import { UserService } from '../../../../common/services/user.service';
 export class HomeComponent implements OnInit {
 
   images: Array<string>;
+  cityList = []; 
+  //  = ['Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'California', 'Colorado',
+  // 'Connecticut', 'Delaware', 'District Of Columbia', 'Federated States Of Micronesia', 'Florida', 'Georgia',
+  // 'Guam', 'Hawaii', 'Idaho' ];
+  propertyTypeList;
 
   constructor(
     private _http: HttpClient,
-    private userService: UserService    
+    private userService: UserService,
+    private commonService: CommonService    
   ) {}
+
+  search = (text$: Observable<string>) =>
+    text$
+      .debounceTime(200)
+      .distinctUntilChanged()
+      .map(term => term.length < 2 ? []
+        : this.cityList.filter(v => { console.log(v); v.toLowerCase().indexOf(term.toLowerCase()) > -1}).slice(0, 10));
 
   ngOnInit() {
     this._http.get('https://picsum.photos/list')
@@ -24,6 +43,29 @@ export class HomeComponent implements OnInit {
           this.images = images;
           console.log(images);          
         });
+
+    this.commonService.getCitylist()
+        .subscribe(response => {
+          console.log(response);
+          response.forEach(element => {
+            this.cityList.push(element.name);
+          })
+          // this.cityList = response.name;
+        });
+
+    this.commonService.getPropertyTypeList()
+      .subscribe(response => {
+        console.log(response);
+        this.propertyTypeList = response;
+      });  
+  }
+
+  searchPropData = {
+    location: ''
+  }
+
+  searchProp(value){
+    console.log(value);    
   }
 
   queryParams = '?userId='+this.userService.currentUser.user._id;  

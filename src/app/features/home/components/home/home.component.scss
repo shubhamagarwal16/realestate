@@ -1,3 +1,43 @@
 .carousal-img{
     height: 350px;
 }
+
+:host /deep/ .nav.nav-pills{
+    text-align: center;
+    display: block;
+    margin-bottom: 20px;
+}
+:host /deep/ .nav.nav-pills .nav-item{
+    display: inline-block;
+}
+:host /deep/ .nav.nav-pills .nav-item a {
+    padding: 10px 65px;
+    border-radius: 0px;
+    background-color: #eee;
+    border: 1px solid #fff;
+    color: black;
+}
+:host /deep/ .nav.nav-pills .nav-item a.active {
+    background-color: #dc4045;
+    color: white;
+}
+
+.searchProp{
+    // position: relative;
+    // top: -165px;
+}
+.searchProp-cont {
+    position: relative;
+}
+.searchProp {
+    position: absolute;
+    bottom: 80px;
+    left: 6%;
+}
+.searchProp .form-group select{
+    border-radius: 0px;
+}
+.searchFields{
+    left: 33%;
+    position: relative;
+}

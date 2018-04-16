@@ -1,24 +1,64 @@
-<ngb-carousel *ngIf="images">
-    <ng-template *ngFor="let item of [0, 1, 2]" ngbSlide>
-      <img [src]="images[item]" class="carousal-img" width="100%" alt="Random first slide">
-      <div class="carousel-caption">
-        <h3>First slide label</h3>
-        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-      </div>
-    </ng-template>
-</ngb-carousel>
+<div class="searchProp-cont">
+  <ngb-carousel *ngIf="images">
+      <ng-template *ngFor="let item of [0, 1, 2]" ngbSlide>
+        <img [src]="images[item]" class="carousal-img" width="100%" alt="Random first slide">
+        <!-- <div class="carousel-caption">
+          <h3>First slide label</h3>
+          <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+        </div> -->
+      </ng-template>
+  </ngb-carousel>
 
-<div class="container">
-  <h4 class="text-danger">Search Property:</h4>
-  <hr class="hr">
+  <div class="container searchProp">
+    <!-- <h4 class="text-danger">Search Property:</h4>
+    <hr class="hr"> -->
 
-
-
+    <!-- <form #searchProp="ngForm" (ngSubmit)="searchProp(searchProp.value)" > -->
+      <ngb-tabset type="pills">
+        <ngb-tab title="BUY">
+          <ng-template ngbTabContent>
+            <!-- <p>zxc</p> -->
+          </ng-template>
+        </ngb-tab>
+        <ngb-tab title="RENT">
+          <!-- <ng-template ngbTabTitle><button class="btn btn-primary" >RENT</button></ng-template> -->
+          <ng-template ngbTabContent>
+            <!-- <p>zxc</p> -->
+          </ng-template>
+        </ngb-tab>
+        <ngb-tab title="RENT">
+          <ng-template ngbTabContent>
+            <!-- <p>zxc</p> -->
+          </ng-template>
+        </ngb-tab>
+      </ngb-tabset>
+      <div class="form-inline searchFields">
+        <div class="form-group">
+          <!-- <select name="city" class="custom-select searchLocation">
+            <option value="">Location</option>
+            <option *ngFor="let city of cityList" [value]="city._id">{{ city.name }}</option>
+          </select> -->
+          <input id="typeahead-basic" type="text" class="form-control" [(ngModel)]="searchPropData.location" [ngbTypeahead]="search"/>
+        </div>
+        <div class="form-group">
+          <select name="city" class="custom-select searchType">
+            <option value="">Property Type</option>
+            <option *ngFor="let type of propertyTypeList" [value]="type._id">{{ type.title }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-danger searchButton">Search</button>
+        </div>   
+      </div>   
+    <!-- </form> -->
+  </div>
 </div>
 
 <div class="container">
   <h4 class="text-danger">Recent Postings:</h4>
   <hr class="hr">
+  <p>{{ searchPropData | json }}</p>
+  <p>{{ cityList | json }}</p>
   
   <div ngbSlide >
     <app-propertylist [blockView]="true" [blockSize]="4" [queryParams]="queryParams" ></app-propertylist>
