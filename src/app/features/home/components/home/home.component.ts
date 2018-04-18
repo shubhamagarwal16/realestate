@@ -7,7 +7,7 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import { UserService } from '../../../../common/services/user.service';
 import { CommonService } from '../../../../common/services/common.service';
-import { JSONP_ERR_WRONG_RESPONSE_TYPE } from '@angular/common/http/src/jsonp';
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-home',
@@ -26,32 +26,31 @@ export class HomeComponent implements OnInit {
   constructor(
     private _http: HttpClient,
     private userService: UserService,
-    private commonService: CommonService    
+    private commonService: CommonService,
+    private router: Router    
   ) {}
 
   search = (text$: Observable<string>) =>
     text$
       .debounceTime(200)
       .distinctUntilChanged()
-      .map(term => term.length < 2 ? []
-        : this.cityList.filter(v => { console.log(v); v.toLowerCase().indexOf(term.toLowerCase()) > -1}).slice(0, 10));
+      .map(term => term.length < 2 ? [] : this.cityList.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10));
 
   ngOnInit() {
     this._http.get('https://picsum.photos/list')
-        .pipe(map((images: Array<{id: number}>) => this._randomImageUrls(images)))
-        .subscribe(images => {
-          this.images = images;
-          console.log(images);          
-        });
+      .pipe(map((images: Array<{id: number}>) => this._randomImageUrls(images)))
+      .subscribe(images => {
+        this.images = images;
+        console.log(images);          
+      });
 
     this.commonService.getCitylist()
-        .subscribe(response => {
-          console.log(response);
-          response.forEach(element => {
-            this.cityList.push(element.name);
-          })
-          // this.cityList = response.name;
+      .subscribe(response => {
+        console.log(response);
+        response.forEach(element => {
+          this.cityList.push(element.name);
         });
+      });
 
     this.commonService.getPropertyTypeList()
       .subscribe(response => {
@@ -64,11 +63,16 @@ export class HomeComponent implements OnInit {
     location: ''
   }
 
+  postAprop(){
+    console.log('post a prop');    
+    this.router.navigate(['/users/property/new'])
+  }
+  
   searchProp(value){
     console.log(value);    
   }
 
-  queryParams = '?userId='+this.userService.currentUser.user._id;  
+  queryParams = '?status=available';  
 
   private _randomImageUrls(images: Array<{id: number}>): Array<string> {
     return [1, 2, 3].map(() => {

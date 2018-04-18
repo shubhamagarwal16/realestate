@@ -13,22 +13,24 @@
     <!-- <h4 class="text-danger">Search Property:</h4>
     <hr class="hr"> -->
 
-    <!-- <form #searchProp="ngForm" (ngSubmit)="searchProp(searchProp.value)" > -->
+    <form #searchProp="ngForm" (ngSubmit)="searchProp(searchProp.value)" >
       <ngb-tabset type="pills">
         <ngb-tab title="BUY">
           <ng-template ngbTabContent>
-            <!-- <p>zxc</p> -->
           </ng-template>
         </ngb-tab>
-        <ngb-tab title="RENT">
-          <!-- <ng-template ngbTabTitle><button class="btn btn-primary" >RENT</button></ng-template> -->
+        <ngb-tab>
+          <ng-template ngbTabTitle>
+            <label for="rent" >RENT</label>
+            <input type="radio" class="disp-none" [value]="rent" name="propertyFor" id="rent">
+          </ng-template>
+          
           <ng-template ngbTabContent>
-            <!-- <p>zxc</p> -->
           </ng-template>
         </ngb-tab>
-        <ngb-tab title="RENT">
+        <ngb-tab>
+          <ng-template ngbTabTitle><b (click)="postAprop()">POST A PROPERTY</b></ng-template>
           <ng-template ngbTabContent>
-            <!-- <p>zxc</p> -->
           </ng-template>
         </ngb-tab>
       </ngb-tabset>
@@ -50,15 +52,15 @@
           <button class="btn btn-danger searchButton">Search</button>
         </div>   
       </div>   
-    <!-- </form> -->
+    </form>
   </div>
 </div>
 
 <div class="container">
   <h4 class="text-danger">Recent Postings:</h4>
   <hr class="hr">
-  <p>{{ searchPropData | json }}</p>
-  <p>{{ cityList | json }}</p>
+  <!-- <p>{{ searchPropData | json }}</p>
+  <p>{{ cityList | json }}</p> -->
   
   <div ngbSlide >
     <app-propertylist [blockView]="true" [blockSize]="4" [queryParams]="queryParams" ></app-propertylist>
