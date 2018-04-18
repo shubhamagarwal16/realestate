@@ -17,11 +17,9 @@ import { Router } from "@angular/router";
 export class HomeComponent implements OnInit {
 
   images: Array<string>;
-  cityList = []; 
-  //  = ['Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'California', 'Colorado',
-  // 'Connecticut', 'Delaware', 'District Of Columbia', 'Federated States Of Micronesia', 'Florida', 'Georgia',
-  // 'Guam', 'Hawaii', 'Idaho' ];
+  cityList = [];
   propertyTypeList;
+  searchPropData = { propertyFor: 'buy' }
 
   constructor(
     private _http: HttpClient,
@@ -46,7 +44,7 @@ export class HomeComponent implements OnInit {
 
     this.commonService.getCitylist()
       .subscribe(response => {
-        console.log(response);
+        // console.log(response);
         response.forEach(element => {
           this.cityList.push(element.name);
         });
@@ -54,22 +52,20 @@ export class HomeComponent implements OnInit {
 
     this.commonService.getPropertyTypeList()
       .subscribe(response => {
-        console.log(response);
+        // console.log(response);
         this.propertyTypeList = response;
       });  
   }
 
-  searchPropData = {
-    location: ''
-  }
-
-  postAprop(){
-    console.log('post a prop');    
-    this.router.navigate(['/users/property/new'])
-  }
   
   searchProp(value){
-    console.log(value);    
+    value.propertyFor = this.searchPropData.propertyFor;
+
+    console.log(value); 
+    
+    this.router.navigate(['/users/property/search'], {
+      queryParams: { 'city': value.city, 'propertyFor': value.propertyFor, 'type': value.type }
+    })
   }
 
   queryParams = '?status=available';  

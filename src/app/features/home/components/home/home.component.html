@@ -13,44 +13,40 @@
     <!-- <h4 class="text-danger">Search Property:</h4>
     <hr class="hr"> -->
 
-    <form #searchProp="ngForm" (ngSubmit)="searchProp(searchProp.value)" >
+    <form #searchData="ngForm" (ngSubmit)="searchProp(searchData.value)" >
       <ngb-tabset type="pills">
-        <ngb-tab title="BUY">
+        <ngb-tab>
+          <ng-template ngbTabTitle>
+            <label (click)="searchPropData.propertyFor = 'buy'" >BUY</label>
+          </ng-template>
           <ng-template ngbTabContent>
           </ng-template>
         </ngb-tab>
         <ngb-tab>
           <ng-template ngbTabTitle>
-            <label for="rent" >RENT</label>
-            <input type="radio" class="disp-none" [value]="rent" name="propertyFor" id="rent">
+            <label (click)="searchPropData.propertyFor = 'rent'" >RENT</label>
           </ng-template>
           
           <ng-template ngbTabContent>
           </ng-template>
         </ngb-tab>
         <ngb-tab>
-          <ng-template ngbTabTitle><b (click)="postAprop()">POST A PROPERTY</b></ng-template>
+          <ng-template ngbTabTitle><label><b (click)="router.navigate(['/users/property/new'])">POST A PROPERTY</b></label></ng-template>
           <ng-template ngbTabContent>
           </ng-template>
         </ngb-tab>
       </ngb-tabset>
-      <div class="form-inline searchFields">
+      <div class="text-center searchFields">
         <div class="form-group">
-          <!-- <select name="city" class="custom-select searchLocation">
-            <option value="">Location</option>
-            <option *ngFor="let city of cityList" [value]="city._id">{{ city.name }}</option>
-          </select> -->
-          <input id="typeahead-basic" type="text" class="form-control" [(ngModel)]="searchPropData.location" [ngbTypeahead]="search"/>
-        </div>
-        <div class="form-group">
-          <select name="city" class="custom-select searchType">
+            <input id="typeahead-basic" placeholder="Enter a location" type="text" class="rounded-left" ngModel #location="ngModel" name="city" [value]="searchPropData.location" [ngbTypeahead]="search"/>
+
+          <select ngModel #city="ngModel" style="width: auto;" name="type" class="custom-select searchType rounded-0">
             <option value="">Property Type</option>
             <option *ngFor="let type of propertyTypeList" [value]="type._id">{{ type.title }}</option>
           </select>
+
+          <button class="btn btn-danger searchButton rounded-0 rounded-right">Search</button>
         </div>
-        <div class="form-group">
-          <button class="btn btn-danger searchButton">Search</button>
-        </div>   
       </div>   
     </form>
   </div>

@@ -41,6 +41,13 @@ export class HeaderComponent implements OnInit {
     type: '',
     message: ''
   }
+  navItems = [
+    { path: '/users/dashboard', name: 'Dashboard' },
+    { path: '/users/property/new', name: 'Add New Property' },
+    { path: '/users/property/search', name: 'Find Property' },
+    { path: '/users/property/listing', name: 'My Listing' },
+    { path: '/users/profile/edit', name: 'My Profile' }
+  ];
 
   closeHeaderMessage(){
     this.HeaderMessage.message = '';    

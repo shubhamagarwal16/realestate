@@ -45,20 +45,8 @@
             <li class="nav-item">
                 <a class="nav-link" routerLink="/"><i class="fa fa-home" aria-hidden="true"></i> | </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" routerLink="/users/dashboard">Dashboard</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" routerLink="/users/property/new">Add New Property</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" routerLink="/users/property/search">Find Property</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" routerLink="/users/property/listing">My Listing</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" routerLink="/users/profile/edit">My Profile</a>
+            <li *ngFor="let nav of navItems;" routerLinkActive="active" class="nav-item">
+                <a class="nav-link" routerLink="{{nav.path}}">{{ nav.name }}</a>
             </li>
         </ul>
         </div>

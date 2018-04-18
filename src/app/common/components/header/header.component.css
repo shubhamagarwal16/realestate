@@ -37,11 +37,18 @@ ul.header-drp-dwn li button {
 .show-collapsed-menu{
     display: block;
 }
+.nav-item{
+    padding: 8px 0px;
+}
+.nav-item.active{
+    background-color: #f9797d;
+}
 .nav-dash{
     top: 0px;
     position: -webkit-sticky;
     position: sticky;
     z-index: 99;
+    padding: 0px 16px;
 }
 .navbar-dash .nav-link{
     color: white;

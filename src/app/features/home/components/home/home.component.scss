@@ -11,15 +11,20 @@
     display: inline-block;
 }
 :host /deep/ .nav.nav-pills .nav-item a {
-    padding: 10px 65px;
     border-radius: 0px;
     background-color: #eee;
     border: 1px solid #fff;
     color: black;
+    padding: 0px;
 }
 :host /deep/ .nav.nav-pills .nav-item a.active {
     background-color: #dc4045;
     color: white;
+}
+:host /deep/ .nav.nav-pills .nav-item a label{
+    padding: 10px 80px;
+    cursor: pointer;
+    margin-bottom: 0px;
 }
 
 .searchProp{
@@ -37,7 +42,12 @@
 .searchProp .form-group select{
     border-radius: 0px;
 }
-.searchFields{
-    left: 33%;
-    position: relative;
+.searchFields input, .searchFields select, .searchFields button {
+    padding: 10px 110px 10px 10px;
+    margin-right: 0px;
+    height: auto;
+    border: none;
+}
+.searchFields button{
+    padding: 10px 35px;
 }
