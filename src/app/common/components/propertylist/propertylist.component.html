@@ -1,23 +1,23 @@
 <div class="row">
-  <div *ngFor="let property of propertyList" class="col-md-{{blockSize}} pad-btm-15" >
+  <div routerLink="/users/property/view/{{property._id}}" *ngFor="let property of propertyList" class="col-md-{{blockSize}} pad-btm-15 p-cursor" >
   <!-- [ngClass]="{
     'col-md-12': !blockView,
     'col-md-6': blockView
   }"> -->
-    <div class="border-main mar-ryt-15">
-      <div class="row border-box-manage property-box">
+    <div class="border-main propBoxHover card"> <!-- mar-ryt-15-->
+      <div class="row border-box-manage"><!-- property-box -->
         <div [ngClass]="{
           'col-md-3 border-right': !blockView,
           'col-md-12 border-bottom': blockView
-        }" class="">image</div>
+        }" class=""><img src="sdsd.jpg" alt=""></div>
         <div  [ngClass]="{
           'col-md-7': !blockView,
           'col-md-12 text-center': blockView
         }" class="">
           <h5>{{property.title}}</h5>
-          <ul style="padding-left: 0px;" class="propertyLocation">
+          <ul style="padding-left: 0px; list-style-type: none;" class="propertyLocation">
             <li><small>{{property.locality}}, {{property.city.name}}, {{property.state.name}}</small></li>
-            <li>{{property.type.title}} | {{ property.updatedOn | date:'fullDate' }}</li>
+            <li style="font-size: 14px;" >{{property.type.title}} | {{ property.updatedOn | date:'fullDate' }}</li>
           </ul>
           <p>{{property.description}}</p>
         </div>
@@ -28,10 +28,7 @@
           <!-- <small class="float-right" >{{ property.updatedOn | date:'fullDate' }}</small>  -->
           <!-- <button [class.btn-block]="!blockView" class="btn btn-primary btn-sm">View Property</button> -->
           <button [class.btn-block]="!blockView" routerLink="/users/property/edit/{{property._id}}" class="btn btn-info btn-sm">Edit Property</button>
-          <button [class.btn-block]="!blockView" class="btn btn-success btn-sm">
-            <span (click)="propertyService.markProperty('sold')" *ngIf="property.propertyFor == 'sell'" >Mark as Sold</span>
-            <span (click)="propertyService.markProperty('rented')" *ngIf="property.propertyFor == 'rent'" >Mark as Acquired</span>
-          </button>
+          <button [class.btn-block]="!blockView" class="btn btn-success btn-sm"> {{ property?.propertyFor == 'sell' ? 'Mark as Sold' : 'Mark as Acquired' }}</button>
         </div>
       </div>
     </div>    

@@ -1,9 +1,8 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { Http } from '@angular/http';
 import { CommonService } from '../../services/common.service';
-// import { PropertyService } from '../../services/property.service';
 import { LoginService } from '../../services/login.service';
 import { UserService } from '../../services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-propertylist',
@@ -16,7 +15,7 @@ export class PropertylistComponent implements OnInit, OnChanges {
     private commonService: CommonService,
     private loginService: LoginService,
     private userService: UserService,
-    // private propertyService: PropertyService
+    private router: Router
   ) { }
 
   // @Input('listType') listType: string;
@@ -38,6 +37,10 @@ export class PropertylistComponent implements OnInit, OnChanges {
       }, (err) => console.log({err}),
     () => this.commonService.togglePageLoaderFn(false) );
       
+  }
+
+  viewProperty(){
+    this.router.navigate(['/']);
   }
 
   ngOnInit() {

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { CommonService } from '../../../../common/services/common.service';
-import { RegistrationValidators } from '../../../../common/validators/registration.validators';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { CommonService } from '../../../common/services/common.service';
+import { RegistrationValidators } from '../../../common/validators/registration.validators';
 
 
 @Component({
@@ -14,7 +14,8 @@ import { Router } from '@angular/router';
 })
 export class RegistrationComponent implements OnInit {
 
-  constructor(private commonService: CommonService, 
+  constructor(
+    private commonService: CommonService, 
     private registrationValidators: RegistrationValidators,
     private http: HttpClient,
     private router: Router

@@ -29,7 +29,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        loadChildren: 'app/features/users/users.module#UsersModule'
+        loadChildren: 'app/features/features.module#FeaturesModule'
       }
     ]
   },

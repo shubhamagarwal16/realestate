@@ -9,7 +9,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { ReUsableModule } from './common/re-usable.module';
 import { AppRoutingModule } from './app-routing.module';
-import { MatComponentsModule } from './/mat-components.module';
+import { MatComponentsModule } from './mat-components.module';
 
 import { AppComponent } from './app.component';
 import { MainComponent } from './main/main.component';
