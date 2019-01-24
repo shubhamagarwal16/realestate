@@ -103,9 +103,11 @@ module.exports = {
             query['city'] = { $in: req.query.city.split(",") }
         if (req.query.userId)
             query['userId'] = req.query.userId
+        if (req.query.notUserId)
+            query['userId'] = { $ne: req.query.notUserId}
         if (req.query.status)
             query['status'] = { $in: req.query.status.split(",") }
-            
+            console.log({query});
         Property.find(query)
             .populate('city', 'name')
             .populate('state', 'name')

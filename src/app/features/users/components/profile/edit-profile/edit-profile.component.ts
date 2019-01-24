@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../../../common/services/user.service';
 import { CommonService } from '../../../../../common/services/common.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-edit-profile',
@@ -22,54 +23,46 @@ export class EditProfileComponent implements OnInit {
   isEditing = false;
   stateList;
   private cityList = [];
+  lastEdited = '';
 
-  getcurrentUserDetails(userId){
+  getcurrentUserDetails(userId) {
     this.commonService.togglePageLoaderFn(true);
     this.userService.getcurrentUserDetails(userId)
-      .subscribe(result => {
+      .subscribe((result: any) => {
         this.UserDetails = result;
-        // console.log(this.UserDetails);
+        this.lastEdited = result && result.updatedOn && moment(result.updatedOn).format('MMMM Do YYYY, h:mm:ss a') || '';
         this.getCityList(result['state']._id);
-
         this.commonService.togglePageLoaderFn(false);
-        
       });
   }
 
-  getCityList(stateId){
+  getCityList(stateId) {
     this.cityList = [];
 
-    if(stateId != 0){
+    if (stateId != 0) {
       this.commonService.getCitylistByState(stateId)
-      .subscribe(response => {
-        if(response.length > 0){
-          this.cityList = response;
-        }
-      });
-    }
-    else{
-      this.cityList = [];
+        .subscribe(response => {
+          if (response.length) this.cityList = response;
+        });
     }
   }
 
-  updateProfilefn(data){
-    console.log(data);    
-    
+  updateProfilefn(data) {
     this.getcurrentUserDetails(this.userID);
   }
-  
+
   ngOnInit() {
-    this.userID = this.userService.currentUser.user._id;      
+    this.userID = this.userService.currentUser.user._id;
     this.getcurrentUserDetails(this.userID);
 
     this.commonService.getStatelist()
-    .subscribe(response => {
-      if(response.length > 0){
-        this.stateList = response;
-      }
-    });
-    
-    
+      .subscribe(response => {
+        if (response.length > 0) {
+          this.stateList = response;
+        }
+      });
+
+
   }
 
 }

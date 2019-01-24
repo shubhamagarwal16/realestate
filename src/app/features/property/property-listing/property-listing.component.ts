@@ -14,20 +14,22 @@ export class PropertyListingComponent implements OnInit {
     private router: ActivatedRoute
   ) { }
 
+  isHidden = false;
   queryParams; // = '?userId='+this.userService.currentUser.user._id;
 
-  ngOnInit() {
-    console.log(this.router.snapshot.data.data);     
-    let data = this.router.snapshot.data.data;
+  ngOnInit() {     
+    let data = this.router.snapshot && this.router.snapshot.data && this.router.snapshot.data.data || '';
+    this.isHidden = false;
     if(data){
       if(data === 'all')
         this.queryParams = '?userId='+this.userService.currentUser.user._id;
-      else if(data === 'active')
-          this.queryParams = '?userId='+this.userService.currentUser.user._id + '&status=' + data + ',available';
+      else if(data === 'available')
+          this.queryParams = '?userId='+this.userService.currentUser.user._id + '&status=available';
       else if(data === 'sold')
         this.queryParams = '?userId='+this.userService.currentUser.user._id + '&status=' + data + ',rented';
       else if(data === 'expired')
         this.queryParams = '?userId='+this.userService.currentUser.user._id + '&status=' + data;
+      else this.isHidden = true;
     }
   }
 

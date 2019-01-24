@@ -44,11 +44,12 @@
         <div class="col-4">
           <label for="">Enter Total Amount</label>
           <input type="number" name="price" ngModel #price="ngModel" class="form-control" required >
+          <input type="checkbox" ngModel #Noprice="ngModel" class="form-control" (change)="(Noprice.value) ?  log(Noprice.value) : log(Noprice.value)" name="Noprice">
         </div>        
       </div>
     </div>  
 
-    <div *ngIf="propertyFormData.type == '5abbd8585536e81408846d6f'">
+    <!-- <div *ngIf="propertyFormData.type == '5abbd8585536e81408846d6f'"> -->
       <h5>Additional Data -</h5>
       <hr class="hr">
   
@@ -81,7 +82,7 @@
 
         </div>
       </div>
-    </div>
+    <!-- </div> -->
 
     <h4>Location -</h4>
     <hr class="hr">
@@ -172,4 +173,3 @@
 
   </form>
 </div>
-<button (click)="testfn()" >zxc</button>

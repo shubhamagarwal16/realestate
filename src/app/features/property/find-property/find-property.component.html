@@ -67,7 +67,7 @@
         <button [class.btn-danger]="blockView.status" (click)="blockView = { status: true, size: 6 }; " class="btn"><i class="fa fa-th-large" aria-hidden="true"></i></button>
       </div>
       <!-- <div class="border-main border-box-manage"> -->
-          <app-propertylist [queryParams]="queryParams" [blockSize]="blockView.size" [blockView]="blockView.status" ></app-propertylist>
+          <app-propertylist [queryParams]="queryParams" [blockSize]="blockView.size" [hideOwnProperty]="true" [blockView]="blockView.status" ></app-propertylist>
       <!-- </div> -->
     </div>
   </div>

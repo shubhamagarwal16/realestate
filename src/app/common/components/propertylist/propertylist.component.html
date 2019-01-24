@@ -21,14 +21,14 @@
           </ul>
           <p>{{property.description}}</p>
         </div>
-        <div [ngClass]="{
+        <div *ngIf="loginService.isLoggedIn() && property?.userId?._id == userService?.currentUser?.user?._id" [ngClass]="{
             'col-md-2': !blockView,
             'col-md-12 text-center': blockView
-          }" class="">
+          }">
           <!-- <small class="float-right" >{{ property.updatedOn | date:'fullDate' }}</small>  -->
           <!-- <button [class.btn-block]="!blockView" class="btn btn-primary btn-sm">View Property</button> -->
-          <button *ngIf="loginService.isLoggedIn()" [class.btn-block]="!blockView" routerLink="/users/property/edit/{{property._id}}" class="btn btn-info btn-sm">Edit Property</button>
-          <button *ngIf="loginService.isLoggedIn()" [class.btn-block]="!blockView" class="btn btn-success btn-sm">
+          <button [class.btn-block]="!blockView" routerLink="/users/property/edit/{{property._id}}" class="btn btn-info btn-sm">Edit Property</button>
+          <button [class.btn-block]="!blockView" class="btn btn-success btn-sm">
             <span (click)="propertyService.markProperty('sold')" *ngIf="property.propertyFor == 'sell'" >Mark as Sold</span>
             <span (click)="propertyService.markProperty('rented')" *ngIf="property.propertyFor == 'rent'" >Mark as Acquired</span>
           </button>
