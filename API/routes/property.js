@@ -19,6 +19,7 @@ router.post('/new', propertyController.addNewProperty);
 router.get('/list/:userId', propertyController.getUserList);
 router.get('/list/', propertyController.getFullList);
 router.get('/single/:propertyId', propertyController.getSingleProperty);
+router.put('/markAsSold/:propertyId', propertyController.markAsSold);
 
 //filter
 router.get('/filter', propertyController.filterProperties);

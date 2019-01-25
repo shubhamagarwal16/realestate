@@ -89,6 +89,9 @@ module.exports = {
                 res.status(200).json(result);
         });
     },
+    markAsSold: (req, res) => {
+        console.log('running');
+    },
     filterProperties: (req, res) => {
         // console.log('propertyFor ', req.query.propertyFor, typeof req.query.propertyFor);
         // console.log(req.query.propertyFor.split(","));        

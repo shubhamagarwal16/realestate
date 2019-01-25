@@ -3,6 +3,7 @@ import { CommonService } from '../../services/common.service';
 import { LoginService } from '../../services/login.service';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-propertylist',
@@ -15,7 +16,8 @@ export class PropertylistComponent implements OnInit, OnChanges {
     private commonService: CommonService,
     private loginService: LoginService,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private http: HttpClient
   ) { }
 
   // @Input('listType') listType: string;
@@ -39,8 +41,18 @@ export class PropertylistComponent implements OnInit, OnChanges {
       
   }
 
-  viewProperty(){
-    this.router.navigate(['/']);
+  viewProperty(property_id){
+    this.router.navigate([`/users/property/view/${property_id}`]);
+  }
+
+  markAsSold(value){
+    this.router.navigate([`/users/property/listing/all`]);
+    if(value){
+      this.http.put(this.commonService.base_url + `/property/markAsSold/${value}`, {})
+      .subscribe(result => {
+        console.log(result)
+      });
+    }
   }
 
   ngOnInit() {
