@@ -20,9 +20,9 @@
             <hr class="hr">
             <div class="custom-control custom-checkbox" [hidden]="SidebarHiddenItem == 1">
               <div class="row">
-                <div *ngFor="let propertyFor of ['sell', 'rent'];let loop = index" class="col">
-                  <input value="{{propertyFor}}" type="checkbox" class="custom-control-input" id="forCheck{{loop}}" name="propertyFor" [checked]="checkCheckedValue(propertyFor, 'propertyFor')" propertyFor="ngModel" ngModel (change)="$event.target.checked? manageCheckedValue(propertyFor, 'propertyFor', true) : manageCheckedValue(propertyFor, 'propertyFor', false)">
-                  <label class="custom-control-label" for="forCheck{{loop}}">{{propertyFor | titlecase }}</label>
+                <div *ngFor="let propertyFor of [{ key: 'sell', val: 'buy'}, { key: 'rent', val: 'rent'}];let loop = index" class="col">
+                  <input name="propertyFor" type="checkbox" class="custom-control-input" id="forCheck{{loop}}" value="{{propertyFor.key}}" [checked]="checkCheckedValue(propertyFor.key, 'propertyFor')" (change)="$event.target.checked? manageCheckedValue(propertyFor.key, 'propertyFor', true) : manageCheckedValue(propertyFor.key, 'propertyFor', false)">
+                  <label class="custom-control-label" style="padding-left: 5px;" for="forCheck{{loop}}">{{propertyFor.val | titlecase }}</label>
                 </div>
               </div>
             </div>

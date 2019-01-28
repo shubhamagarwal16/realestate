@@ -48,8 +48,8 @@ export class FindPropertyComponent implements OnInit {
   }
 
   filterProperties(data = '') {
-    var tempVar = Object.values(this.filterData).filter(e => e.length);
-    if (tempVar.length) {
+    // var tempVar = Object.values(this.filterData).filter(e => e.length);
+    // if (tempVar.length) {
       this.route.navigate([window.location.pathname], {
         queryParams: this.filterData
       });
@@ -58,7 +58,7 @@ export class FindPropertyComponent implements OnInit {
       (this.filterData.type.length) ? data += '&type=' + this.filterData.type + '&' : '';
       (this.filterData.city.length) ? data += '&city=' + this.filterData.city : '';
       this.queryParams = data;
-    }
+    // }
   }
 
   uncheckAll;
@@ -74,7 +74,7 @@ export class FindPropertyComponent implements OnInit {
 
   checkCheckedValue(value, type){
     if(value && this.filterData[type]){
-      var tempVar = this.filterData[type].filter(ele => ele == value ? true : false )
+      var tempVar = this.filterData[type].filter(ele => ele == value)
       return tempVar.length ? true : false;
     }
     else return false;
@@ -91,11 +91,11 @@ export class FindPropertyComponent implements OnInit {
         this.cityList = result;
       });
     
-    this.activatedRoute.queryParams
-    .subscribe(data => {
-      if(data && data.propertyFor) this.filterData.propertyFor = Array.isArray(data.propertyFor)? data.propertyFor : [data.propertyFor];
-      if(data && data.type) this.filterData.type = Array.isArray(data.type)? data.type : [data.type];
-      if(data && data.city) this.filterData.city = Array.isArray(data.city)? data.city : [data.city];
-    })
+    this.activatedRoute.queryParamMap
+    .subscribe(ele => {
+      this.filterData.propertyFor = JSON.parse(JSON.stringify(ele.getAll('propertyFor')));
+      this.filterData.type = JSON.parse(JSON.stringify(ele.getAll('type')));
+      this.filterData.city = JSON.parse(JSON.stringify(ele.getAll('city')));
+    });
   }
 }

@@ -64,8 +64,7 @@ export class PropertylistComponent implements OnInit, OnChanges {
     // this.getPropertyList(this.queryParams);
   }
   
-  ngOnChanges() {    
-    console.log('ngOnChanges');
+  ngOnChanges() {
     this.getPropertyList(this.queryParams);
   }
 
