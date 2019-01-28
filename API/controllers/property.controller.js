@@ -90,7 +90,14 @@ module.exports = {
         });
     },
     markAsSold: (req, res) => {
-        console.log('running');
+        Property.update({ _id: req.params.propertyId }, { status: req.body.status })
+        .exec((err, result) => {
+            if(err) res.status(400).send(err);
+            else res.status(200).json({result});
+        })
+
+        // console.log('running', req.params, req.body);
+        // res.send('sdsadsda');
     },
     filterProperties: (req, res) => {
         // console.log('propertyFor ', req.query.propertyFor, typeof req.query.propertyFor);

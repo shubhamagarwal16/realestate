@@ -45,21 +45,27 @@ export class PropertylistComponent implements OnInit, OnChanges {
     this.router.navigate([`/users/property/view/${property_id}`]);
   }
 
-  markAsSold(value){
-    this.router.navigate([`/users/property/listing/all`]);
-    if(value){
-      this.http.put(this.commonService.base_url + `/property/markAsSold/${value}`, {})
-      .subscribe(result => {
-        console.log(result)
+  markAsSold(propertyId, status){
+    // this.router.navigate([`/users/property/listing/all`]);
+    if(propertyId){
+      status = status == 'sell' ? 'sold' : 'acquired';
+      this.http.post(this.commonService.base_url + `/property/markAsSold/${propertyId}`, {status})
+      .subscribe(result => {        
+        if(result['result'] && result['result']['ok'] == 1){
+          this.commonService.changeHeaderMessage({ type: 'success', message: 'Property updated successfully'  });
+          this.router.navigate([`/users/property/listing/sold`]);
+        }
       });
     }
   }
 
   ngOnInit() {
-    this.getPropertyList(this.queryParams);
+    // console.log('ngOnInit');
+    // this.getPropertyList(this.queryParams);
   }
-
+  
   ngOnChanges() {    
+    console.log('ngOnChanges');
     this.getPropertyList(this.queryParams);
   }
 

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpParams } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { CommonService } from '../../../common/services/common.service';
 
 @Component({
@@ -12,67 +11,73 @@ export class FindPropertyComponent implements OnInit {
 
   constructor(
     private commonService: CommonService,
-    private route: Router
+    private route: Router,
+    private activatedRoute: ActivatedRoute
   ) { }
 
   propertyTypeList = [];
   cityList = [];
   propertyList = [];
   blockView = { status: true, size: 6 };
-  queryParams;
+  queryParams = '';
   filterData = {
     propertyFor: [],
     type: [],
     city: []
   };
 
-  SidebarHiddenItem =  0;
+  SidebarHiddenItem = 0;
 
-  hideSidebarItem(num){
-    if(this.SidebarHiddenItem == num)
+  hideSidebarItem(num) {
+    if (this.SidebarHiddenItem == num)
       this.SidebarHiddenItem = 0;
     else
       this.SidebarHiddenItem = num;
   }
 
-  manageCheckedValue(value, location, checked){
-    // console.log('values: ', value, location, checked);    
-    if(checked){
+  manageCheckedValue(value, location, checked) {
+    if (checked) {
       this.filterData[location].push(value);
-      // console.log('ss ', this.filterData[location]);
     }
-    else{
+    else {
       let index = this.filterData[location].indexOf(value);
-      if(index > -1){
+      if (index > -1) {
         this.filterData[location].splice(index, 1);
-        // console.log('sdfd', this.filterData[location], ' index ', index);
-      }      
-    }    
+      }
+    }
   }
 
-  filterProperties(data = ''){
-    this.route.navigate([window.location.pathname], {
-      queryParams: this.filterData
-    });
-
-    data = data + '?';
-    (this.filterData.propertyFor.length > 0)?  data = data + 'propertyFor=' + this.filterData.propertyFor + '&': '';
-    (this.filterData.type.length > 0)? data = data + '&type='+this.filterData.type + '&': '';
-    (this.filterData.city.length > 0)? data = data + '&city='+this.filterData.city: '';
-    console.log(data);
-
-    this.queryParams = data;
+  filterProperties(data = '') {
+    var tempVar = Object.values(this.filterData).filter(e => e.length);
+    if (tempVar.length) {
+      this.route.navigate([window.location.pathname], {
+        queryParams: this.filterData
+      });
+      data = data + '?';
+      (this.filterData.propertyFor.length) ? data += 'propertyFor=' + this.filterData.propertyFor + '&' : '';
+      (this.filterData.type.length) ? data += '&type=' + this.filterData.type + '&' : '';
+      (this.filterData.city.length) ? data += '&city=' + this.filterData.city : '';
+      this.queryParams = data;
+    }
   }
 
   uncheckAll;
-  clearFilters(){
+  clearFilters() {
     this.route.navigate([window.location.pathname]);
     this.uncheckAll = false;
     this.queryParams = '';
   }
 
-  log(data){
-    console.log(data);    
+  log(data) {
+    console.log('log fn ', data);
+  }
+
+  checkCheckedValue(value, type){
+    if(value && this.filterData[type]){
+      var tempVar = this.filterData[type].filter(ele => ele == value ? true : false )
+      return tempVar.length ? true : false;
+    }
+    else return false;
   }
 
   ngOnInit() {
@@ -85,6 +90,12 @@ export class FindPropertyComponent implements OnInit {
       .subscribe(result => {
         this.cityList = result;
       });
+    
+    this.activatedRoute.queryParams
+    .subscribe(data => {
+      if(data && data.propertyFor) this.filterData.propertyFor = Array.isArray(data.propertyFor)? data.propertyFor : [data.propertyFor];
+      if(data && data.type) this.filterData.type = Array.isArray(data.type)? data.type : [data.type];
+      if(data && data.city) this.filterData.city = Array.isArray(data.city)? data.city : [data.city];
+    })
   }
-
 }

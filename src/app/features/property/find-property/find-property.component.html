@@ -1,48 +1,54 @@
 <div class="container find-properties">
   <div class="row">
     <div class="col-md-3">
-      <form #filter="ngForm" class="positn-sticky" (ngSubmit)="filterProperties()" >
+      <form #filter="ngForm" class="positn-sticky" (ngSubmit)="filterProperties()">
+        <h4 class="pad-btm-15">
+          <i class="fa fa-filter" aria-hidden="true"></i> Filters
+          <a (click)="clearFilters()">
+            <small>clear</small>
+          </a>
+          <button class="btn btn-success btn-sm float-right">Search</button>
+        </h4>
         <div class="border-main border-box-manage side-bar-filter card">
-          <h4 class="pad-btm-15"><i class="fa fa-filter" aria-hidden="true"></i> Filters 
-            <a (click)="clearFilters()" ><small>clear</small></a>
-            <button class="btn btn-success btn-sm float-right">Search</button></h4>
-
           <div class="form-group">
-            <h5 >Property For: <i (click)="hideSidebarItem(1);" [ngClass]="{ 
+            <h5>Property For:
+              <i (click)="hideSidebarItem(1);" [ngClass]="{ 
               'fa-plus-square-o': SidebarHiddenItem == 1,
               'fa-minus-square-o': SidebarHiddenItem != 1
-             }" class="fa  p-cursor float-right" aria-hidden="true"></i> </h5>
+             }" class="fa  p-cursor float-right" aria-hidden="true"></i>
+            </h5>
             <hr class="hr">
-            <div [hidden]="SidebarHiddenItem == 1" >
-              <label>
-                <input [value]="sell" type="checkbox" name="propertyFor" #propertyFor="ngModel" ngModel
-                  (change)="$event.target.checked? manageCheckedValue('sell', 'propertyFor', true) : manageCheckedValue('sell', 'propertyFor', false)" > Sell
-              </label> &nbsp;
-              <label>
-                <input [value]="rent" type="checkbox" name="propertyFor" #propertyFor="ngModel" ngModel 
-                  (change)="$event.target.checked? manageCheckedValue('rent', 'propertyFor', true) : manageCheckedValue('rent', 'propertyFor', false)" > Rent
-              </label> &nbsp;
-            </div>            
+            <div class="custom-control custom-checkbox" [hidden]="SidebarHiddenItem == 1">
+              <div class="row">
+                <div *ngFor="let propertyFor of ['sell', 'rent'];let loop = index" class="col">
+                  <input value="{{propertyFor}}" type="checkbox" class="custom-control-input" id="forCheck{{loop}}" name="propertyFor" [checked]="checkCheckedValue(propertyFor, 'propertyFor')" propertyFor="ngModel" ngModel (change)="$event.target.checked? manageCheckedValue(propertyFor, 'propertyFor', true) : manageCheckedValue(propertyFor, 'propertyFor', false)">
+                  <label class="custom-control-label" for="forCheck{{loop}}">{{propertyFor | titlecase }}</label>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="form-group">
-            <h5 >Property Type: <i (click)="hideSidebarItem(2);" [ngClass]="{ 
+            <h5>Property Type:
+              <i (click)="hideSidebarItem(2);" [ngClass]="{ 
               'fa-plus-square-o': SidebarHiddenItem == 2,
               'fa-minus-square-o': SidebarHiddenItem != 2
-             }" class="fa  p-cursor float-right" aria-hidden="true"></i> </h5>
+             }" class="fa  p-cursor float-right" aria-hidden="true"></i>
+            </h5>
             <hr class="hr">
             <div [hidden]="SidebarHiddenItem == 2" class="options-block">
               <div *ngFor="let type of propertyTypeList; let loop = index" class="custom-control custom-checkbox d-block">
-                <input name="type" type="checkbox" class="custom-control-input" id="customCheck{{loop}}" value="{{type._id}}" [checked]="uncheckAll"
-                (change)="$event.target.checked? manageCheckedValue(type._id, 'type', true) : manageCheckedValue(type._id, 'type', false)" > 
+                <input name="type" type="checkbox" class="custom-control-input" id="customCheck{{loop}}" value="{{type._id}}" [checked]="checkCheckedValue(type._id, 'type')" (change)="$event.target.checked? manageCheckedValue(type._id, 'type', true) : manageCheckedValue(type._id, 'type', false)">
                 <label class="custom-control-label" for="customCheck{{loop}}">{{type.title}}</label>
               </div>
             </div>
           </div>
           <div class="form-group">
-            <h5>City: <i (click)="hideSidebarItem(3);" [ngClass]="{ 
+            <h5>City:
+              <i (click)="hideSidebarItem(3);" [ngClass]="{ 
               'fa-plus-square-o': SidebarHiddenItem == 3,
               'fa-minus-square-o': SidebarHiddenItem != 3
-             }" class="fa p-cursor float-right" aria-hidden="true"></i> </h5>
+             }" class="fa p-cursor float-right" aria-hidden="true"></i>
+            </h5>
             <hr class="hr">
             <div [hidden]="SidebarHiddenItem == 3" class="options-block">
               <!-- <label class="d-block" *ngFor="let city of cityList" >
@@ -51,8 +57,7 @@
               </label>  -->
               <!-- #city="ngModel" ngModel -->
               <div *ngFor="let city of cityList; let loop = index" class="custom-control custom-checkbox d-block">
-                <input name="type" type="checkbox" class="custom-control-input" id="cityCheck{{loop}}" value="{{city._id}}" [checked]="uncheckAll"
-                (change)="$event.target.checked? manageCheckedValue(city._id, 'city', true) : manageCheckedValue(city._id, 'city', false)" > 
+                <input name="type" type="checkbox" class="custom-control-input" id="cityCheck{{loop}}" value="{{city._id}}" [checked]="checkCheckedValue(city._id, 'city')" (change)="$event.target.checked? manageCheckedValue(city._id, 'city', true) : manageCheckedValue(city._id, 'city', false)">
                 <label class="custom-control-label" for="cityCheck{{loop}}">{{city.name}}</label>
               </div>
             </div>
@@ -61,13 +66,17 @@
       </form>
     </div>
     <div class="col-md-9">
-      <p>{{ filter.value | json }} {{ filter.status }}</p>
       <div class="text-right pad-btm-15">
-        <button [class.btn-danger]="!blockView.status" (click)="blockView = { status: false, size: 12 };" class="btn"><i class="fa fa-list" aria-hidden="true"></i></button>
-        <button [class.btn-danger]="blockView.status" (click)="blockView = { status: true, size: 6 }; " class="btn"><i class="fa fa-th-large" aria-hidden="true"></i></button>
+        {{ filter.value | json }} {{ filter.status }}
+        <button [class.btn-danger]="!blockView.status" (click)="blockView = { status: false, size: 12 };" class="btn">
+          <i class="fa fa-list" aria-hidden="true"></i>
+        </button>
+        <button [class.btn-danger]="blockView.status" (click)="blockView = { status: true, size: 6 }; " class="btn">
+          <i class="fa fa-th-large" aria-hidden="true"></i>
+        </button>
       </div>
       <!-- <div class="border-main border-box-manage"> -->
-          <app-propertylist [queryParams]="queryParams" [blockSize]="blockView.size" [hideOwnProperty]="true" [blockView]="blockView.status" ></app-propertylist>
+      <app-propertylist [queryParams]="queryParams" [blockSize]="blockView.size" [hideOwnProperty]="true" [blockView]="blockView.status"></app-propertylist>
       <!-- </div> -->
     </div>
   </div>
