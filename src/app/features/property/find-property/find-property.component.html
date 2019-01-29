@@ -67,7 +67,7 @@
     </div>
     <div class="col-md-9">
       <div class="text-right pad-btm-15">
-        {{ filter.value | json }} {{ filter.status }}
+        <!-- {{ filter.value | json }} {{ filter.status }} -->
         <button [class.btn-danger]="!blockView.status" (click)="blockView = { status: false, size: 12 };" class="btn">
           <i class="fa fa-list" aria-hidden="true"></i>
         </button>

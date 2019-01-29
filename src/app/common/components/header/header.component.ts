@@ -23,9 +23,9 @@ export class HeaderComponent implements OnInit {
     private route: ActivatedRoute,
     private modalService: NgbModal,
     private commonService: CommonService
-   ) {}
+  ) { }
 
-  openloginModal(){    
+  openloginModal() {
     const modalRef = this.modalService.open(LoginModalComponent);
   }
 
@@ -49,16 +49,16 @@ export class HeaderComponent implements OnInit {
     { path: '/users/profile/edit', name: 'My Profile' }
   ];
 
-  closeHeaderMessage(){
-    this.HeaderMessage.message = '';    
+  closeHeaderMessage() {
+    this.HeaderMessage.message = '';
   }
 
-  changeHeaderMessage(type, message){
+  changeHeaderMessage(type, message) {
     console.log('changeHeaderMessage');
-    
+
     this.HeaderMessage = { type: type, message: message }
     var self = this;
-    setTimeout(function(){
+    setTimeout(function () {
       self.closeHeaderMessage();
     }, 5000);
   }
@@ -66,31 +66,45 @@ export class HeaderComponent implements OnInit {
   pageloaderStatus: boolean = true;
 
   ngOnInit() {
-
     this.route.queryParamMap.subscribe((data) => {
       if (data.get('action') === 'signUpsuccess') {
-        this.changeHeaderMessage('success', 'Congratulations, you have been successfully registered, login to continue');       
-        this.openloginModal(); 
+        this.changeHeaderMessage('success', 'Congratulations, you have been successfully registered, login to continue');
+        this.openloginModal();
       }
       else if (data.get('action') === 'logOut') {
-        this.changeHeaderMessage('success', 'You have logged out successfully');     
+        this.changeHeaderMessage('success', 'You have logged out successfully');
         this.openloginModal();
       }
       else if (data.get('action') === 'login') {
-        this.changeHeaderMessage('success', 'Please login to continue');     
+        this.changeHeaderMessage('success', 'Please login to continue');
         this.openloginModal();
       }
-    });  
+    });
 
     // HEADER MESSAGE
-    this.commonService.HeaderMessage$.subscribe( (data: any) => {
-      console.log('header ', data);  
-      if(data)
+    this.commonService.HeaderMessage$.subscribe((data: any) => {
+      if (data)
         this.changeHeaderMessage(data.type, data.message);
     });
 
     // Toggling Page Loader status
     this.commonService.togglePageLoader$.subscribe(data => this.pageloaderStatus = data);
+
+    //isAdmin
+    // if (this.userService.currentUser && this.userService.currentUser.user.isAdmin) {
+    //   this.navItems = [
+    //     { path: '/admin/dashboard', name: 'Dashboard' }
+    //   ];
+    // }
+    // else {
+    //   this.navItems = [
+    //     { path: '/users/dashboard', name: 'Dashboard' },
+    //     { path: '/users/property/new', name: 'Add New Property' },
+    //     { path: '/users/property/search', name: 'Find Property' },
+    //     { path: '/users/property/listing', name: 'My Listing' },
+    //     { path: '/users/profile/edit', name: 'My Profile' }
+    //   ];
+    // }
   }
 
 

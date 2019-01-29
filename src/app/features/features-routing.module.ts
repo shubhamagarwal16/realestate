@@ -37,7 +37,8 @@ const Routes: Routes = [
     children: [
       {
         path: 'new',
-        component: PropertyNewComponent
+        component: PropertyNewComponent,
+        canActivate: [AuthGuardService]
       },
       {
         path: 'search',
@@ -71,11 +72,13 @@ const Routes: Routes = [
             path: '',
             redirectTo: 'all'
           }
-        ]
+        ],
+        canActivate: [AuthGuardService]
       },
       {
         path: 'edit/:propertyId',
-        component: EditPropertyComponent
+        component: EditPropertyComponent,
+        canActivate: [AuthGuardService]
       },
       {
         path: 'view/:propertyId',
@@ -85,8 +88,7 @@ const Routes: Routes = [
         path: '',
         redirectTo: 'new'
       }
-    ],
-    canActivate: [AuthGuardService]
+    ]    
   },
   {
     path: 'profile',

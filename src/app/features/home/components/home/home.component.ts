@@ -19,7 +19,8 @@ export class HomeComponent implements OnInit {
   images: Array<string>;
   cityList = [];
   propertyTypeList;
-  searchPropData = { propertyFor: 'sell' }
+  searchPropData = { propertyFor: 'sell' };
+  hideOwnProperty = false;
 
   constructor(
     private _http: HttpClient,
@@ -40,7 +41,6 @@ export class HomeComponent implements OnInit {
       .pipe(map((images: Array<{ id: number }>) => this._randomImageUrls(images)))
       .subscribe(images => {
         this.images = images;
-        console.log(images);
       });
 
     this.commonService.getCitylist()
@@ -53,9 +53,10 @@ export class HomeComponent implements OnInit {
 
     this.commonService.getPropertyTypeList()
       .subscribe(response => {
-        // console.log(response);
         this.propertyTypeList = response;
       });
+
+    this.hideOwnProperty = this.userService.currentUser && this.userService.currentUser.user._id ? true : false;
   }
 
   searchProp(value) {

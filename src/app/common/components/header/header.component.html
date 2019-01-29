@@ -19,7 +19,7 @@
                         <ul *ngIf="headerDropdown" class="header-drp-dwn" >
                             <li><button routerLink="/users/dashboard" (click)="headerDropdown = !headerDropdown"
                                 class="btn btn-light btn-block">Dashboard</button></li>
-                            <li><button class="btn btn-light btn-block">Other</button></li>
+                            <li *ngIf="userService.currentUser?.user.isAdmin" ><button routerLink="/admin/dashboard" class="btn btn-light btn-block">Admin</button></li>
                             <li><button (click)="headerDropdown = !headerDropdown"
                                  routerLink="/users/sign-up" (click)="loginService.logOut()"
                             class="btn btn-light btn-block">Logout</button></li>

@@ -19,7 +19,7 @@ export class FindPropertyComponent implements OnInit {
   cityList = [];
   propertyList = [];
   blockView = { status: true, size: 6 };
-  queryParams = '';
+  queryParams = '?status=available';
   filterData = {
     propertyFor: [],
     type: [],
@@ -53,9 +53,9 @@ export class FindPropertyComponent implements OnInit {
       this.route.navigate([window.location.pathname], {
         queryParams: this.filterData
       });
-      data = data + '?';
-      (this.filterData.propertyFor.length) ? data += 'propertyFor=' + this.filterData.propertyFor + '&' : '';
-      (this.filterData.type.length) ? data += '&type=' + this.filterData.type + '&' : '';
+      data += '?status=available';
+      (this.filterData.propertyFor.length) ? data += '&propertyFor=' + this.filterData.propertyFor : '';
+      (this.filterData.type.length) ? data += '&type=' + this.filterData.type : '';
       (this.filterData.city.length) ? data += '&city=' + this.filterData.city : '';
       this.queryParams = data;
     // }

@@ -4,6 +4,7 @@ import { LoginService } from '../../services/login.service';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-propertylist',
@@ -30,7 +31,7 @@ export class PropertylistComponent implements OnInit, OnChanges {
 
   getPropertyList(params:any = ''){
     this.commonService.togglePageLoaderFn(true);
-    if(this.hideOwnProperty && this.userService.currentUser.user._id) params = this.queryParams ? `${params}&notUserId=${this.userService.currentUser.user._id}` : `?notUserId=${this.userService.currentUser.user._id}`;
+    if(this.hideOwnProperty && this.userService.currentUser && this.userService.currentUser.user._id) params = this.queryParams ? `${params}&notUserId=${this.userService.currentUser.user._id}` : `?notUserId=${this.userService.currentUser.user._id}`;
     console.log('final query ', params);
     this.commonService.filterProperties(params)
       .subscribe((result: any) => {
@@ -57,6 +58,10 @@ export class PropertylistComponent implements OnInit, OnChanges {
         }
       });
     }
+  }
+
+  getFormattedDate(date){
+    return moment(date).format("MMMM Do YYYY") || '';
   }
 
   ngOnInit() {

@@ -1,9 +1,8 @@
 const express = require('express');
-
-var app = express();
 var propertyController = require('../controllers/property.controller');
-
 var router = express.Router();
+var multer  = require('multer')
+var upload = multer({ dest: 'uploads/' })
 
 router.use((req, res, next) => {
     console.log(req.originalUrl,' query param: ', req.query);

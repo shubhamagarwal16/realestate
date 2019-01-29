@@ -34,6 +34,17 @@ const routes: Routes = [
     ]
   },
   {
+    path: 'admin',
+    component: MainComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: 'app/features/admin/admin.module#AdminModule'
+      }
+    ],
+    data: {isAdmin : true}
+  },
+  {
     path: '**',
     component: NotFoundComponent,
 

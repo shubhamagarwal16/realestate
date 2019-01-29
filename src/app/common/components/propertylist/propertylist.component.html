@@ -18,7 +18,7 @@
           <h5>{{property.title}}</h5>
           <ul style="padding-left: 0px; list-style-type: none;" class="propertyLocation">
             <li><small>{{property.locality}}, {{property.city.name}}, {{property.state.name}}</small></li>
-            <li style="font-size: 14px;" >{{property.type.title}} | {{ property.updatedOn | date:'fullDate' }}</li>
+            <li style="font-size: 14px;" >{{property.type.title}} <b>|</b> {{ getFormattedDate(property.updatedOn) }}</li>
           </ul>
           <p>{{property.description}}</p>
         </div>
