@@ -1,7 +1,8 @@
 const express = require('express');
 var propertyController = require('../controllers/property.controller');
 var router = express.Router();
-var multer  = require('multer')
+var multer  = require('multer');
+const helpers = require('../providers/helper');
 var upload = multer({ dest: 'uploads/' })
 
 router.use((req, res, next) => {
@@ -20,6 +21,10 @@ router.get('/list/', propertyController.getFullList);
 router.get('/single/:propertyId', propertyController.getSingleProperty);
 router.post('/markAsSold/:propertyId', propertyController.markAsSold);
 
+router.get('/slugslug', (req, res) => {
+    var slug  = helpers.slugGenerator('Property 1', 'title', 'property');
+    res.send('sdfsf'+ slug);
+});
 //filter
 router.get('/filter', propertyController.filterProperties);
 // router.get('/filter/propertyFor/:propertyFor/type/:type/city/:city', propertyController.filterProperties);
