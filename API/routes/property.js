@@ -23,6 +23,7 @@ router.post('/markAsSold/:propertyId', propertyController.markAsSold);
 
 router.get('/slugslug', (req, res) => {
     var slug  = helpers.slugGenerator('Property 1', 'title', 'property');
+    console.log({slug});
     res.send('sdfsf'+ slug);
 });
 //filter

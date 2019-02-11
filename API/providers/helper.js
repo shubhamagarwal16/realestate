@@ -23,14 +23,26 @@ module.exports = {
     slugGenerator: (title, fieldName, tableName) => {
         title = (title)? title : 'A custom title';           
         var slug = title.trim().toLowerCase().split(' ').join('-');
-        let i = 0;
-        var slugTemp = slug;
-        while(true){
-            console.log('2');
-            slugTemp = i ? `${slug}-${i}` : slug;
-            if(slugCheck(slugTemp, fieldName, tableName)) {break;}
-            else i++;
-        }
-        return slugTemp;
+        var table = require(`../models/${tableName}`);
+        var promise = new Promise((resolve, reject) => {
+            console.log('3');
+            table.findOne({slug})
+            .exec((err, result) => {
+                console.log({err}, {result});
+                if(err) reject(new Error(err));
+                else resolve(result);
+            })            
+        })
+        .then((z) => { console.log('then ', {z}); return z.slug} )
+        .catch((z) => { console.log('catch ', {z}); return z} )
+        // let i = 0;
+        // var slugTemp = slug;
+        // while(true){
+        //     console.log('2');
+        //     slugTemp = i ? `${slug}-${i}` : slug;
+        //     if(slugCheck(slugTemp, fieldName, tableName)) {break;}
+        //     else i++;
+        // }
+        // return slugTemp;
     }
 }
