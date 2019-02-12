@@ -16,7 +16,7 @@ export class UserService {
     if(!token) return null;
     
     let jwtHelper = new JwtHelper();
-    console.log('decoded ', jwtHelper.decodeToken(token));
+    // console.log('decoded ', jwtHelper.decodeToken(token));
     
     return jwtHelper.decodeToken(token);
   }
