@@ -13,6 +13,7 @@ import { PropertylistComponent } from './components/propertylist/propertylist.co
 import { PageLoaderComponent } from './components/page-loader/page-loader.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { LoginModalComponent } from './components/login-modal/login-modal.component';
+import { MatComponentsModule } from '../mat-components.module';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { LoginModalComponent } from './components/login-modal/login-modal.compon
     FormsModule,
     RouterModule,
     HttpClientModule,
+    MatComponentsModule
     
     // HttpClientXsrfModule.withOptions({
     //   cookieName: 'csrftoken',

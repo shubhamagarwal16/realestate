@@ -6,24 +6,29 @@
                 <div class="header-ryt text-right">  
                     <!-- <a routerLink="/" >Home</a>                  
                     <a routerLink="/" >Find Property</a> -->
-                    <button type="button"  *ngIf="!loginService.isLoggedIn()" (click)="openloginModal()" class="btn btn-outline-primary btn-sm">Login</button>
+                    <button type="button" style="margin-right: 5px;" *ngIf="!loginService.isLoggedIn()" (click)="openloginModal()" class="btn btn-outline-primary btn-sm">Login </button>
                     <button type="button"routerLink="/users/sign-up" *ngIf="!loginService.isLoggedIn()" class="btn btn-outline-primary btn-sm">Register</button>
-
+                    
                     <div *ngIf="loginService.isLoggedIn()">
                         <div class="user-image" >
-                            <span *ngIf="loginService.isLoggedIn()"> <span class="text-danger" >Welcome</span> {{userService.currentUser.user.fname}}</span>
-                            <img src="assets/images/user.jpg" 
+                            <span><span class="text-danger" >Welcome</span> {{userService.currentUser.user.fname}} </span>
+                            <img [matMenuTriggerFor]="headerRytmenu" src="assets/images/user.jpg" 
                                 (click)="headerDropdown = !headerDropdown"
                             class="rounded-circle p-cursor" alt="user">
                         </div>
-                        <ul *ngIf="headerDropdown" class="header-drp-dwn" >
-                            <li><button routerLink="/users/dashboard" (click)="headerDropdown = !headerDropdown"
+                        <mat-menu #headerRytmenu="matMenu" xPosition="before">
+                            <button routerLink="/users/dashboard" mat-menu-item>Dashboard</button>
+                            <button *ngIf="userService.currentUser?.user.isAdmin" routerLink="/admin/dashboard" mat-menu-item>Admin</button>
+                            <button (click)="loginService.logOut()" mat-menu-item>Logout</button>
+                        </mat-menu>
+                        <!-- <ul *ngIf="headerDropdown" class="header-drp-dwn" >
+                            <li><button (click)="headerDropdown = !headerDropdown"
                                 class="btn btn-light btn-block">Dashboard</button></li>
                             <li *ngIf="userService.currentUser?.user.isAdmin" ><button routerLink="/admin/dashboard" class="btn btn-light btn-block">Admin</button></li>
                             <li><button (click)="headerDropdown = !headerDropdown"
                                  routerLink="/users/sign-up" (click)="loginService.logOut()"
                             class="btn btn-light btn-block">Logout</button></li>
-                        </ul>
+                        </ul> -->
                     </div>
                     <!-- <button type="button" *ngIf="!loginService.isLoggedIn()" routerLink="/users/sign-up" (click)="loginService.logOut()" class="btn btn-outline-primary btn-sm">Logout</button> -->
                 </div>
@@ -45,8 +50,8 @@
             <li class="nav-item">
                 <a class="nav-link" routerLink="/"><i class="fa fa-home" aria-hidden="true"></i> | </a>
             </li>
-            <li *ngFor="let nav of navItems;" routerLinkActive="active" class="nav-item">
-                <a class="nav-link" routerLink="{{nav.path}}">{{ nav.name }}</a>
+            <li *ngFor="let nav of navItems;" routerLink="{{nav.path}}" routerLinkActive="active" class="nav-item p-cursor">
+                <a class="nav-link">{{ nav.name }}</a>
             </li>
         </ul>
         </div>

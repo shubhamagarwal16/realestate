@@ -2,7 +2,7 @@
 
 ## Services used / Minimum Requirements - 
 
-- Angular 5 - This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.2
+- Angular 5 (now Angular 7) 
 - Node v8.11.1 && npm v5.6.0
 - MongoDb v3.6.3
 

@@ -2,10 +2,7 @@
   <div class="row">
     <div class="col-md-3">
       <div class="border-main border-box-manage side-bar-filter card" >
-        <button routerLink="all" routerLinkActive="btn-outline-danger" class="btn btn-danger btn-block">All Properties</button>
-        <button routerLink="active" routerLinkActive="btn-outline-danger" class="btn btn-danger btn-block">Active Properties</button>
-        <button routerLink="sold" routerLinkActive="btn-outline-danger" class="btn btn-danger btn-block">Sold/Acquired</button>
-        <button routerLink="inactive" routerLinkActive="btn-outline-danger" class="btn btn-danger btn-block">Inactive Properties</button>
+        <button *ngFor="let btn of buttons;" routerLink="{{btn.route}}" routerLinkActive="btn-outline-danger" class="btn btn-danger btn-block">{{btn.name}}</button>
       </div>      
     </div>
     <div class="col-md-9">

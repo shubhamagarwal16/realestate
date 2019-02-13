@@ -7,8 +7,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PropertyMainComponent implements OnInit {
 
-  constructor(
-  ) { }
+  constructor() { }
+
+  buttons = [
+    {
+      name: 'All Properties',
+      route: 'all'
+    },
+    {
+      name: 'Active Properties',
+      route: 'active'
+    },
+    {
+      name: 'Sold/Acquired',
+      route: 'sold'
+    },
+    {
+      name: 'Inactive Properties',
+      route: 'inactive'
+    }
+  ]
 
   ngOnInit() { 
   }
