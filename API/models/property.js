@@ -55,6 +55,10 @@ propertySchema = new Schema({
         type: Boolean,
         default: true
     },
+    slug : {
+        type: String,
+        required: true
+    },
     updatedOn: {
         type: Date,
         default: Date.now()
