@@ -1,48 +1,34 @@
-const mongoose = require('mongoose');
-
-function slugCheck(slug, fieldName, tableName){    
-    var table = require(`../models/${tableName}`);
-    var data = {};
-    data[fieldName] = slug;
-    console.log('1');
-    if(!table) return null; 
-    var promise = new Promise((resolve, reject) => {
-        console.log('3');
-        table.findOne(data)
-        .exec((err, result) => {
-            console.log({err}, {result});
-            if(err) resolve(true);
-            else reject(null);
-        })
-        .then((z) => {return true} )
-        .catch((z) => {return null} )
-    })
-}
 
 module.exports = {    
     slugGenerator: (title, fieldName, tableName) => {
         title = (title)? title : 'A custom title';           
         var slug = title.trim().toLowerCase().split(' ').join('-');
-        var table = require(`../models/${tableName}`);
-        var promise = new Promise((resolve, reject) => {
-            console.log('3');
+        let table = require(`../models/${tableName}`);
+        let incrementer = 1, stopWhile = true;
+        return new Promise((resolve, reject) => {
             table.findOne({slug})
+            .select('slug')
             .exec((err, result) => {
                 console.log({err}, {result});
-                if(err) reject(new Error(err));
-                else resolve(result);
-            })            
+                if(err){ stopWhile=false; reject(new Error(err));}
+                else resolve(slug);
+                    if(!result){ 
+                        // slug in unavailable so we can use this slug
+                        stopWhile = false; resolve(slug);}
+                else {
+                    // slug is already available so we need a new slug
+                    slug += `-${incrementer}`;
+                    incrementer++;
+                    console.log('else ', slug);
+                    // some condtn to re run the find query
+                }
+            }) 
         })
-        .then((z) => { console.log('then ', {z}); return z.slug} )
+        .then((z) => { 
+            console.log('then ', {z}); 
+            if(z) this.slugGenerator(slug, fieldName, tableName);
+            else return z.slug
+        } )
         .catch((z) => { console.log('catch ', {z}); return z} )
-        // let i = 0;
-        // var slugTemp = slug;
-        // while(true){
-        //     console.log('2');
-        //     slugTemp = i ? `${slug}-${i}` : slug;
-        //     if(slugCheck(slugTemp, fieldName, tableName)) {break;}
-        //     else i++;
-        // }
-        // return slugTemp;
     }
 }
