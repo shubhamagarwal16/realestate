@@ -1,10 +1,10 @@
 <div class="row">
-  <div *ngFor="let property of propertyList" class="col-md-{{blockSize}} pad-btm-15 p-cursor" >
+  <div *ngFor="let property of propertyList;index as propNum;trackBy: setMaxLength('propNum'+index)" class="col-md-{{blockSize}} pad-btm-15 p-cursor" id="propNum{{propNum}}" [ngStyle]="{ 'height': maxLength ? maxLength : 'initial' }" ng-init="setMaxLength('propNum'+ propNum)"  >
   <!-- [ngClass]="{  routerLink="/users/property/view/{{property._id}}"
     'col-md-12': !blockView,
     'col-md-6': blockView
   }"> -->
-    <div [class.soldOutBg]="property?.status!= 'available'" class="border-main propBoxHover card"> <!-- mar-ryt-15-->
+    <div id="propNum{{propNum}}" [class.soldOutBg]="property?.status!= 'available'" class="border-main propBoxHover card"> <!-- mar-ryt-15-->
       <div class="row border-box-manage"><!-- property-box -->
         <div  (click)="viewProperty(property._id);" [ngClass]="{
           'col-md-3 border-right': !blockView,
@@ -29,7 +29,7 @@
           <!-- <small class="float-right" >{{ property.updatedOn | date:'fullDate' }}</small>  -->
           <!-- <button [class.btn-block]="!blockView" class="btn btn-primary btn-sm">View Property</button> -->
           <button [class.btn-block]="!blockView" routerLink="/users/property/edit/{{property._id}}" class="btn btn-info btn-sm">Edit Property</button>
-          <button [class.btn-block]="!blockView" *ngIf="property?.status == 'available';" (click)="markAsSold(property?._id, property?.propertyFor)" class="btn btn-success btn-sm"> {{ property?.propertyFor == 'sell' ? 'Mark as Sold' : 'Mark as Acquired' }}</button>
+          <button [class.btn-block]="!blockView" *ngIf="property?.status == 'available';" (click)="markAsSold(property?._id, property?.propertyFor)" class="btn btn-success btn-sm mar-left-10"> {{ property?.propertyFor == 'sell' ? 'Mark as Sold' : 'Mark as Acquired' }}</button>
           <!-- <ng-template #soldAcquired  else soldAcquired >
             <p class="badge badge-success">Sold</p>
           </ng-template> -->

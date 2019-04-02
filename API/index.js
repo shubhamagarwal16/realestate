@@ -3,6 +3,8 @@ var app = express();
 const bodyParser = require('body-parser');
 const mongoose   = require('mongoose');
 const morgan = require('morgan');
+const startupdebug = require('debug')('app:startup');
+
 // Routing
 var indexR = require('./routes/indexR'); 
 var users = require('./routes/users');
@@ -16,13 +18,10 @@ var property = require('./routes/property');
 // mongoose.connect('mongodb://localhost/realEstatedb');
 
 // ----- mLab
-mongoose.connect('mongodb://realEstate:realEstate@ds227119.mlab.com:27119/realestate-node');
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-  // we're connected!
-  console.log('connected to dB');  
-});
+mongoose.connect('mongodb://realEstate:realEstate@ds227119.mlab.com:27119/realestate-node')
+.then(() => // we're connected!
+startupdebug('connected to dB'))
+.catch(err => console.error('Connection Error', err));
 
 
 // configure app to use bodyParser()
@@ -57,5 +56,5 @@ app.use('/api/property', property);
 var port =  process.env.PORT || 8080;
 
 app.listen(port, () => {
-    console.log('Listening @', port);    
+  startupdebug('Listening @', port);    
 });

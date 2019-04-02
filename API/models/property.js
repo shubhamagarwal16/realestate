@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-propertySchema = new Schema({
+const propertySchema = mongoose.model('property', new mongoose.Schema({
     title: {
         type: String,
         required: true
@@ -61,11 +61,11 @@ propertySchema = new Schema({
     },
     updatedOn: {
         type: Date,
-        default: Date.now()
+        default: Date.now
     },
     createdOn: {
         type: Date
     }
-});
+}) );
 
-module.exports = mongoose.model('property', propertySchema);
+module.exports = propertySchema;

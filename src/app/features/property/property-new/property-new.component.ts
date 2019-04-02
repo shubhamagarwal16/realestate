@@ -25,9 +25,12 @@ export class PropertyNewComponent implements OnInit {
     breadth: 0,
     length: 0
   }
+  imgUrls = [];
+  imgsToUpload;
+  
 
   get plotArea(){ 
-    if(this.propertyFormData.length > 0 && this.propertyFormData.breadth > 0) 
+    if(this.propertyFormData.length && this.propertyFormData.breadth) 
       return this.propertyFormData.length * this.propertyFormData.breadth; 
     return null;
   }
@@ -67,24 +70,53 @@ export class PropertyNewComponent implements OnInit {
   // }
 
   submitForm(data){
-    console.log(data);
+    console.log({data});
     data.value.userId = this.userService.currentUser.user._id;
-    console.log('userid: ', data.value.userId);
-    
-    this.http.post(this.commonService.base_url + '/property/new' , data.value)
-    .subscribe(result => {
-      console.log(result);
-      if(result && result['id']){
-        this.commonService.changeHeaderMessage({ type: 'success', message: 'You property has been listed successfully'  });
-      }
+    // console.log('userid: ', data.value.userId);
+    const imageData = new FormData();
+    this.imgsToUpload.forEach((ele, index) => {
+      imageData.append("uploads[]", ele[index], ele[index]['name']);
     })
-
+    console.log({imageData});
+    // imageData.append('images', this.imgUrls, this.imgUrls.name);
+    
+    // this.http.post(this.commonService.base_url + '/property/new' , data.value)
+    // .subscribe(result => {
+    //   console.log(result);
+    //   if(result && result['id']){
+    //     this.commonService.changeHeaderMessage({ type: 'success', message: 'You property has been listed successfully'  });
+    //   }
+    // })
   }
 
+  log(data) {    console.log(data);  }
 
-  log(data) {
-    console.log(data);
+  filesChange(fieldName: string, fileList) {
+    if(fileList && fileList.length){
+      this.imgsToUpload = Object.values(fileList);
+      let i = 0;
+      Object.values(fileList).forEach(f => {
+        let reader = new FileReader();
+        reader.readAsDataURL(fileList[i]); 
+        let name = fileList[i].name;
+        reader.onload = (_event) => { 
+          this.imgUrls.push({ name, path: reader.result}); 
+        }    
+        i++;
+      })
+    }
+    console.log('this.imgUrls', this.imgUrls, this.imgsToUpload);
+  }
 
+  removeSinglePic(img){
+    this.imgUrls = this.imgUrls.filter(e => img != e );
+  }
+
+  getDataTitleViaId(id, dataList, keyName){
+    if(!id || !dataList || !keyName) return '';
+
+    let data = this[dataList].filter(e => e._id == id );
+    return data.length && data[0][keyName] || '';
   }
 
   ngOnInit() {

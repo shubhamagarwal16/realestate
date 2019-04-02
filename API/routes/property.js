@@ -23,10 +23,31 @@ router.post('/markAsSold/:propertyId', propertyController.markAsSold);
 
 router.get('/slugslug', (req, res) => {
     var slug  = helpers.slugGenerator('Property 1', 'title', 'property');
-    slug.then((result) => {
-        console.log({result});
-        res.send('sdfsf'+ result);
+    slug.then((result2) => {
+        console.log({result2});
+        res.send('sdfsf'+ result2);
     })
+    console.log('------------');
+}); 
+
+router.get('/testtest2', propertyController.testController);
+router.get('/testtest1', (req, res) => {
+    async function f1(){
+        var propertyType = require('../models/propertyTypes');
+        var sada = await propertyType.find();
+        console.log('sada ', sada);
+        // await f2();
+        // res.send('async await');
+    }
+    // function f2(){
+    //     new Promise(() => {
+    //         setTimeout(() => console.log('f2'), 3000 );
+    //     })
+    //     console.log('async await');
+    // }
+    f1();
+   
+
 });
 //filter
 router.get('/filter', propertyController.filterProperties);

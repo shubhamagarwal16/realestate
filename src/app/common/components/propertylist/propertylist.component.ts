@@ -15,7 +15,7 @@ export class PropertylistComponent implements OnInit, OnChanges {
 
   constructor(
     private commonService: CommonService,
-    private loginService: LoginService,
+    private loginService: LoginService, // used in template
     private userService: UserService,
     private router: Router,
     private http: HttpClient
@@ -62,6 +62,14 @@ export class PropertylistComponent implements OnInit, OnChanges {
 
   getFormattedDate(date){
     return moment(date).format("MMMM Do YYYY") || '';
+  }
+
+  maxLength: Number = 0;
+  setMaxLength(boxId){
+    // console.log({boxId});
+    // let height = document.getElementById(boxId).offsetHeight;
+    // console.log({height}, boxId);
+    // (height > this.maxLength)? this.maxLength = height : null;
   }
 
   ngOnInit() {

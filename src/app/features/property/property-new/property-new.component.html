@@ -5,53 +5,48 @@
     <h4>Property Info- </h4>
     <hr class="hr">
     <div class="form-group">
-      <h3>Upload images</h3>
-      <div class="dropbox">
-        <input type="file" multiple [name]="uploadFieldName"
-          (change)="filesChange($event.target.name, $event.target.files)" [disabled]="currentStatus === STATUS_SAVING"
-          accept="image/*" #photos>
+      <label for=""> Upload images: <small class="text-info">(Auto-generated)</small> <small *ngIf="imgUrls.length;"
+          (click)="imgUrls.length = 0;" class="p-cursor text-primary">(remove all)</small></label> <br>
+      <div *ngIf="!imgUrls.length; else imgBOx" class="dropbox">
+        <input type="file" multiple name="uploadFieldName"
+          (change)="filesChange($event.target.name, $event.target.files)" accept="image/*" #photos>
         <p *ngIf="currentStatus === STATUS_INITIAL">
           Drag your file(s) here to begin<br>
           or click to browse
         </p>
-        <p *ngIf="currentStatus === STATUS_SAVING">
+        <!-- <p *ngIf="currentStatus === STATUS_SAVING">
           Uploading {{ photos.files.length }} files...
-        </p>
+        </p> -->
       </div>
+      <ng-template #imgBOx>
+        <span class="singlImg" *ngFor="let img of imgUrls">
+          <img src="{{img.path}}" style="max-width: 150px; margin-right: 10px;" alt="img">
+          <i (click)="removeSinglePic(img);" class="fa fa-times p-cursor" aria-hidden="true"></i>
+        </span>
+      </ng-template>
     </div>
-    <div class="form-group">
-      <label for="">Property Title:</label>
-      <input type="text" ngModel #title="ngModel" name="title" (change)="log(title.value)"
-        placeholder="Enter property's title" required class="form-control">
 
-      <small class="text-danger" *ngIf="title.touched && title.invalid">
-        This field is required</small>
-    </div>
     <div class="form-group">
       <div class="form-row">
         <div class="col-4">
-          <label for=""> Property For: </label> <br>
+          <label for="">Property For: </label> <br>
           <label> <input type="radio" ngModel #for="ngModel" required name="for" value="sell"> Sell </label> &nbsp;
           <label> <input type="radio" ngModel #for="ngModel" required name="for" value="rent"> Rent </label>
 
-          <small class="text-danger" *ngIf="for.touched && for.invalid">
-            This field is required</small>
+          <small class="text-danger" *ngIf="for.touched && for.invalid">This field is required</small>
         </div>
         <div class="col-4">
           <label for="">Property Type:</label>
-          <select required name="type" [(ngModel)]="propertyFormData.type" #type="ngModel" class="custom-select">
+          <select required name="Proptype" [(ngModel)]="propertyFormData.type" #Proptype="ngModel"
+            class="custom-select">
             <option value="">Select Property Type</option>
             <option *ngFor="let property of propertyTypeList" value="{{property._id}}">{{property.title}}</option>
           </select>
-
-          <small class="text-danger" *ngIf="type.touched && type.invalid">
-            This field is required</small>
+          <small class="text-danger" *ngIf="Proptype.touched && Proptype.invalid">This field is required</small>
         </div>
         <div class="col-4">
-          <label for="">Enter Total Amount</label>
+          <label for="">Enter Total Amount <small class="text-primary">(optional)</small> </label>
           <input type="number" name="price" ngModel #price="ngModel" class="form-control" required>
-          <input type="checkbox" ngModel #Noprice="ngModel" class="form-control"
-            (change)="(Noprice.value) ?  log(Noprice.value) : log(Noprice.value)" name="Noprice">
         </div>
       </div>
     </div>
@@ -66,29 +61,30 @@
         <div class="row">
           <div class="col-md-3">
             <small>Length</small>
-            <input type="number" min="0" (keyup)="plotArea()" [(ngModel)]="propertyFormData.length" name="length"
-              required placeholder="Plot length" class="form-control form-field-small">
+            <input type="number" min="0" ngModel #length="ngModel" name="length" required placeholder="Plot length"
+              class="form-control form-field-small">
           </div>
           <div class="col-md-3">
             <small>Breadth</small>
-            <input type="number" min="0" (keyup)="plotArea()" [(ngModel)]="propertyFormData.breadth" name="breadth"
-              required placeholder="Plot breadth" class="form-control form-field-small">
+            <input type="number" min="0" ngModel #breadth="ngModel" name="breadth" required placeholder="Plot breadth"
+              class="form-control form-field-small">
           </div>
           <div class="col-md-6">
             <p>Total-</p>
-            <h5 *ngIf="propertyFormData.length && propertyFormData.breadth">{{ plotArea }} sqkm</h5>
+            <h5 *ngIf="breadth.value && length.value">
+              {{ (breadth.value | number) * (length.value | number) }} sqft</h5>
           </div>
         </div>
       </div>
       <div class="col-md-2">
         <p>Corner Plot?</p>
         <div class="custom-control custom-checkbox">
-          <input class="custom-control-input" id="cornrPlot" type="checkbox">
-          <label class="custom-control-label" for="cornrPlot">Yes</label>
+          <input class="custom-control-input" ngModel #cornrPlot="ngModel" name="cornrPlot" value="true"
+            id="cornrPlotId" type="checkbox">
+          <label class="custom-control-label" for="cornrPlotId">Yes</label>
         </div>
       </div>
       <div>
-
       </div>
     </div>
     <!-- </div> -->
@@ -97,7 +93,7 @@
     <hr class="hr">
 
     <div class="form-row">
-      <div class="form-group col-md-4">
+      <div class="form-group col-md-3">
         <label for="">State:</label>
         <select name="state" ngModel #state="ngModel" (change)="getCityList(state.value)" required
           class="custom-select">
@@ -107,7 +103,7 @@
         <small class="text-danger" *ngIf="state.touched && state.invalid">
           This field is required</small>
       </div>
-      <div class="form-group col-md-4">
+      <div class="form-group col-md-3">
         <label for="">City: <small *ngIf="FetchingCityList"><i class="fa fa-refresh fa-spin fa-fw"></i></small></label>
         <select name="city" ngModel #city="ngModel" required class="custom-select">
           <option value="">Select City</option>
@@ -116,11 +112,38 @@
         <small class="text-danger" *ngIf="city.touched && city.invalid">
           This field is required</small>
       </div>
-      <div class="form-group col-md-4">
+      <div class="form-group col-md-3">
+        <label for="">Pincode:</label>
+        <input type="text" placeholder="Enter Pincode" ngModel #pincode="ngModel" required name="pincode"
+          class="form-control">
+        <small class="text-danger" *ngIf="pincode.touched && pincode.invalid">
+          This field is required</small>
+      </div>
+      <div class="form-group col-md-3">
         <label for="">Locality:</label>
         <input type="text" name="locality" ngModel #locality="ngModel" required placeholder="Enter locality"
           class="form-control">
         <small class="text-danger" *ngIf="locality.touched && locality.invalid">
+          This field is required</small>
+      </div>
+      <div class="form-group col-md-4">
+        <label>Is it a Society?</label> <br>
+        <label> <input type="radio" ngModel #isSociety="ngModel" required name="isSociety" value="true"> Yes </label>
+        &nbsp;
+        <label> <input type="radio" ngModel #isSociety="ngModel" required name="isSociety" value="false"> No </label>
+      </div>
+      <div [hidden]="isSociety.value != 'true'" class="form-group col-md-4">
+        <label for="">Society Name:</label>
+        <input type="text" name="societyName" ngModel #societyName="ngModel" [required]="isSociety.value == 'true'"
+          placeholder="Enter Society Name" class="form-control">
+        <small class="text-danger" *ngIf="societyName.touched && societyName.invalid">
+          This field is required</small>
+      </div>
+      <div [hidden]="isSociety.value != 'true'" class="form-group col-md-4">
+        <label for="">Flat No.:</label>
+        <input type="text" name="flatNo" ngModel #flatNo="ngModel" [required]="isSociety.value == 'true'"
+          placeholder="Enter Flat Number" class="form-control">
+        <small class="text-danger" *ngIf="flatNo.touched && flatNo.invalid">
           This field is required</small>
       </div>
     </div>
@@ -130,15 +153,16 @@
 
     <div class="row">
       <div class="form-group col-md-12">
-        <label for="">Description: </label>
-        <textarea name="description" required ngModel #description="ngModel" class="form-control" cols="30"
-          rows="5"></textarea>
+        <label for="">Description: <small class="text-primary">({{ 500 - description.value?.length | number }})</small>
+        </label>
+        <textarea name="description" required ngModel #description="ngModel" class="form-control" resize="none"
+          cols="30" maxlength="500" rows="5"></textarea>
 
         <small class="text-danger" *ngIf="description.touched && description.invalid">
           This field is required</small>
       </div>
       <div class="form-group col-md-12">
-        <label for="">Property Complete Address</label>
+        <label for="">Property Complete Address:</label>
         <input type="text" required name="address" ngModel #address="ngModel"
           placeholder="Enter complete Property's Address" class="form-control">
 
@@ -150,7 +174,6 @@
         <label for="">Email:</label>
         <input type="text" placeholder="Enter Email" name="email" ngModel #email="ngModel" required
           value="{{userService.currentUser.user.email}}" class="form-control">
-
         <small class="text-danger" *ngIf="email.touched && email.invalid">
           This field is required</small>
       </div>
@@ -158,22 +181,20 @@
         <label for="">Phone Number: </label>
         <input type="text" ngModel #phoneNo="ngModel" required name="phoneNo" placeholder="Enter Phone Number"
           value="{{userService.currentUser.user.phoneNo}}" class="form-control">
-
         <small class="text-danger" *ngIf="phoneNo.touched && phoneNo.invalid">
           This field is required</small>
       </div>
-      <div class="form-group col-md-4">
-        <label for="">Pincode:</label>
-        <input type="text" placeholder="Enter Pincode" ngModel #pincode="ngModel" required name="pincode"
-          class="form-control">
+    </div>
+    <div class="form-group">
+      <label for="">Property Title: <small class="text-info">(Auto-generated)</small></label>
+      <input type="text" #title="ngModel" name="title" (change)="log(title.value)"
+        [ngModel]="(cornrPlot.value ? 'Corner ' : '') + getDataTitleViaId(Proptype.value, 'propertyTypeList', 'title') + (societyName?.value ? ' at ' +  societyName.value : '') + (city.value ? ' in ' + getDataTitleViaId(city.value, 'cityList', 'name') : '') + (state.value ? (city.value ? ', ': ' in ') + getDataTitleViaId(state.value, 'stateList', 'name') : '')"
+        placeholder="Enter property's title" required class="form-control">
 
-        <small class="text-danger" *ngIf="pincode.touched && pincode.invalid">
-          This field is required</small>
-      </div>
-
+      <small class="text-danger" *ngIf="title.touched && title.invalid">
+        This field is required</small>
     </div>
 
     <button [disabled]="f.invalid" class="btn btn-danger btn-block">Post a New Property</button>
-
   </form>
 </div>

@@ -7,9 +7,9 @@ var Property = require('../models/property');
 module.exports = {
     propertyTypeList: (req, res) => {
         propertyType.find({ is_active: true }, (err, result) => {
-            if(err)
+            if (err)
                 res.status(400).send(err);
-            else    
+            else
                 res.status(200).json(result);
         });
     },
@@ -21,60 +21,62 @@ module.exports = {
         proptyp.createdOn = Date.now();
 
         proptyp.save((err, result) => {
-            if(err)
+            if (err)
                 res.status(400).send(err);
-            else    
+            else
                 res.status(200).json({ message: 'Property type added successfully', id: result._id });
         });
     },
     addNewProperty: (req, res) => {
-        // res.status(200).send(req.body.userId);
-        var property = new Property();
+        console.log('req.body ', req.body);
+        res.json({data: req.body});
+        // // res.status(200).send(req.body.userId);
+        // var property = new Property();
 
-        property.title = req.body.title;
-        property.description = req.body.description;
-        property.type = req.body.type;
-        property.propertyFor = 'sell'; //req.body.for;
-        property.state = req.body.state;
-        property.city = req.body.city;
-        property.locality = req.body.locality;
-        property.address = req.body.address;
-        property.email = req.body.email;
-        property.phoneNo = req.body.phoneNo;
-        property.pincode = req.body.pincode;
-        property.userId = req.body.userId;
-        property.createdOn = Date.now();
+        // property.title = req.body.title;
+        // property.description = req.body.description;
+        // property.type = req.body.type;
+        // property.propertyFor = 'sell'; //req.body.for;
+        // property.state = req.body.state;
+        // property.city = req.body.city;
+        // property.locality = req.body.locality;
+        // property.address = req.body.address;
+        // property.email = req.body.email;
+        // property.phoneNo = req.body.phoneNo;
+        // property.pincode = req.body.pincode;
+        // property.userId = req.body.userId;
+        // property.createdOn = Date.now();
 
-        property.save((err, result) => {
-            if(err)
-                res.status(400).send(err);
-            else
-                res.status(200).json({ message: 'Property posted successfully', id: result._id });
-        })
+        // property.save((err, result) => {
+        //     if (err)
+        //         res.status(400).send(err);
+        //     else
+        //         res.status(200).json({ message: 'Property posted successfully', id: result._id });
+        // })
     },
     getUserList: (req, res) => {
         Property.find({ isActive: true, userId: req.params.userId })
-        .populate('city', 'name')
-        .populate('state', 'name')
-        .populate('type', 'title')
-        .exec((err, result) => {
-            if (err)
-                res.status(400).send(err);
-            else
-                res.status(200).json(result);
-        });
+            .populate('city', 'name')
+            .populate('state', 'name')
+            .populate('type', 'title')
+            .exec((err, result) => {
+                if (err)
+                    res.status(400).send(err);
+                else
+                    res.status(200).json(result);
+            });
     },
     getSingleProperty: (req, res) => {
         Property.findOne({ _id: req.params.propertyId })
-        .populate('city', 'name')
-        .populate('state', 'name')
-        .populate('type', 'title')
-        .exec((err, result) => {
-            if (err)
-                res.status(400).send(err);
-            else
-                res.status(200).json(result);
-        });
+            .populate('city', 'name')
+            .populate('state', 'name')
+            .populate('type', 'title')
+            .exec((err, result) => {
+                if (err)
+                    res.status(400).send(err);
+                else
+                    res.status(200).json(result);
+            });
     },
     getFullList: (req, res) => {
         Property.find({ isActive: true })
@@ -83,18 +85,18 @@ module.exports = {
             .populate('type', 'title')
             .populate('userId', 'name')
             .exec((err, result) => {
-            if (err)
-                res.status(400).send(err);
-            else
-                res.status(200).json(result);
-        });
+                if (err)
+                    res.status(400).send(err);
+                else
+                    res.status(200).json(result);
+            });
     },
     markAsSold: (req, res) => {
         Property.update({ _id: req.params.propertyId }, { status: req.body.status })
-        .exec((err, result) => {
-            if(err) res.status(400).send(err);
-            else res.status(200).json({result});
-        })
+            .exec((err, result) => {
+                if (err) res.status(400).send(err);
+                else res.status(200).json({ result });
+            })
 
         // console.log('running', req.params, req.body);
         // res.send('sdsadsda');
@@ -114,20 +116,26 @@ module.exports = {
         if (req.query.userId)
             query['userId'] = req.query.userId
         if (req.query.notUserId)
-            query['userId'] = { $ne: req.query.notUserId}
+            query['userId'] = { $ne: req.query.notUserId }
         if (req.query.status)
             query['status'] = { $in: req.query.status.split(",") }
-            console.log({query});
+        console.log({ query });
         Property.find(query)
             .populate('city', 'name')
             .populate('state', 'name')
             .populate('type', 'title')
             .populate('userId', 'name')
-        .exec((err, result) => {
-            if (err)
-                res.status(400).send(err);
-            else
-                res.status(200).json(result);                
-        });
+            .exec((err, result) => {
+                if (err)
+                    res.status(400).send(err);
+                else
+                    res.status(200).json(result);
+            });
     },
+    testController: async (req, res) => {
+        // console.log({testData});
+        const testData = await Property.find()//.update({ pincode: 'sdfsdf3443' }, { $set: { title: 'testing property title' } });
+        console.log({ testData });
+        return res.send(testData);
+    }
 }
