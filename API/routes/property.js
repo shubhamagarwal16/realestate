@@ -3,7 +3,18 @@ var propertyController = require('../controllers/property.controller');
 var router = express.Router();
 var multer  = require('multer');
 const helpers = require('../providers/helper');
-var upload = multer({ dest: 'uploads/' })
+
+// var upload = multer({ dest: 'uploads/' })
+var storage = multer.diskStorage({
+    // destination
+    destination: function (req, file, cb) {
+      cb(null, './uploads/')
+    },
+    filename: function (req, file, cb) {
+      cb(null, Date.now() + '-' + file.originalname);
+    }
+  });
+var upload = multer({ storage: storage });
 
 router.use((req, res, next) => {
     console.log(req.originalUrl,' query param: ', req.query);
@@ -15,7 +26,7 @@ router.get('/type', propertyController.propertyTypeList);
 router.post('/type', propertyController.addPropertyType);
 
 //Property
-router.post('/new', propertyController.addNewProperty);
+router.post('/new', upload.array("propImages"), propertyController.addNewProperty);
 router.get('/list/:userId', propertyController.getUserList);
 router.get('/list/', propertyController.getFullList);
 router.get('/single/:propertyId', propertyController.getSingleProperty);

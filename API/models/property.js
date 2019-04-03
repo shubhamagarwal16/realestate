@@ -4,6 +4,7 @@ var Schema = mongoose.Schema;
 const propertySchema = mongoose.model('property', new mongoose.Schema({
     title: {
         type: String,
+        trim: true,
         required: true
     },
     propertyFor: {
@@ -28,23 +29,58 @@ const propertySchema = mongoose.model('property', new mongoose.Schema({
         ref: 'City'
     },
     locality: {
-        type: String
+        type: String,
+        required: true
+    },
+    length: {
+        type: Number,
+        required: true
+    },
+    breadth: {
+        type: Number,
+        required: true
+    },
+    cornrPlot: {
+        type: Boolean,
+        default: false,
+        enum: [true, false]
+    },
+    isSociety: {
+        type: Boolean,
+        default: false,
+        enum: [true, false]
+    },
+    societyName: {
+        type: String,
+        required: function(){ return this.isSociety; }
+    },
+    flatNo: {
+        type: String,
+        required: function(){ return this.isSociety; }
     },
     address: {
-        type: String
+        type: String,
+        required: true
     },
     email: {
-        type: String
+        type: String,
+        required: true
+    },
+    price: {
+        type: Number
     },
     phoneNo: {
-        type: String
+        type: String,
+        required: true
     },
     pincode: {
-        type: String
+        type: String,
+        required: true
     },
     userId: {
         type: Schema.Types.ObjectId,
-        ref: 'users'
+        ref: 'users',
+        required: true
     },
     status: {
         type: String,

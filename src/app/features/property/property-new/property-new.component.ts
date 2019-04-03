@@ -27,38 +27,38 @@ export class PropertyNewComponent implements OnInit {
   }
   imgUrls = [];
   imgsToUpload;
-  
 
-  get plotArea(){ 
-    if(this.propertyFormData.length && this.propertyFormData.breadth) 
-      return this.propertyFormData.length * this.propertyFormData.breadth; 
-    return null;
-  }
 
-  getPropertyTypeList(){
-    this.commonService.togglePageLoaderFn(true);            
+  // get plotArea(){ 
+  //   if(this.propertyFormData.length && this.propertyFormData.breadth) 
+  //     return this.propertyFormData.length * this.propertyFormData.breadth; 
+  //   return null;
+  // }
+
+  getPropertyTypeList() {
+    this.commonService.togglePageLoaderFn(true);
     this.commonService.getPropertyTypeList()
       .subscribe(result => {
         // console.log(result);
         this.propertyTypeList = result;
-        this.commonService.togglePageLoaderFn(false);                
+        this.commonService.togglePageLoaderFn(false);
       });
   }
 
-  getCityList(stateId){
+  getCityList(stateId) {
     this.cityList = [];
     this.FetchingCityList = true;
 
-    if(stateId != 0){
+    if (stateId != 0) {
       this.commonService.getCitylistByState(stateId)
-      .subscribe(response => {
-        if(response.length > 0){
-          this.cityList = response;
-          this.FetchingCityList = false;
-        }
-      });
+        .subscribe(response => {
+          if (response.length > 0) {
+            this.cityList = response;
+            this.FetchingCityList = false;
+          }
+        });
     }
-    else{
+    else {
       this.cityList = [];
     }
   }
@@ -69,53 +69,54 @@ export class PropertyNewComponent implements OnInit {
   //   message: ''
   // }
 
-  submitForm(data){
-    console.log({data});
+  submitForm(data) {
+    console.log({ data });
     data.value.userId = this.userService.currentUser.user._id;
     // console.log('userid: ', data.value.userId);
     const imageData = new FormData();
     this.imgsToUpload.forEach((ele, index) => {
-      imageData.append("uploads[]", ele[index], ele[index]['name']);
+      imageData.append("propImages", ele, ele['name']);
     })
-    console.log({imageData});
-    // imageData.append('images', this.imgUrls, this.imgUrls.name);
-    
-    // this.http.post(this.commonService.base_url + '/property/new' , data.value)
-    // .subscribe(result => {
-    //   console.log(result);
-    //   if(result && result['id']){
-    //     this.commonService.changeHeaderMessage({ type: 'success', message: 'You property has been listed successfully'  });
-    //   }
-    // })
+    for (let key in data.value) {
+      // iterate and set other form data
+      imageData.append(key, data.value[key])
+    }
+    this.http.post(this.commonService.base_url + '/property/new', imageData)
+      .subscribe(result => {
+        console.log(result);
+        if (result && result['id']) {
+          this.commonService.changeHeaderMessage({ type: 'success', message: 'You property has been listed successfully' });
+        }
+      })
   }
 
-  log(data) {    console.log(data);  }
+  log(data) { console.log(data); }
 
   filesChange(fieldName: string, fileList) {
-    if(fileList && fileList.length){
+    if (fileList && fileList.length) {
       this.imgsToUpload = Object.values(fileList);
       let i = 0;
       Object.values(fileList).forEach(f => {
         let reader = new FileReader();
-        reader.readAsDataURL(fileList[i]); 
+        reader.readAsDataURL(fileList[i]);
         let name = fileList[i].name;
-        reader.onload = (_event) => { 
-          this.imgUrls.push({ name, path: reader.result}); 
-        }    
+        reader.onload = (_event) => {
+          this.imgUrls.push({ name, path: reader.result });
+        }
         i++;
       })
     }
     console.log('this.imgUrls', this.imgUrls, this.imgsToUpload);
   }
 
-  removeSinglePic(img){
-    this.imgUrls = this.imgUrls.filter(e => img != e );
+  removeSinglePic(img) {
+    this.imgUrls = this.imgUrls.filter(e => img != e);
   }
 
-  getDataTitleViaId(id, dataList, keyName){
-    if(!id || !dataList || !keyName) return '';
+  getDataTitleViaId(id, dataList, keyName) {
+    if (!id || !dataList || !keyName) return '';
 
-    let data = this[dataList].filter(e => e._id == id );
+    let data = this[dataList].filter(e => e._id == id);
     return data.length && data[0][keyName] || '';
   }
 
@@ -123,10 +124,10 @@ export class PropertyNewComponent implements OnInit {
     this.getPropertyTypeList();
 
     this.commonService.getStatelist()
-    .subscribe(response => {
-      if(response.length > 0){
-        this.stateList = response;
-      }
+      .subscribe(response => {
+        if (response.length > 0) {
+          this.stateList = response;
+        }
       });
 
   }

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const moment = require('moment');
+const helpers = require('../providers/helper');
 
 var propertyType = require('../models/propertyTypes');
 var Property = require('../models/property');
@@ -27,9 +28,26 @@ module.exports = {
                 res.status(200).json({ message: 'Property type added successfully', id: result._id });
         });
     },
-    addNewProperty: (req, res) => {
-        console.log('req.body ', req.body);
-        res.json({data: req.body});
+    addNewProperty: async (req, res) => {
+        try{
+            var slug  = await helpers.slugGenerator(req.body.title, 'title', 'property');
+            req.body.slug = slug;
+            req.body.type = req.body.Proptype;
+            req.body.propertyFor = req.body && req.body.for || 'sell';
+            req.body.createdOn = Date.now();
+            
+            console.log({result: req.body });
+            res.json({result : req.body });
+
+            // var prop = new Property(req.body);
+            // const result = await prop.save();
+            // res.json({data: req.body, result});
+        }
+        catch(err){
+            console.log({err});
+        }
+
+        
         // // res.status(200).send(req.body.userId);
         // var property = new Property();
 
