@@ -43,9 +43,9 @@ export class HeaderComponent implements OnInit {
   }
   navItems = [
     { path: '/users/dashboard', name: 'Dashboard' },
-    { path: '/users/property/new', name: 'Add New Property' },
-    { path: '/users/property/search', name: 'Find Property' },
-    { path: '/users/property/listing', name: 'My Listing' },
+    { path: '/property/new', name: 'Add New Property' },
+    { path: '/property/search', name: 'Find Property' },
+    { path: '/property/listing', name: 'My Listing' },
     { path: '/users/profile/edit', name: 'My Profile' }
   ];
 

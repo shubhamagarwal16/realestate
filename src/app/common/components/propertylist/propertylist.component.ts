@@ -60,7 +60,7 @@ export class PropertylistComponent implements OnInit, OnChanges {
   }
 
   viewProperty(propertySlug) {
-    this.router.navigate([`/users/property/view/${propertySlug}`]);
+    this.router.navigate([`/property/view/${propertySlug}`]);
   }
 
   markAsSold(propertySlug, status) {
@@ -72,7 +72,7 @@ export class PropertylistComponent implements OnInit, OnChanges {
           let message = result && result['message'];
           if (data && data.nModified == 1) {
             this.commonService.changeHeaderMessage({ type: 'success', message });
-            this.router.navigate([`/users/property/listing/sold`]);
+            this.router.navigate([`/property/listing/sold`]);
           }
           else this.commonService.changeHeaderMessage({ type: 'danger', message });
         }, err => {

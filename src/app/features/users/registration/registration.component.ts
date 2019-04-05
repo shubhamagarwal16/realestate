@@ -44,7 +44,7 @@ export class RegistrationComponent implements OnInit {
   private cityList = [];
 
   ngOnInit() {
-    
+    this.commonService.togglePageLoaderFn(false);
     this.commonService.getStatelist()
     .subscribe(response => {
       if(response.length > 0){

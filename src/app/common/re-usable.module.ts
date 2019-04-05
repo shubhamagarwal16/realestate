@@ -14,6 +14,8 @@ import { PageLoaderComponent } from './components/page-loader/page-loader.compon
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { LoginModalComponent } from './components/login-modal/login-modal.component';
 import { MatComponentsModule } from '../mat-components.module';
+import { DashboardComponent } from './components/dashboard-main/dashboard.component';
+import { InputFormatDirective } from './directives/input-format.directive';
 
 
 @NgModule({
@@ -30,19 +32,23 @@ import { MatComponentsModule } from '../mat-components.module';
     // })
   ],
   declarations: [
+    DashboardComponent,
     HeaderComponent,
     FooterComponent,
     PropertylistComponent,
     PageLoaderComponent,
     NotFoundComponent,
-    LoginModalComponent
+    LoginModalComponent,
+    InputFormatDirective
   ],
   exports: [
+    DashboardComponent,
     HeaderComponent,
     FooterComponent,
     PropertylistComponent,
     PageLoaderComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    InputFormatDirective
   ],
   providers: [
     LoginService,

@@ -1,38 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { Routes, RouterModule } from '@angular/router';
 
-import { DashboardComponent } from './users/components/dashboard/dashboard-main/dashboard.component';
-import { EditProfileComponent } from './users/components/profile/edit-profile/edit-profile.component';
-import { DashboardHomeComponent } from './users/components/dashboard/dashboard-home/dashboard-home.component';
-import { AuthGuardService } from '../common/services/auth-guard.service';
-import { PropertyNewComponent } from './property/property-new/property-new.component';
-import { FindPropertyComponent } from './property/find-property/find-property.component';
-import { PropertyListingComponent } from './property/property-listing/property-listing.component';
-import { EditPropertyComponent } from './property/edit-property/edit-property.component';
-import { PropertyMainComponent } from './property/property-main/property-main.component';
-import { PropertyViewComponent } from './property/property-view/property-view.component';
-import { RegistrationComponent } from './users/registration/registration.component';
+import { AuthGuardService } from '../../common/services/auth-guard.service';
+import { PropertyNewComponent } from '../property/property-new/property-new.component';
+import { FindPropertyComponent } from '../property/find-property/find-property.component';
+import { PropertyListingComponent } from '../property/property-listing/property-listing.component';
+import { EditPropertyComponent } from '../property/edit-property/edit-property.component';
+import { PropertyMainComponent } from '../property/property-main/property-main.component';
+import { PropertyViewComponent } from '../property/property-view/property-view.component';
+import { DashboardComponent } from '../../common/components/dashboard-main/dashboard.component';
 
 const Routes: Routes = [
   {
-    path: 'sign-up', 
-    component: RegistrationComponent
-  },
-  {
-    path: 'dashboard', 
-    component: DashboardComponent,
-    children: [
-      {
-        path: '',
-        component: DashboardHomeComponent
-      }
-    ],
-    canActivate: [AuthGuardService]
-  },
-  {
-    path: 'property',
+    path: '',
     component: DashboardComponent,
     children: [
       {
@@ -89,19 +70,8 @@ const Routes: Routes = [
         redirectTo: 'new'
       }
     ]    
-  },
-  {
-    path: 'profile',
-    component: DashboardComponent,
-    children: [
-      {
-        path: 'edit',
-        component: EditProfileComponent
-      }
-    ],
-    canActivate: [AuthGuardService]
   }
-]
+];
 
 @NgModule({
   imports: [
@@ -113,4 +83,4 @@ const Routes: Routes = [
   ],
   declarations: []
 })
-export class FeaturesRoutingModule { }
+export class PropertyRoutingModule { }

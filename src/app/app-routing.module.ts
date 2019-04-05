@@ -24,6 +24,16 @@ const routes: Routes = [
     ]
   },
   {
+    path: 'property',
+    component: MainComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: 'app/features/property/property.module#PropertyModule'
+      }
+    ]
+  },
+  {
     path: 'users',
     component: MainComponent,
     children: [

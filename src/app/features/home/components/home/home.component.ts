@@ -71,7 +71,7 @@ export class HomeComponent implements OnInit {
       return e.name == value.city ? e._id : ''
      }).filter(ele => ele);
 
-    this.router.navigate(['/users/property/search'], {
+    this.router.navigate(['/property/search'], {
       queryParams: queryParamsTemp //{ 'city': value.city, 'propertyFor': value.propertyFor, 'type': value.type }
     })
   }

@@ -11,10 +11,11 @@ router.route('/state')
 .post(commonController.addState)
 
 //Cities
-router.get('/cities', commonController.getAllCities)
+router.route('/cities')
+.get(commonController.getAllCities)
+.post(commonController.addCity)
 
 router.get('/cities/:state_id', commonController.getCityList)
-.post('/cities', commonController.addCity)
 
 router.delete('/city/:cityId', commonController.removeCity)
 

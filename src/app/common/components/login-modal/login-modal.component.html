@@ -6,7 +6,7 @@
 </div>
 <div class="modal-body">
 
-  <div *ngIf="alertMessage.message" class="alert alert-{{ alertMessage.type }}">
+  <div *ngIf="alertMessage.message != ''" class="alert alert-{{ alertMessage.type }}">
     {{ alertMessage.message }}
   </div>
 

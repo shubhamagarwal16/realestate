@@ -38,7 +38,7 @@ module.exports = {
         });
     },
     getCityList: (req, res) => {
-        city_model.find({ state_id: req.params.state_id })
+        city_model.find({ state_id: req.params.state_id, is_active: true })
             .populate('state_id', 'name')
             .exec((err, data) => {
             if(err)
@@ -46,16 +46,17 @@ module.exports = {
             res.status(200).json(data);
         });
     },
-    addCity: (req, res) => {
-        var city = new city_model();
-        city.name = req.body.name;
-        city.state_id = req.body.state_id;        
-        
-        city.save((err) => {
-            if(err)
-                res.send(err);
-            res.status(200).json({ message: 'city added successfully' });
-        })
+    addCity: async (req, res) => {
+        try{
+            var city = new city_model(req.body);            
+            const result = await city.save();
+            console.log({result});
+            if(result) res.status(200).json({ message: 'City added successfully' });
+            else throw new Error('Something Went Wrong');
+        }
+        catch(err){
+            res.status(400).json({message: err.message});
+        }
     },
     removeCity: (req, res) => {
         city_model.remove({_id: req.params.cityId }, (err, result) => {

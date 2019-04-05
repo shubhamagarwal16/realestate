@@ -39,6 +39,10 @@ module.exports = {
             req.body.type = req.body.Proptype;
             req.body.images = imgs;      
             req.body.imgPath = 'properties';
+            if(!req.body.isSociety){
+                req.body.flatNo = '';
+                req.body.societyName = '';
+            }
 
             var prop = new Property(req.body);
             const result = await prop.save();

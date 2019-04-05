@@ -1,5 +1,14 @@
 # RealEstate using Angular, Node and MongoDb
 
+## Features -
+
+- Login/Registration (using bcrypt password encryption)
+- Property:
+    - Post New Property (add images, Auto-generated property title, Dynamic form entries, slug creation in backend)
+    - Filter, view properties (multiple views option)
+    - Auth guard, Local storage
+- Many more functionalities to add....
+
 ## Services used / Minimum Requirements - 
 
 - Angular 5 (now Angular 7) 
@@ -29,10 +38,11 @@ I have used Ubuntu 16.04 for the development of this project, conflicts may arri
 - `sudo service mongod start` for starting mongoDB server
   - Note: this command may vary acc to the OS, please check mongodb for the right command for your system 
 
-- `node index.js` in the API/ directory  - Backend 
--- **Note:** 
+- `node index.js` in the API/ directory  - Backend (`npm start` if nodemon is installed)
+
+**Note:** 
 1. Mongodb must be running before running backend server
-2. I prefer using nodemon for running back-end to install `npm i -g nodemon`  and then run using `nodemon index.js`
+2. I prefer using nodemon for running back-end to install `npm i -g nodemon`  and then run using `npm start`
 
 
 THANKS
