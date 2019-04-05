@@ -29,43 +29,66 @@ export class PropertylistComponent implements OnInit, OnChanges {
 
   propertyList = [];
 
-  getPropertyList(params:any = ''){
+  toggleImages(id, propNum, incDec, imgLen, e) {
+    let ele: any = document.getElementById(id+propNum);
+    let value = parseInt(ele.value) || 0;
+    if (value >= (imgLen - 1)) { ele.value = incDec == '-1' ? value - 1 : 0; }
+    else if (value == 0) { ele.value = incDec == '-1' ? imgLen - 1 : value + 1; }
+    else { ele.value = value + incDec; }
+
+    let imgSrc = this.propertyList[propNum].images[ele.value];
+    let imgPath = this.propertyList[propNum].imgPath;
+    if (imgSrc) {
+      let img: any = document.getElementById('propImg' + propNum);
+      img.src = this.commonService.main_url + '/' + imgPath + '/' + imgSrc;
+    }
+    //Preventing opening property view page on button click
+    e.stopPropagation();
+  }
+
+  getPropertyList(params: any = '') {
     this.commonService.togglePageLoaderFn(true);
-    if(this.hideOwnProperty && this.userService.currentUser && this.userService.currentUser.user._id) params = this.queryParams ? `${params}&notUserId=${this.userService.currentUser.user._id}` : `?notUserId=${this.userService.currentUser.user._id}`;
+    if (this.hideOwnProperty && this.userService.currentUser && this.userService.currentUser.user._id) params = this.queryParams ? `${params}&notUserId=${this.userService.currentUser.user._id}` : `?notUserId=${this.userService.currentUser.user._id}`;
     console.log('final query ', params);
     this.commonService.filterProperties(params)
       .subscribe((result: any) => {
-        if(result) this.propertyList = result;               
+        if (result) this.propertyList = result;
         console.log('propertyList: ', this.propertyList);
-      }, (err) => console.log({err}),
-    () => this.commonService.togglePageLoaderFn(false) );
-      
+      }, (err) => console.log({ err }),
+        () => this.commonService.togglePageLoaderFn(false));
+
   }
 
-  viewProperty(property_id){
-    this.router.navigate([`/users/property/view/${property_id}`]);
+  viewProperty(propertySlug) {
+    this.router.navigate([`/users/property/view/${propertySlug}`]);
   }
 
-  markAsSold(propertyId, status){
-    // this.router.navigate([`/users/property/listing/all`]);
-    if(propertyId){
+  markAsSold(propertySlug, status) {
+    if (propertySlug) {
       status = status == 'sell' ? 'sold' : 'acquired';
-      this.http.post(this.commonService.base_url + `/property/markAsSold/${propertyId}`, {status})
-      .subscribe(result => {        
-        if(result['result'] && result['result']['ok'] == 1){
-          this.commonService.changeHeaderMessage({ type: 'success', message: 'Property updated successfully'  });
-          this.router.navigate([`/users/property/listing/sold`]);
-        }
-      });
+      this.http.post(this.commonService.base_url + `/property/markAsSold/${propertySlug}`, { status })
+        .subscribe(result => {
+          let data = result && result['result'] || {};
+          let message = result && result['message'];
+          if (data && data.nModified == 1) {
+            this.commonService.changeHeaderMessage({ type: 'success', message });
+            this.router.navigate([`/users/property/listing/sold`]);
+          }
+          else this.commonService.changeHeaderMessage({ type: 'danger', message });
+        }, err => {
+          let error = err.error;
+          let message = err.error && err.error['message'];
+          this.commonService.changeHeaderMessage({ type: 'danger', message });
+        });
     }
   }
 
-  getFormattedDate(date){
+  getFormattedDate(date) {
     return moment(date).format("MMMM Do YYYY") || '';
   }
 
   maxLength: Number = 0;
-  setMaxLength(boxId){
+  setMaxLength(boxId) {
     // console.log({boxId});
     // let height = document.getElementById(boxId).offsetHeight;
     // console.log({height}, boxId);
@@ -76,7 +99,7 @@ export class PropertylistComponent implements OnInit, OnChanges {
     // console.log('ngOnInit');
     // this.getPropertyList(this.queryParams);
   }
-  
+
   ngOnChanges() {
     this.getPropertyList(this.queryParams);
   }

@@ -29,48 +29,28 @@ module.exports = {
         });
     },
     addNewProperty: async (req, res) => {
+        let imgs = [];        
         try{
+            if(req.files.length)
+                req.files.forEach(ele => imgs.push(ele.filename) )
+            //Creating slug for the listing 
             var slug  = await helpers.slugGenerator(req.body.title, 'title', 'property');
             req.body.slug = slug;
             req.body.type = req.body.Proptype;
-            req.body.propertyFor = req.body && req.body.for || 'sell';
-            req.body.createdOn = Date.now();
-            
-            console.log({result: req.body });
-            res.json({result : req.body });
+            req.body.images = imgs;      
+            req.body.imgPath = 'properties';
 
-            // var prop = new Property(req.body);
-            // const result = await prop.save();
-            // res.json({data: req.body, result});
+            var prop = new Property(req.body);
+            const result = await prop.save();
+
+            if(result && result._id && result.slug)
+                res.status(200).json({result, message: "Your property has been successfully posted"});                
+            else throw new Error('Something Went Wrong');
         }
         catch(err){
             console.log({err});
+            res.status(400).json({message: err.message});
         }
-
-        
-        // // res.status(200).send(req.body.userId);
-        // var property = new Property();
-
-        // property.title = req.body.title;
-        // property.description = req.body.description;
-        // property.type = req.body.type;
-        // property.propertyFor = 'sell'; //req.body.for;
-        // property.state = req.body.state;
-        // property.city = req.body.city;
-        // property.locality = req.body.locality;
-        // property.address = req.body.address;
-        // property.email = req.body.email;
-        // property.phoneNo = req.body.phoneNo;
-        // property.pincode = req.body.pincode;
-        // property.userId = req.body.userId;
-        // property.createdOn = Date.now();
-
-        // property.save((err, result) => {
-        //     if (err)
-        //         res.status(400).send(err);
-        //     else
-        //         res.status(200).json({ message: 'Property posted successfully', id: result._id });
-        // })
     },
     getUserList: (req, res) => {
         Property.find({ isActive: true, userId: req.params.userId })
@@ -84,17 +64,20 @@ module.exports = {
                     res.status(200).json(result);
             });
     },
-    getSingleProperty: (req, res) => {
-        Property.findOne({ _id: req.params.propertyId })
-            .populate('city', 'name')
-            .populate('state', 'name')
-            .populate('type', 'title')
-            .exec((err, result) => {
-                if (err)
-                    res.status(400).send(err);
-                else
-                    res.status(200).json(result);
-            });
+    getSingleProperty: async (req, res) => {
+        try{
+            const result  = await Property.findOne({ slug: req.params.propertySlug })
+                .populate('city', 'name')
+                .populate('state', 'name')
+                .populate('type', 'title');
+            
+            if(result) res.status(200).json({result});
+            else throw new Error('Something Went Wrong');
+        }
+        catch(err){
+            res.status(400).json({message: err.message});
+        }
+        
     },
     getFullList: (req, res) => {
         Property.find({ isActive: true })
@@ -109,15 +92,16 @@ module.exports = {
                     res.status(200).json(result);
             });
     },
-    markAsSold: (req, res) => {
-        Property.update({ _id: req.params.propertyId }, { status: req.body.status })
-            .exec((err, result) => {
-                if (err) res.status(400).send(err);
-                else res.status(200).json({ result });
-            })
-
-        // console.log('running', req.params, req.body);
-        // res.send('sdsadsda');
+    markAsSold: async (req, res) => {
+        try{
+            const result = await Property.update({ slug: req.params.propertySlug }, { status: req.body.status });
+            console.log({result});
+            if(result && result.nModified == 1) res.status(200).json({ result, message: "Property has been updated Successfully" });
+            else throw new Error('Error in updating property');
+        }
+        catch(err){
+            res.status(400).json({message: err.message});
+        }
     },
     filterProperties: (req, res) => {
         // console.log('propertyFor ', req.query.propertyFor, typeof req.query.propertyFor);
@@ -152,7 +136,7 @@ module.exports = {
     },
     testController: async (req, res) => {
         // console.log({testData});
-        const testData = await Property.find()//.update({ pincode: 'sdfsdf3443' }, { $set: { title: 'testing property title' } });
+        const testData = await Property.find({ updatedOn: { $gte : '2019-04-01' } })
         console.log({ testData });
         return res.send(testData);
     }

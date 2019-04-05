@@ -4,11 +4,10 @@ var router = express.Router();
 var multer  = require('multer');
 const helpers = require('../providers/helper');
 
-// var upload = multer({ dest: 'uploads/' })
 var storage = multer.diskStorage({
     // destination
     destination: function (req, file, cb) {
-      cb(null, './uploads/')
+      cb(null, './uploads/properties/')
     },
     filename: function (req, file, cb) {
       cb(null, Date.now() + '-' + file.originalname);
@@ -16,10 +15,10 @@ var storage = multer.diskStorage({
   });
 var upload = multer({ storage: storage });
 
-router.use((req, res, next) => {
-    console.log(req.originalUrl,' query param: ', req.query);
-    next();
-})
+// router.use((req, res, next) => {
+//     console.log(req.originalUrl,' query param: ', req.query);
+//     next();
+// })
 
 // Property type
 router.get('/type', propertyController.propertyTypeList);
@@ -29,8 +28,8 @@ router.post('/type', propertyController.addPropertyType);
 router.post('/new', upload.array("propImages"), propertyController.addNewProperty);
 router.get('/list/:userId', propertyController.getUserList);
 router.get('/list/', propertyController.getFullList);
-router.get('/single/:propertyId', propertyController.getSingleProperty);
-router.post('/markAsSold/:propertyId', propertyController.markAsSold);
+router.get('/single/:propertySlug', propertyController.getSingleProperty);
+router.post('/markAsSold/:propertySlug', propertyController.markAsSold);
 
 router.get('/slugslug', (req, res) => {
     var slug  = helpers.slugGenerator('Property 1', 'title', 'property');

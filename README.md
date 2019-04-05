@@ -10,8 +10,8 @@ I have used Ubuntu 16.04 for the development of this project, conflicts may arri
 
 ## File Structure -
 
--- real-estate/ (root direcory for **Angular front-end** )
-   -- API/ (directory for **Node-express back-end** )
+- real-estate/ (root direcory for **Angular front-end** )
+- real-estate/API/ (directory for **Node-express back-end** )
 
 ## Installation / Configuration - 
 

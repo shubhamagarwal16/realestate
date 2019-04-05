@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UserService } from '../../../common/services/user.service';
 import { CommonService } from '../../../common/services/common.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-property-new',
@@ -13,27 +14,16 @@ export class PropertyNewComponent implements OnInit {
   constructor(
     private commonService: CommonService,
     private userService: UserService,
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router
   ) { }
 
   propertyTypeList = [];
-  stateList;
+  stateList: any[];
   private cityList = [];
   FetchingCityList = false;
-  propertyFormData = {
-    type: '',
-    breadth: 0,
-    length: 0
-  }
   imgUrls = [];
-  imgsToUpload;
-
-
-  // get plotArea(){ 
-  //   if(this.propertyFormData.length && this.propertyFormData.breadth) 
-  //     return this.propertyFormData.length * this.propertyFormData.breadth; 
-  //   return null;
-  // }
+  imgsToUpload = [];
 
   getPropertyTypeList() {
     this.commonService.togglePageLoaderFn(true);
@@ -49,7 +39,7 @@ export class PropertyNewComponent implements OnInit {
     this.cityList = [];
     this.FetchingCityList = true;
 
-    if (stateId != 0) {
+    if (stateId) {
       this.commonService.getCitylistByState(stateId)
         .subscribe(response => {
           if (response.length > 0) {
@@ -63,16 +53,10 @@ export class PropertyNewComponent implements OnInit {
     }
   }
 
-  // @Output('changeHeaderMessage') changeHeaderMessage = new EventEmitter();
-  //  {
-  //   type: '',
-  //   message: ''
-  // }
-
   submitForm(data) {
     console.log({ data });
     data.value.userId = this.userService.currentUser.user._id;
-    // console.log('userid: ', data.value.userId);
+
     const imageData = new FormData();
     this.imgsToUpload.forEach((ele, index) => {
       imageData.append("propImages", ele, ele['name']);
@@ -83,10 +67,18 @@ export class PropertyNewComponent implements OnInit {
     }
     this.http.post(this.commonService.base_url + '/property/new', imageData)
       .subscribe(result => {
-        console.log(result);
-        if (result && result['id']) {
-          this.commonService.changeHeaderMessage({ type: 'success', message: 'You property has been listed successfully' });
+        console.log({ result });
+        let data = result && result['result'] || {};
+        let message = result && result['message'] || '';
+        if(data && data['slug']){
+          this.commonService.changeHeaderMessage({ type: 'success', message });
+          this.router.navigate([`/users/property/view/${data.slug}`])
         }
+        else this.commonService.changeHeaderMessage({ type: 'danger', message: 'Something Went Wrong' });
+      }, err => {
+        let errmessage = err.error && err.error.message || '';
+        console.log({err}, errmessage);
+        this.commonService.changeHeaderMessage({ type: 'danger', message: errmessage });
       })
   }
 

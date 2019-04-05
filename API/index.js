@@ -1,9 +1,12 @@
 const express = require('express');
 var app = express();
+var path = require('path');
 const bodyParser = require('body-parser');
 const mongoose   = require('mongoose');
 const morgan = require('morgan');
 const startupdebug = require('debug')('app:startup');
+
+app.use(express.static(path.join(__dirname, 'uploads')));
 
 // Routing
 var indexR = require('./routes/indexR'); 

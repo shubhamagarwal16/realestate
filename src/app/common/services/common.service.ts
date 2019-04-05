@@ -34,6 +34,7 @@ export class CommonService {
   // showLoader() { this.togglePageLoader.next(true); }
   // hideLoader() { this.togglePageLoader.next(false); }
 
+  main_url = 'http://localhost:8080';
   base_url = 'http://localhost:8080/api';
 
   getStatelist(): Observable<any>{
@@ -56,8 +57,8 @@ export class CommonService {
     return this.http.get(this.base_url + '/property/list/' + param);
   }
 
-  getSingleProperty(propertyId){
-    return this.http.get(this.base_url + '/property/single/' + propertyId);
+  getSingleProperty(propertySlug){
+    return this.http.get(this.base_url + '/property/single/' + propertySlug);
   }
 
   filterProperties(param = ''){

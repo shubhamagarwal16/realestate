@@ -1,5 +1,5 @@
 <h3 class="text-center text-danger">Post a New Property-</h3>
-<p>{{ f.value | json }}</p>
+<!-- <p>{{ f.value | json }}</p> -->
 <div class="container border-main border-box-manage card">
   <form #f="ngForm" (ngSubmit)="submitForm(f)" enctype="multipart/form-data">
     <h4>Property Info- </h4>
@@ -30,15 +30,14 @@
       <div class="form-row">
         <div class="col-4">
           <label for="">Property For: </label> <br>
-          <label> <input type="radio" ngModel #for="ngModel" required name="for" value="sell"> Sell </label> &nbsp;
-          <label> <input type="radio" ngModel #for="ngModel" required name="for" value="rent"> Rent </label>
+          <label> <input type="radio" ngModel #propertyFor="ngModel" required name="propertyFor" value="sell"> Sell </label> &nbsp;
+          <label> <input type="radio" ngModel #propertyFor="ngModel" required name="propertyFor" value="rent"> Rent </label>
 
-          <small class="text-danger" *ngIf="for.touched && for.invalid">This field is required</small>
+          <small class="text-danger" *ngIf="propertyFor.touched && propertyFor.invalid">This field is required</small>
         </div>
         <div class="col-4">
           <label for="">Property Type:</label>
-          <select required name="Proptype" [(ngModel)]="propertyFormData.type" #Proptype="ngModel"
-            class="custom-select">
+          <select required name="Proptype" ngModel #Proptype="ngModel" class="custom-select">
             <option value="">Select Property Type</option>
             <option *ngFor="let property of propertyTypeList" value="{{property._id}}">{{property.title}}</option>
           </select>
@@ -95,7 +94,7 @@
     <div class="form-row">
       <div class="form-group col-md-3">
         <label for="">State:</label>
-        <select name="state" ngModel #state="ngModel" (change)="getCityList(state.value)" required
+        <select name="state" ngModel #state="ngModel" (change)="getCityList(state.value);city.value = ''" required
           class="custom-select">
           <option value="">Select State</option>
           <option *ngFor="let state of stateList" value="{{state._id}}">{{state.name}}</option>
@@ -194,7 +193,6 @@
       <small class="text-danger" *ngIf="title.touched && title.invalid">
         This field is required</small>
     </div>
-
-    <button class="btn btn-danger btn-block">Post a New Property</button> [disabled]="f.invalid"
+    <button [disabled]="f.invalid" class="btn btn-danger btn-block">Post a New Property</button>
   </form>
 </div>

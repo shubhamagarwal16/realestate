@@ -64,7 +64,7 @@
 <app-page-loader [loaderActive] ="pageloaderStatus" ></app-page-loader>
 <!-- ------------------ PAGE LOADER ---------------- -->
 
-<div *ngIf="HeaderMessage.message != ''" class="container header-message">
+<div *ngIf="HeaderMessage.message" class="container header-message">
     <div class="alert alert-{{HeaderMessage.type}}" >{{HeaderMessage.message}}
         <button type="button" class="close" (click)="closeHeaderMessage()" aria-label="Close">
         <span aria-hidden="true">&times;</span>

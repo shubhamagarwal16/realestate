@@ -95,12 +95,19 @@ const propertySchema = mongoose.model('property', new mongoose.Schema({
         type: String,
         required: true
     },
+    images: {
+        type: [String]
+    },
+    imgPath: {
+        type: String
+    },
     updatedOn: {
         type: Date,
-        default: Date.now
+        default: Date.now()
     },
     createdOn: {
-        type: Date
+        type: Date,
+        default: Date.now()
     }
 }) );
 

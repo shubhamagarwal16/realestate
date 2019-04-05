@@ -16,14 +16,15 @@ export class PropertyViewComponent implements OnInit {
 
   propertyDetail = {};
 
-  getProperty(propertyId) {
+  getProperty(propertySlug) {
     this.commonService.togglePageLoaderFn(true);
-    this.commonService.getSingleProperty(propertyId)
+    this.commonService.getSingleProperty(propertySlug)
       .subscribe(result => {
-        console.log('propertydata: ', result);
         this.propertyDetail = result;
       },
-      () => { },
+      () => { 
+        this.commonService.togglePageLoaderFn(false);
+      },
       () => {
         this.commonService.togglePageLoaderFn(false);
       }
@@ -31,8 +32,8 @@ export class PropertyViewComponent implements OnInit {
   }
 
   ngOnInit() {
-    let propertyId = this.activatedRoute.snapshot.paramMap.get('propertyId');
-    if (propertyId) this.getProperty(propertyId);
+    let propertySlug = this.activatedRoute.snapshot.paramMap.get('propertySlug');
+    if (propertySlug) this.getProperty(propertySlug);
   }
 
 }
