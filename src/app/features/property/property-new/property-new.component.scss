@@ -26,3 +26,22 @@ input[type="file"] {
     text-align: center;
     padding: 50px 0;
 }
+
+// Single Image
+.singlImg{
+    position: relative;
+}
+.singlImg i{
+    position: absolute;
+    top: 20%;
+    left: 40%;
+    display: none;
+    transition: font-size 0.3s ease;
+    -webkit-transition: font-size 0.3s ease;
+    -moz-transition: font-size 0.3s ease;
+}
+.singlImg img:hover + i, .singlImg i:hover{
+    font-size: 30px;
+    display: block;
+    // background: #495057bd;
+}

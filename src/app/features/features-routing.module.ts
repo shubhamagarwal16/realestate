@@ -76,12 +76,12 @@ const Routes: Routes = [
         canActivate: [AuthGuardService]
       },
       {
-        path: 'edit/:propertyId',
+        path: 'edit/:propertySlug',
         component: EditPropertyComponent,
         canActivate: [AuthGuardService]
       },
       {
-        path: 'view/:propertyId',
+        path: 'view/:propertySlug',
         component: PropertyViewComponent
       },
       {

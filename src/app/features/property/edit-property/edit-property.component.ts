@@ -27,8 +27,8 @@ export class EditPropertyComponent implements OnInit {
   propertyTypeList;
   newPropertyData: any = {};
 
-  getProperty(propertyId){
-    this.commonService.getSingleProperty(propertyId)
+  getProperty(propertySlug){
+    this.commonService.getSingleProperty(propertySlug)
       .subscribe(result => {
         console.log('propertydata: ', result);     
         this.propertyDetail = result;   
@@ -62,11 +62,11 @@ export class EditPropertyComponent implements OnInit {
   }
 
   ngOnInit() {
-    let propertyId = this.activatedRoute.snapshot.paramMap.get('propertyId');
+    let propertySlug = this.activatedRoute.snapshot.paramMap.get('propertySlug');
     // console.log('propertyId: ', propertyId);
 
-    if(propertyId)
-      this.getProperty(propertyId);
+    if(propertySlug)
+      this.getProperty(propertySlug);
     else
       console.log('not found');      
 

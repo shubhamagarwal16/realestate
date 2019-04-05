@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const moment = require('moment');
+const helpers = require('../providers/helper');
 
 var propertyType = require('../models/propertyTypes');
 var Property = require('../models/property');
@@ -7,9 +8,9 @@ var Property = require('../models/property');
 module.exports = {
     propertyTypeList: (req, res) => {
         propertyType.find({ is_active: true }, (err, result) => {
-            if(err)
+            if (err)
                 res.status(400).send(err);
-            else    
+            else
                 res.status(200).json(result);
         });
     },
@@ -21,60 +22,62 @@ module.exports = {
         proptyp.createdOn = Date.now();
 
         proptyp.save((err, result) => {
-            if(err)
+            if (err)
                 res.status(400).send(err);
-            else    
+            else
                 res.status(200).json({ message: 'Property type added successfully', id: result._id });
         });
     },
-    addNewProperty: (req, res) => {
-        // res.status(200).send(req.body.userId);
-        var property = new Property();
+    addNewProperty: async (req, res) => {
+        let imgs = [];        
+        try{
+            if(req.files.length)
+                req.files.forEach(ele => imgs.push(ele.filename) )
+            //Creating slug for the listing 
+            var slug  = await helpers.slugGenerator(req.body.title, 'title', 'property');
+            req.body.slug = slug;
+            req.body.type = req.body.Proptype;
+            req.body.images = imgs;      
+            req.body.imgPath = 'properties';
 
-        property.title = req.body.title;
-        property.description = req.body.description;
-        property.type = req.body.type;
-        property.propertyFor = 'sell'; //req.body.for;
-        property.state = req.body.state;
-        property.city = req.body.city;
-        property.locality = req.body.locality;
-        property.address = req.body.address;
-        property.email = req.body.email;
-        property.phoneNo = req.body.phoneNo;
-        property.pincode = req.body.pincode;
-        property.userId = req.body.userId;
-        property.createdOn = Date.now();
+            var prop = new Property(req.body);
+            const result = await prop.save();
 
-        property.save((err, result) => {
-            if(err)
-                res.status(400).send(err);
-            else
-                res.status(200).json({ message: 'Property posted successfully', id: result._id });
-        })
+            if(result && result._id && result.slug)
+                res.status(200).json({result, message: "Your property has been successfully posted"});                
+            else throw new Error('Something Went Wrong');
+        }
+        catch(err){
+            console.log({err});
+            res.status(400).json({message: err.message});
+        }
     },
     getUserList: (req, res) => {
         Property.find({ isActive: true, userId: req.params.userId })
-        .populate('city', 'name')
-        .populate('state', 'name')
-        .populate('type', 'title')
-        .exec((err, result) => {
-            if (err)
-                res.status(400).send(err);
-            else
-                res.status(200).json(result);
-        });
+            .populate('city', 'name')
+            .populate('state', 'name')
+            .populate('type', 'title')
+            .exec((err, result) => {
+                if (err)
+                    res.status(400).send(err);
+                else
+                    res.status(200).json(result);
+            });
     },
-    getSingleProperty: (req, res) => {
-        Property.findOne({ _id: req.params.propertyId })
-        .populate('city', 'name')
-        .populate('state', 'name')
-        .populate('type', 'title')
-        .exec((err, result) => {
-            if (err)
-                res.status(400).send(err);
-            else
-                res.status(200).json(result);
-        });
+    getSingleProperty: async (req, res) => {
+        try{
+            const result  = await Property.findOne({ slug: req.params.propertySlug })
+                .populate('city', 'name')
+                .populate('state', 'name')
+                .populate('type', 'title');
+            
+            if(result) res.status(200).json({result});
+            else throw new Error('Something Went Wrong');
+        }
+        catch(err){
+            res.status(400).json({message: err.message});
+        }
+        
     },
     getFullList: (req, res) => {
         Property.find({ isActive: true })
@@ -83,21 +86,22 @@ module.exports = {
             .populate('type', 'title')
             .populate('userId', 'name')
             .exec((err, result) => {
-            if (err)
-                res.status(400).send(err);
-            else
-                res.status(200).json(result);
-        });
+                if (err)
+                    res.status(400).send(err);
+                else
+                    res.status(200).json(result);
+            });
     },
-    markAsSold: (req, res) => {
-        Property.update({ _id: req.params.propertyId }, { status: req.body.status })
-        .exec((err, result) => {
-            if(err) res.status(400).send(err);
-            else res.status(200).json({result});
-        })
-
-        // console.log('running', req.params, req.body);
-        // res.send('sdsadsda');
+    markAsSold: async (req, res) => {
+        try{
+            const result = await Property.update({ slug: req.params.propertySlug }, { status: req.body.status });
+            console.log({result});
+            if(result && result.nModified == 1) res.status(200).json({ result, message: "Property has been updated Successfully" });
+            else throw new Error('Error in updating property');
+        }
+        catch(err){
+            res.status(400).json({message: err.message});
+        }
     },
     filterProperties: (req, res) => {
         // console.log('propertyFor ', req.query.propertyFor, typeof req.query.propertyFor);
@@ -114,20 +118,26 @@ module.exports = {
         if (req.query.userId)
             query['userId'] = req.query.userId
         if (req.query.notUserId)
-            query['userId'] = { $ne: req.query.notUserId}
+            query['userId'] = { $ne: req.query.notUserId }
         if (req.query.status)
             query['status'] = { $in: req.query.status.split(",") }
-            console.log({query});
+        console.log({ query });
         Property.find(query)
             .populate('city', 'name')
             .populate('state', 'name')
             .populate('type', 'title')
             .populate('userId', 'name')
-        .exec((err, result) => {
-            if (err)
-                res.status(400).send(err);
-            else
-                res.status(200).json(result);                
-        });
+            .exec((err, result) => {
+                if (err)
+                    res.status(400).send(err);
+                else
+                    res.status(200).json(result);
+            });
     },
+    testController: async (req, res) => {
+        // console.log({testData});
+        const testData = await Property.find({ updatedOn: { $gte : '2019-04-01' } })
+        console.log({ testData });
+        return res.send(testData);
+    }
 }

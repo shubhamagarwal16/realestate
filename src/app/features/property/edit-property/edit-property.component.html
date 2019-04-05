@@ -32,7 +32,7 @@
         <div class="col-8">
             <label for="">Property Type:</label>
             <select required name="type" 
-             [(ngModel)]="propertyDetail.type._id" #type="ngModel" 
+             [(ngModel)]="propertyDetail.type" #type="ngModel" 
             class="custom-select">
               <option value="">Select Property Type</option>
               <option *ngFor="let property of propertyTypeList" value="{{property._id}}"
@@ -51,7 +51,7 @@
     <div class="form-row">
       <div class="form-group col-md-4">
           <label for="">State:</label>
-          <select name="state" [(ngModel)]="propertyDetail.state._id" #state="ngModel" (change)="getCityList(state.value)"  required class="custom-select">
+          <select name="state" [(ngModel)]="propertyDetail.state" #state="ngModel" (change)="getCityList(state.value)"  required class="custom-select">
             <option value="">Select State</option>
             <option *ngFor="let state of stateList" [selected]="propertyDetail.state._id" value="{{state._id}}">{{state.name}}</option>
           </select>
@@ -60,7 +60,7 @@
         </div>
         <div class="form-group col-md-4">
           <label for="">City: <small *ngIf="FetchingCityList" ><i class="fa fa-refresh fa-spin fa-fw"></i></small></label>
-            <select name="city" [(ngModel)]="propertyDetail.city._id" #city="ngModel" required class="custom-select">
+            <select name="city" [(ngModel)]="propertyDetail.city" #city="ngModel" required class="custom-select">
                 <option value="">Select City</option>
                 <option *ngFor="let city of cityList" [selected]="propertyDetail.city._id" value="{{city._id}}">{{city.name}}</option>
             </select>

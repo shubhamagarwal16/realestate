@@ -4,7 +4,7 @@
       <form #filter="ngForm" class="positn-sticky" (ngSubmit)="filterProperties()">
         <h4 class="pad-btm-15">
           <i class="fa fa-filter" aria-hidden="true"></i> Filters
-          <a (click)="clearFilters()">
+          <a href="javascript:void(0);" (click)="clearFilters()">
             <small>clear</small>
           </a>
           <button class="btn btn-success btn-sm float-right">Search</button>
@@ -71,7 +71,7 @@
         <button [class.btn-danger]="!blockView.status" (click)="blockView = { status: false, size: 12 };" class="btn">
           <i class="fa fa-list" aria-hidden="true"></i>
         </button>
-        <button [class.btn-danger]="blockView.status" (click)="blockView = { status: true, size: 6 }; " class="btn">
+        <button [class.btn-danger]="blockView.status" (click)="blockView = { status: true, size: 6 }; " class="btn mar-left-10">
           <i class="fa fa-th-large" aria-hidden="true"></i>
         </button>
       </div>

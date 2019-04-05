@@ -1,9 +1,10 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-propertySchema = new Schema({
+const propertySchema = mongoose.model('property', new mongoose.Schema({
     title: {
         type: String,
+        trim: true,
         required: true
     },
     propertyFor: {
@@ -28,23 +29,58 @@ propertySchema = new Schema({
         ref: 'City'
     },
     locality: {
-        type: String
+        type: String,
+        required: true
+    },
+    length: {
+        type: Number,
+        required: true
+    },
+    breadth: {
+        type: Number,
+        required: true
+    },
+    cornrPlot: {
+        type: Boolean,
+        default: false,
+        enum: [true, false]
+    },
+    isSociety: {
+        type: Boolean,
+        default: false,
+        enum: [true, false]
+    },
+    societyName: {
+        type: String,
+        required: function(){ return this.isSociety; }
+    },
+    flatNo: {
+        type: String,
+        required: function(){ return this.isSociety; }
     },
     address: {
-        type: String
+        type: String,
+        required: true
     },
     email: {
-        type: String
+        type: String,
+        required: true
+    },
+    price: {
+        type: Number
     },
     phoneNo: {
-        type: String
+        type: String,
+        required: true
     },
     pincode: {
-        type: String
+        type: String,
+        required: true
     },
     userId: {
         type: Schema.Types.ObjectId,
-        ref: 'users'
+        ref: 'users',
+        required: true
     },
     status: {
         type: String,
@@ -59,13 +95,20 @@ propertySchema = new Schema({
         type: String,
         required: true
     },
+    images: {
+        type: [String]
+    },
+    imgPath: {
+        type: String
+    },
     updatedOn: {
         type: Date,
         default: Date.now()
     },
     createdOn: {
-        type: Date
+        type: Date,
+        default: Date.now()
     }
-});
+}) );
 
-module.exports = mongoose.model('property', propertySchema);
+module.exports = propertySchema;
