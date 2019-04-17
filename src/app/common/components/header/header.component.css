@@ -55,3 +55,21 @@ ul.header-drp-dwn li button {
     font-size: 14px;
     padding: 5px .5rem;
 }
+
+/* fullPageLoader */
+.fullPageLoaderMain{
+    position: relative;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+.fullPageLoader{
+    position: fixed;
+    top: 38%;
+    bottom: 50%;
+    left: 44%;
+    right: 50%;
+    z-index: 1;
+    
+}

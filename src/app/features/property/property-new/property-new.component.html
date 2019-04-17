@@ -78,8 +78,7 @@
       <div class="col-md-2">
         <p>Corner Plot?</p>
         <div class="custom-control custom-checkbox">
-          <input class="custom-control-input" ngModel #cornrPlot="ngModel" name="cornrPlot" value="true"
-            id="cornrPlotId" type="checkbox">
+          <input class="custom-control-input" ngModel #cornrPlot="ngModel" name="cornrPlot" value="true" id="cornrPlotId" type="checkbox">
           <label class="custom-control-label" for="cornrPlotId">Yes</label>
         </div>
       </div>
@@ -193,6 +192,6 @@
       <small class="text-danger" *ngIf="title.touched && title.invalid">
         This field is required</small>
     </div>
-    <button [disabled]="f.invalid" class="btn btn-danger btn-block">Post a New Property</button>
+    <button [disabled]="f.invalid || isSubmittingForm" class="btn btn-danger btn-block"> <i *ngIf="isSubmittingForm" class="fa fa-spinner fa-spin" aria-hidden="true"></i> Post a New Property</button>
   </form>
 </div>

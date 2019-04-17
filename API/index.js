@@ -1,29 +1,31 @@
 const express = require('express');
-var app = express();
 var path = require('path');
 const bodyParser = require('body-parser');
-const mongoose   = require('mongoose');
+const mongoose = require('mongoose');
 const morgan = require('morgan');
+
+const config = require('./config/config');
+var app = express();
+
 const startupdebug = require('debug')('app:startup');
 
 app.use(express.static(path.join(__dirname, 'uploads')));
 
 // Routing
-var indexR = require('./routes/indexR'); 
 var users = require('./routes/users');
 var auth = require('./routes/auth');
 var common = require('./routes/common');
 var property = require('./routes/property');
 
 // Connect with DB
-
-// --- local
-// mongoose.connect('mongodb://localhost/realEstatedb');
+// --- local     // mongoose.connect('mongodb://localhost/realEstatedb');
 
 // ----- mLab
-mongoose.connect('mongodb://realEstate:realEstate@ds227119.mlab.com:27119/realestate-node')
-.then(() => // we're connected!
-startupdebug('connected to dB'))
+mongoose.connect(config.dbUrl, {useNewUrlParser: true})
+.then((conn) => // we're connected!
+{
+  startupdebug('connected to dB');
+})
 .catch(err => console.error('Connection Error', err));
 
 
@@ -42,19 +44,14 @@ app.use(function(req, res, next) {
 });
 
 // Routes
-// app.use('/api', indexR);
 app.use('/api/user', users);
 app.use('/api/auth', auth);
 app.use('/api/common', common);
 app.use('/api/property', property);
 
- //console.log(process.env.PORT); //.PORT, ' -port');
-
+//console.log(process.env.PORT); //.PORT, ' -port');
 // var tokenn = require('./config/config').secretKey;
-
 // console.log('token ', tokenn);
-
-
 
 var port =  process.env.PORT || 8080;
 

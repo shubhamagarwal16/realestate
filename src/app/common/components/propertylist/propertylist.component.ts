@@ -63,7 +63,7 @@ export class PropertylistComponent implements OnInit, OnChanges {
     this.router.navigate([`/property/view/${propertySlug}`]);
   }
 
-  markAsSold(propertySlug, status) {
+  markAsSold(propertySlug, status, e) {
     if (propertySlug) {
       status = status == 'sell' ? 'sold' : 'acquired';
       this.http.post(this.commonService.base_url + `/property/markAsSold/${propertySlug}`, { status })
@@ -81,6 +81,7 @@ export class PropertylistComponent implements OnInit, OnChanges {
           this.commonService.changeHeaderMessage({ type: 'danger', message });
         });
     }
+    e.stopPropagation();
   }
 
   getFormattedDate(date) {

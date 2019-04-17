@@ -15,14 +15,18 @@ export class PropertyViewComponent implements OnInit {
   ) { }
 
   propertyDetail = {};
+  imageDetail;
 
   getProperty(propertySlug) {
     this.commonService.togglePageLoaderFn(true);
     this.commonService.getSingleProperty(propertySlug)
       .subscribe(result => {
-        this.propertyDetail = result;
+        console.log({result});
+        this.propertyDetail = result['result'];
+        this.imageDetail = result['files'];
       },
-      () => { 
+      (err) => { 
+        console.log({err});
         this.commonService.togglePageLoaderFn(false);
       },
       () => {

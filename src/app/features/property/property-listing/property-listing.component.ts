@@ -26,7 +26,7 @@ export class PropertyListingComponent implements OnInit {
       else if(data === 'available')
           this.queryParams = '?userId='+this.userService.currentUser.user._id + '&status=available';
       else if(data === 'sold')
-        this.queryParams = '?userId='+this.userService.currentUser.user._id + '&status=' + data + ',rented';
+        this.queryParams = '?userId='+this.userService.currentUser.user._id + '&status=' + data + ',acquired';
       else if(data === 'expired')
         this.queryParams = '?userId='+this.userService.currentUser.user._id + '&status=' + data;
       else this.isHidden = true;

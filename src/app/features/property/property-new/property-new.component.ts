@@ -24,6 +24,7 @@ export class PropertyNewComponent implements OnInit {
   FetchingCityList = false;
   imgUrls = [];
   imgsToUpload = [];
+  isSubmittingForm: Boolean = false;
 
   getPropertyTypeList() {
     this.commonService.togglePageLoaderFn(true);
@@ -55,6 +56,7 @@ export class PropertyNewComponent implements OnInit {
 
   submitForm(data) {
     console.log({ data });
+    this.isSubmittingForm = true;
     data.value.userId = this.userService.currentUser.user._id;
 
     const imageData = new FormData();
@@ -65,6 +67,7 @@ export class PropertyNewComponent implements OnInit {
       // iterate and set other form data
       imageData.append(key, data.value[key])
     }
+    console.log({imageData});
     this.http.post(this.commonService.base_url + '/property/new', imageData)
       .subscribe(result => {
         console.log({ result });

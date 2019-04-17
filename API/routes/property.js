@@ -1,26 +1,38 @@
 const express = require('express');
-var propertyController = require('../controllers/property.controller');
-var router = express.Router();
 var multer  = require('multer');
-const helpers = require('../providers/helper');
+const crypto = require('crypto');
+var path = require('path');
+var GridFsStorage  = require('multer-gridfs-storage');
+const config = require('../config/config');
 
-var storage = multer.diskStorage({
-    // destination
-    destination: function (req, file, cb) {
-      cb(null, './uploads/properties/')
-    },
-    filename: function (req, file, cb) {
-      cb(null, Date.now() + '-' + file.originalname);
-    }
-  });
-var upload = multer({ storage: storage });
+var router = express.Router();
+var propertyController = require('../controllers/property.controller');
 
-// router.use((req, res, next) => {
-//     console.log(req.originalUrl,' query param: ', req.query);
-//     next();
-// })
+// Create storage engine
+const storage = new GridFsStorage({
+  url: config.dbUrl,
+  file: (req, file) => {
+    return new Promise((resolve, reject) => {
+      crypto.randomBytes(16, (err, buf) => {
+        if (err) return reject(err);
+        const filename = buf.toString('hex') + path.extname(file.originalname);
+        const fileInfo = {
+          filename: filename,
+          bucketName: 'imageMeta'
+        };
+        resolve(fileInfo);
+      });
+    });
+  }
+});
+const upload = multer({ storage });
 
-// Property type
+
+
+// ====================================================================================
+// ====================================ROUTES=========================================
+// ====================================================================================
+// Property type dropdown
 router.get('/type', propertyController.propertyTypeList);
 router.post('/type', propertyController.addPropertyType);
 
@@ -29,38 +41,10 @@ router.post('/new', upload.array("propImages"), propertyController.addNewPropert
 router.get('/list/:userId', propertyController.getUserList);
 router.get('/list/', propertyController.getFullList);
 router.get('/single/:propertySlug', propertyController.getSingleProperty);
+router.get('/showGFSImage/:filename', propertyController.showGFSImage); // To view image in front-end
 router.post('/markAsSold/:propertySlug', propertyController.markAsSold);
 
-router.get('/slugslug', (req, res) => {
-    var slug  = helpers.slugGenerator('Property 1', 'title', 'property');
-    slug.then((result2) => {
-        console.log({result2});
-        res.send('sdfsf'+ result2);
-    })
-    console.log('------------');
-}); 
-
-router.get('/testtest2', propertyController.testController);
-router.get('/testtest1', (req, res) => {
-    async function f1(){
-        var propertyType = require('../models/propertyTypes');
-        var sada = await propertyType.find();
-        console.log('sada ', sada);
-        // await f2();
-        // res.send('async await');
-    }
-    // function f2(){
-    //     new Promise(() => {
-    //         setTimeout(() => console.log('f2'), 3000 );
-    //     })
-    //     console.log('async await');
-    // }
-    f1();
-   
-
-});
-//filter
+//Properties filter
 router.get('/filter', propertyController.filterProperties);
-// router.get('/filter/propertyFor/:propertyFor/type/:type/city/:city', propertyController.filterProperties);
 
 module.exports = router;

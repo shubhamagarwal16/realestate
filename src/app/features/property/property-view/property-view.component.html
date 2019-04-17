@@ -11,7 +11,7 @@
   
   <div class="row">
     <div class="col-md-5">
-      <img src="" alt="">
+      <img *ngFor="let img of imageDetail;" src="{{commonService.base_url}}/property/showGFSImage/{{ img.filename }}" alt="">
     </div>
     <div class="col-md-7">
       <div class="row">

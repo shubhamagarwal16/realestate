@@ -1,9 +1,18 @@
 const mongoose = require('mongoose');
 const moment = require('moment');
-const helpers = require('../providers/helper');
+const fs = require('fs');
+var Grid  = require('gridfs-stream');
 
+const helpers = require('../providers/helper');
 var propertyType = require('../models/propertyTypes');
 var Property = require('../models/property');
+
+var gfs;
+var conn = mongoose.connection;
+conn.on('connected', () => { 
+    gfs = Grid(conn.db, mongoose.mongo);
+    gfs.collection('imageMeta');
+ });
 
 module.exports = {
     propertyTypeList: (req, res) => {
@@ -29,7 +38,7 @@ module.exports = {
         });
     },
     addNewProperty: async (req, res) => {
-        let imgs = [];        
+        let imgs = [];      
         try{
             if(req.files.length)
                 req.files.forEach(ele => imgs.push(ele.filename) )
@@ -37,14 +46,14 @@ module.exports = {
             var slug  = await helpers.slugGenerator(req.body.title, 'title', 'property');
             req.body.slug = slug;
             req.body.type = req.body.Proptype;
+            req.body.cornrPlot = req.body.cornrPlot ? true : false;
             req.body.images = imgs;      
             req.body.imgPath = 'properties';
             if(!req.body.isSociety){
                 req.body.flatNo = '';
                 req.body.societyName = '';
-            }
-
-            var prop = new Property(req.body);
+            }            
+            const prop = new Property(req.body);
             const result = await prop.save();
 
             if(result && result._id && result.slug)
@@ -70,12 +79,16 @@ module.exports = {
     },
     getSingleProperty: async (req, res) => {
         try{
-            const result  = await Property.findOne({ slug: req.params.propertySlug })
+            var result  = await Property.findOne({ slug: req.params.propertySlug })
                 .populate('city', 'name')
                 .populate('state', 'name')
                 .populate('type', 'title');
-            
-            if(result) res.status(200).json({result});
+                
+            var files = [];
+            if(result && result.images.length){
+                files = await gfs.files.find({ filename: { $in : result.images } }).toArray();
+            }
+            if(result) res.status(200).json({result, files});
             else throw new Error('Something Went Wrong');
         }
         catch(err){
@@ -143,5 +156,26 @@ module.exports = {
         const testData = await Property.find({ updatedOn: { $gte : '2019-04-01' } })
         console.log({ testData });
         return res.send(testData);
+    },
+    showGFSImage: (req, res) => {
+        gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+          // Check if file
+          if (!file || file.length === 0) {
+            return res.status(404).json({
+              err: 'No file exists'
+            });
+          }
+      
+          // Check if image
+          if (file.contentType === 'image/jpeg' || file.contentType === 'image/png') {
+            // Read output to browser
+            const readstream = gfs.createReadStream(file.filename);
+            readstream.pipe(res);
+          } else {
+            res.status(404).json({
+              err: 'Not an image'
+            });
+          }
+        }) 
     }
 }
