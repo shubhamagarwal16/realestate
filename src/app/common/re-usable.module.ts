@@ -10,7 +10,7 @@ import { LoginService } from './services/login.service';
 import { AuthGuardService } from './services/auth-guard.service';
 import { RegistrationValidators } from './validators/registration.validators';
 import { PropertylistComponent } from './components/propertylist/propertylist.component';
-import { PageLoaderComponent } from './components/page-loader/page-loader.component';
+import { SmallComponentsComponent } from './components/small-components/small-components.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { LoginModalComponent } from './components/login-modal/login-modal.component';
 import { MatComponentsModule } from '../mat-components.module';
@@ -36,7 +36,7 @@ import { InputFormatDirective } from './directives/input-format.directive';
     HeaderComponent,
     FooterComponent,
     PropertylistComponent,
-    PageLoaderComponent,
+    SmallComponentsComponent,
     NotFoundComponent,
     LoginModalComponent,
     InputFormatDirective
@@ -46,7 +46,7 @@ import { InputFormatDirective } from './directives/input-format.directive';
     HeaderComponent,
     FooterComponent,
     PropertylistComponent,
-    PageLoaderComponent,
+    SmallComponentsComponent,
     NotFoundComponent,
     InputFormatDirective
   ],

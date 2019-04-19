@@ -67,36 +67,47 @@ export class PropertyNewComponent implements OnInit {
       // iterate and set other form data
       imageData.append(key, data.value[key])
     }
-    console.log({imageData});
+    console.log({ imageData });
+    this.commonService.togglePageLoaderFn(true);
     this.http.post(this.commonService.base_url + '/property/new', imageData)
       .subscribe(result => {
         console.log({ result });
         let data = result && result['result'] || {};
         let message = result && result['message'] || '';
-        if(data && data['slug']){
+        if (data && data['slug']) {
           this.commonService.changeHeaderMessage({ type: 'success', message });
           this.router.navigate([`/property/view/${data.slug}`])
         }
         else this.commonService.changeHeaderMessage({ type: 'danger', message: 'Something Went Wrong' });
       }, err => {
         let errmessage = err.error && err.error.message || '';
-        console.log({err}, errmessage);
+        console.log({ err }, errmessage);
         this.commonService.changeHeaderMessage({ type: 'danger', message: errmessage });
-      })
+        this.commonService.togglePageLoaderFn(false);
+      },
+        () => {
+          this.commonService.togglePageLoaderFn(false);
+        })
   }
 
   log(data) { console.log(data); }
 
   filesChange(fieldName: string, fileList) {
+    console.log({ fileList });
     if (fileList && fileList.length) {
-      this.imgsToUpload = Object.values(fileList);
+      // this.imgsToUpload = Object.values(fileList);
       let i = 0;
       Object.values(fileList).forEach(f => {
-        let reader = new FileReader();
-        reader.readAsDataURL(fileList[i]);
-        let name = fileList[i].name;
-        reader.onload = (_event) => {
-          this.imgUrls.push({ name, path: reader.result });
+        if (fileList[i].size < 80000) {
+          // console.log({ f });
+          let reader = new FileReader();
+          reader.readAsDataURL(fileList[i]);
+          let name = fileList[i].name;
+          // console.log(fileList[i]);
+          this.imgsToUpload.push(f);
+          reader.onload = (_event) => {
+            this.imgUrls.push({ name, path: reader.result });
+          }
         }
         i++;
       })

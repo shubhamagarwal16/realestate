@@ -37,10 +37,9 @@ export class PropertylistComponent implements OnInit, OnChanges {
     else { ele.value = value + incDec; }
 
     let imgSrc = this.propertyList[propNum].images[ele.value];
-    let imgPath = this.propertyList[propNum].imgPath;
     if (imgSrc) {
       let img: any = document.getElementById('propImg' + propNum);
-      img.src = this.commonService.main_url + '/' + imgPath + '/' + imgSrc;
+      img.src = this.commonService.main_url + '/api/property/showGFSImage/' + imgSrc;
     }
     //Preventing opening property view page on button click
     e.stopPropagation();

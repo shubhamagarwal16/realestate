@@ -2,13 +2,12 @@
 
 .load-bar {
     position: relative;
-    // margin-top: 20px;
     width: 100%;
     height: 4px;
     background-color: #fdba2c;
-
+    z-index: 1;
     position: sticky;
-    top: 56px;
+    top: 47px;
   }
   .bar {
     content: "";
@@ -38,3 +37,14 @@
   }
 
 /* LOADER */
+
+/* QUESTION MARK */
+
+.more-info-qstnMark a {
+  color: #999;
+}
+.more-info-qstnMark a:hover {
+  color: #555;
+}
+
+/* QUESTION MARK */

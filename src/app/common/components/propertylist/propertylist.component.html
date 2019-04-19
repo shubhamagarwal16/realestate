@@ -1,5 +1,8 @@
 <div class="row">
-  <div (click)="viewProperty(property.slug);" *ngFor="let property of propertyList;index as propNum;trackBy: setMaxLength('propNum'+index)" class="col-md-{{blockSize}} pad-btm-15 p-cursor" id="propNum{{propNum}}" [ngStyle]="{ 'height': maxLength ? maxLength : 'initial' }" ng-init="setMaxLength('propNum'+ propNum)">
+  <div (click)="viewProperty(property.slug);"
+    *ngFor="let property of propertyList;index as propNum;trackBy: setMaxLength('propNum'+index)"
+    class="col-md-{{blockSize}} pad-btm-15 p-cursor" id="propNum{{propNum}}"
+    [ngStyle]="{ 'height': maxLength ? maxLength : 'initial' }" ng-init="setMaxLength('propNum'+ propNum)">
     <!-- [ngClass]="{  routerLink="/users/property/view/{{property._id}}"
     'col-md-12': !blockView,
     'col-md-6': blockView
@@ -13,22 +16,28 @@
           'col-md-3 border-right': !blockView,
           'col-md-12 border-bottom': blockView
         }">
-        <button *ngIf="property.images.length > 1 && blockView;" (click)="toggleImages('imgCounter', propNum, -1, property.images.length, $event);"
-        class="btn btn-xs btn-default">-</button>
-          <img *ngIf="!property.images.length" width="120px" src="assets/images/no-image.png" alt="no-image">
-          <img id="propImg{{propNum}}" src="{{commonService.base_url}}/property/showGFSImage/{{ property.images[0] }}" width="140px" alt="Img">
-          <input type="hidden" name="imgCounter" ngModel="0" #imgCounter="ngModel" id="imgCounter{{propNum}}">
-          <button *ngIf="property.images.length > 1 && blockView;" (click)="toggleImages('imgCounter', propNum, +1, property.images.length, $event);"
-          class="btn btn-xs btn-default mar-left-10">+
-        </button>
-          <div *ngIf="property.images.length > 1 && !blockView;">
-            <button (click)="toggleImages('imgCounter', propNum, -1, property.images.length, $event);"
-              class="btn btn-xs btn-default">
-              -</button>
-            <button (click)="toggleImages('imgCounter', propNum, +1, property.images.length, $event);"
+          <div *ngIf="property.images.length; else noImg;">
+            <button *ngIf="property.images.length > 1 && blockView;"
+              (click)="toggleImages('imgCounter', propNum, -1, property.images.length, $event);"
+              class="btn btn-xs btn-default">-</button>
+            <img [ngStyle]="blockView ? { 'margin-bottom': '10px' } : ''" id="propImg{{propNum}}" src="{{commonService.base_url}}/property/showGFSImage/{{ property.images[0] }}" width="120px" height="120px" alt="Img">
+            <input type="hidden" name="imgCounter" ngModel="0" #imgCounter="ngModel" id="imgCounter{{propNum}}">
+            <button *ngIf="property.images.length > 1 && blockView;"
+              (click)="toggleImages('imgCounter', propNum, +1, property.images.length, $event);"
               class="btn btn-xs btn-default mar-left-10">+
             </button>
+            <div style="margin-top: 10px;" *ngIf="property.images.length > 1 && !blockView;">
+              <button (click)="toggleImages('imgCounter', propNum, -1, property.images.length, $event);"
+                class="btn btn-xs btn-default">
+                -</button>
+              <button (click)="toggleImages('imgCounter', propNum, +1, property.images.length, $event);"
+                class="btn btn-xs btn-default mar-left-10">+
+              </button>
+            </div>
           </div>
+          <ng-template #noImg>
+            <img [ngStyle]="blockView ? { 'margin-bottom': '10px' } : ''" *ngIf="!property.images.length" width="120px" height="120px" src="assets/images/no-image.png" alt="no-image">
+          </ng-template>
         </div>
         <div [ngClass]="{
           'col-md-7': !blockView,

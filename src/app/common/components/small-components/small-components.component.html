@@ -1,0 +1,11 @@
+<div *ngIf="componentName == 'barLoader'" [hidden] = "!loaderActive" class="load-bar">
+  <div class="bar"></div>
+  <div class="bar"></div>
+  <div class="bar"></div>
+</div>
+
+<small *ngIf="componentName == 'moreInfoQstnMark'" class="more-info-qstnMark">
+  <a [matTooltip]="toolTipData.text" [matTooltipPosition]="toolTipData.position" href="javascript:void(0);">
+    <i class="fa fa-question-circle" aria-hidden="true"></i>
+  </a>  
+</small>

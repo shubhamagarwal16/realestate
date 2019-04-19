@@ -5,27 +5,33 @@
     <h4>Property Info- </h4>
     <hr class="hr">
     <div class="form-group">
-      <label for=""> Upload images: <small class="text-info">(Auto-generated)</small> <small *ngIf="imgUrls.length;"
+      <label for=""> Upload images: <small class="text-info">(Auto-preview)</small> <small *ngIf="imgUrls.length;"
           (click)="imgUrls.length = 0;" class="p-cursor text-primary">(remove all)</small></label> <br>
       <div *ngIf="!imgUrls.length; else imgBOx" class="dropbox">
-        <input type="file" multiple name="uploadFieldName"
-          (change)="filesChange($event.target.name, $event.target.files)" accept="image/*" #photos>
+        <input type="file" multiple name="uploadFieldName" (change)="filesChange($event.target.name, $event.target.files)" accept="image/*" #photos>
         <p *ngIf="currentStatus === STATUS_INITIAL">
           Drag your file(s) here to begin<br>
-          or click to browse
+          or click to browse<br>
+          <small>max size: 80kb (or else will be ignored)</small>
         </p>
         <!-- <p *ngIf="currentStatus === STATUS_SAVING">
           Uploading {{ photos.files.length }} files...
         </p> -->
       </div>
       <ng-template #imgBOx>
-        <span class="singlImg" *ngFor="let img of imgUrls">
-          <img src="{{img.path}}" style="max-width: 150px; margin-right: 10px;" alt="img">
-          <i (click)="removeSinglePic(img);" class="fa fa-times p-cursor" aria-hidden="true"></i>
-        </span>
+        <div class="row">
+          <div *ngFor="let img of imgUrls" class="col-md-2">
+            <div class="singlImg">
+              <img title="{{img?.name}}" src="{{img.path}}" alt="img">
+              <div title="{{img?.name}}" class="imgOverlay">
+                  <i (click)="removeSinglePic(img);" class="fa fa-times p-cursor" aria-hidden="true"></i>
+              </div>
+            </div>
+          </div>
+        </div>
       </ng-template>
     </div>
-
+    <hr class="hr">
     <div class="form-group">
       <div class="form-row">
         <div class="col-4">
@@ -45,7 +51,7 @@
         </div>
         <div class="col-4">
           <label for="">Enter Total Amount <small class="text-primary">(optional)</small> </label>
-          <input type="number" name="price" ngModel #price="ngModel" class="form-control" required>
+          <input type="number" name="price" ngModel #price="ngModel" class="form-control" style="-webkit-appearance: none;" >
         </div>
       </div>
     </div>
@@ -62,11 +68,13 @@
             <small>Length</small>
             <input type="number" min="0" ngModel #length="ngModel" name="length" required placeholder="Plot length"
               class="form-control form-field-small">
+              <small class="text-danger" *ngIf="length.touched && length.invalid">required*</small>
           </div>
           <div class="col-md-3">
             <small>Breadth</small>
             <input type="number" min="0" ngModel #breadth="ngModel" name="breadth" required placeholder="Plot breadth"
               class="form-control form-field-small">
+              <small class="text-danger" *ngIf="breadth.touched && breadth.invalid">required*</small>
           </div>
           <div class="col-md-6">
             <p>Total-</p>
@@ -151,7 +159,7 @@
 
     <div class="row">
       <div class="form-group col-md-12">
-        <label for="">Description: <small class="text-primary">({{ 500 - description.value?.length | number }})</small>
+        <label for="">Description: <small class="text-primary">({{ 500 - description.value?.length | number }}) </small> <app-small-components [componentName]="'moreInfoQstnMark'" [toolTipData]="{ position: 'right', text: 'max number of letters - 500' }" ></app-small-components> 
         </label>
         <textarea name="description" required [appInputFormat]="'capitalize'" ngModel #description="ngModel" class="form-control" resize="none"
           cols="30" maxlength="500" rows="5"></textarea>
@@ -184,7 +192,9 @@
       </div>
     </div>
     <div class="form-group">
-      <label for="">Property Title: <small class="text-info">(Auto-generated)</small></label>
+      <label for="">Property Title: <small class="text-info">(Auto-generated) </small>
+        <app-small-components [componentName]="'moreInfoQstnMark'" [toolTipData]="{ position: 'right', text: 'On the basics of values entered above' }" ></app-small-components> 
+      </label>
       <input type="text" #title="ngModel" name="title" (change)="log(title.value)"
         [ngModel]="(cornrPlot.value ? 'Corner ' : '') + getDataTitleViaId(Proptype.value, 'propertyTypeList', 'title') + (societyName?.value ? ' at ' +  societyName.value : '') + (city.value ? ' in ' + getDataTitleViaId(city.value, 'cityList', 'name') : '') + (state.value ? (city.value ? ', ': ' in ') + getDataTitleViaId(state.value, 'stateList', 'name') : '')"
         placeholder="Enter property's title" required class="form-control">

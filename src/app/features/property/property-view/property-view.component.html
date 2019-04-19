@@ -1,57 +1,10 @@
 <div class="container">
   <div class="row mar-btm-25">
-    <div class="col-md-2">
-      price
-    </div>
-    <div class="col-md-10">
-      <h5>{{propertyDetail?.title}}</h5>
-      <p>dnfjkhsdufdsjfsdjfg</p>
+    <div *ngFor="let img of imageDetail;" class="col-md-3">
+        <img  src="{{commonService.base_url}}/property/showGFSImage/{{ img.filename }}" alt="">
     </div>
   </div>
-  
   <div class="row">
-    <div class="col-md-5">
-      <img *ngFor="let img of imageDetail;" src="{{commonService.base_url}}/property/showGFSImage/{{ img.filename }}" alt="">
-    </div>
-    <div class="col-md-7">
-      <div class="row">
-        <div class="col-md-4">
-          <div class="p_title"></div>
-          <div class="p_value"></div>
-        </div>
-        <div class="col-md-4">
-          <div class="p_title"></div>
-          <div class="p_value"></div>
-        </div>
-        <div class="col-md-4">
-          <div class="p_title"></div>
-          <div class="p_value"></div>
-        </div>
-        <div class="col-md-4">
-          <div class="p_title"></div>
-          <div class="p_value"></div>
-        </div>
-        <div class="col-md-4">
-          <div class="p_title"></div>
-          <div class="p_value"></div>
-        </div>
-        <div class="col-md-4">
-          <div class="p_title"></div>
-          <div class="p_value"></div>
-        </div>
-        <div class="col-md-4">
-          <div class="p_title"></div>
-          <div class="p_value"></div>
-        </div>
-        <div class="col-md-4">
-          <div class="p_title"></div>
-          <div class="p_value"></div>
-        </div>
-        <div class="col-md-4">
-          <div class="p_title"></div>
-          <div class="p_value"></div>
-        </div>
-      </div>
-    </div>
+    <h5>{{propertyDetail?.title}}</h5>
   </div>
 </div>
