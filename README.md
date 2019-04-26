@@ -7,6 +7,7 @@
     - Post New Property (add images, Auto-generated property title, Dynamic form entries, slug creation in backend)
     - Filter, view properties (multiple views option)
     - Auth guard, Local storage
+    - File upload in mongodb (using gridfs)
 - Many more functionalities to add....
 
 ## Services used / Minimum Requirements - 
@@ -19,14 +20,13 @@ I have used Ubuntu 16.04 for the development of this project, conflicts may arri
 
 ## File Structure -
 
-- real-estate/ (root direcory for **Angular front-end** )
-- real-estate/API/ (directory for **Node-express back-end** )
+- real-estate/ANGULAR_CODE_BASE (directory for **Angular front-end** )
+- real-estate/NODEJS_CODE_BASE/ (directory for **Node-express back-end** )
 
 ## Installation / Configuration - 
 
 - Install the above required services
-- After clonning the repo use `npm install` under the root directory &&
--  use `npm install` under the API/ directory
+- After clonning the repo use `npm install` in the ANGULAR_CODE_BASE/ directory as well as in  NODEJS_CODE_BASE/ directory
 
 **Note** - Back-end and front-end will have their individual *node_modules*
 
