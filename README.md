@@ -1,4 +1,9 @@
-# RealEstate using Angular, Node and MongoDb
+# RealEstate using Angular, React, Node and MongoDb
+
+## Project Layout
+- Common API codebase for **Angular** aswellas **React** codebase
+- Individual codebase for Angular UI aswellas React UI
+- **React codebase under Initial phase**
 
 ## Features -
 
