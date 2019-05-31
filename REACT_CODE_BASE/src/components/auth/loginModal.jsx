@@ -2,6 +2,7 @@ import React from "react";
 import { Modal, Button } from "react-bootstrap";
 import Form from "../common/form";
 import Joi from "joi-browser";
+import { default as http } from "axios";
 
 class LoginModal extends Form {
   state = {
@@ -20,8 +21,13 @@ class LoginModal extends Form {
       .label("Password")
   };
 
-  doSubmit = () => {
-    console.log("submitted");
+  doSubmit = async () => {
+    console.log("submitted", this.state.data);
+    const { data } = await http.post(
+      "http://localhost:8080/api/auth/user/login",
+      this.state.data
+    );
+    console.log(data);
   };
 
   render() {

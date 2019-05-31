@@ -1,13 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Form from "./form";
+import { Dropdown } from "react-bootstrap";
 
 import LOGO from "../../assets/images/Logo_SA.png";
 import LoginModal from "../auth/loginModal";
+import Navbar from "./navbar";
 
 class Header extends Form {
   state = {
-    loginModalToggle: false
+    loginModalToggle: false,
+    navItems: [
+      { path: "/users/dashboard", name: "Dashboard" },
+      { path: "/property/new", name: "Add New Property" },
+      { path: "/property/search", name: "Find Property" },
+      { path: "/property/listing", name: "My Listing" },
+      { path: "/users/profile/edit", name: "My Profile" }
+    ]
   };
 
   toggleLoginModal = () => {
@@ -17,7 +26,7 @@ class Header extends Form {
   };
 
   render() {
-    const { loginModalToggle } = this.state;
+    const { loginModalToggle, navItems } = this.state;
     return (
       <React.Fragment>
         <header style={{ marginBottom: "0px" }} className="">
@@ -45,12 +54,44 @@ class Header extends Form {
                   >
                     Login
                   </button>
-                  <button
-                    type="button"
+                  <Link
+                    to="/sign-up"
                     className="btn btn-outline-primary btn-sm"
                   >
                     Register
-                  </button>
+                  </Link>
+                  <div>
+                    <div className="user-image">
+                      <span>
+                        <span className="text-danger">Welcome</span>zxc
+                      </span>
+                      <img
+                        src="assets/images/user.jpg"
+                        className="rounded-circle p-cursor"
+                        alt="user"
+                      />
+                    </div>
+                    <Dropdown>
+                      <Dropdown.Toggle variant="success" id="dropdown-basic">
+                        Dropdown Button
+                      </Dropdown.Toggle>
+
+                      <Dropdown.Menu>
+                        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+                        <Dropdown.Item href="#/action-2">
+                          Another action
+                        </Dropdown.Item>
+                        <Dropdown.Item href="#/action-3">
+                          Something else
+                        </Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
+                    {/* <mat-menu #headerRytmenu="matMenu" xPosition="before">
+                            <button routerLink="/users/dashboard" mat-menu-item>Dashboard</button>
+                            <button *ngIf="userService.currentUser?.user.isAdmin" routerLink="/admin/dashboard" mat-menu-item>Admin</button>
+                            <button (click)="loginService.logOut()" mat-menu-item>Logout</button>
+                        </mat-menu> */}
+                  </div>
                 </div>
               </div>
             </div>
@@ -62,6 +103,7 @@ class Header extends Form {
           toggle={loginModalToggle}
           toggleLoginModal={this.toggleLoginModal}
         />
+        <Navbar navItems={navItems} />
         {/* ---------------------- LOGIN MODAL ----------------------------- */}
       </React.Fragment>
     );
