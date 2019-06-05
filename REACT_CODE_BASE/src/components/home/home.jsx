@@ -1,62 +1,56 @@
 import React, { Component } from "react";
 import { Carousel } from "react-bootstrap";
-import sold from "../../assets/images/sold.png";
+import PropertyList from "../common/propertyList";
+import http from "../../services/httpService";
+
+import "../../assets/styles/home.scss";
 
 class Home extends Component {
-  state = {};
+  state = {
+    images: []
+  };
+
+  componentDidMount() {
+    this.getImages();
+  }
+
+  getImages = async () => {
+    const { data: imgs } = await http.get("https://picsum.photos/list");
+    const images = [1, 2, 3].map(() => {
+      const randomId = imgs[Math.floor(Math.random() * imgs.length)].id;
+      return `https://picsum.photos/900/500?image=${randomId}`;
+    });
+    this.setState({ images });
+  };
+
   render() {
+    const { images } = this.state;
     return (
       <React.Fragment>
         <div>
           <Carousel>
-            <Carousel.Item>
-              <img
-                width="200px"
-                className="d-block w-100"
-                src={sold}
-                alt="First slide"
-              />
-              <Carousel.Caption>
-                <h3>First slide label</h3>
-                <p>
-                  Nulla vitae elit libero, a pharetra augue mollis interdum.
-                </p>
-              </Carousel.Caption>
-            </Carousel.Item>
-            <Carousel.Item>
-              <img
-                width="200px"
-                className="d-block w-100"
-                src={sold}
-                alt="Third slide"
-              />
-
-              <Carousel.Caption>
-                <h3>Second slide label</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-              </Carousel.Caption>
-            </Carousel.Item>
-            <Carousel.Item>
-              <img
-                width="200px"
-                className="d-block w-100"
-                src={sold}
-                alt="Third slide"
-              />
-
-              <Carousel.Caption>
-                <h3>Third slide label</h3>
-                <p>
-                  Praesent commodo cursus magna, vel scelerisque nisl
-                  consectetur.
-                </p>
-              </Carousel.Caption>
-            </Carousel.Item>
+            {images.map(item => (
+              <Carousel.Item key={item}>
+                <img
+                  width="100%"
+                  className="d-block w-100"
+                  src={item}
+                  alt="First slide"
+                />
+                <Carousel.Caption>
+                  <h3>First slide label</h3>
+                  <p>
+                    Nulla vitae elit libero, a pharetra augue mollis interdum.
+                  </p>
+                </Carousel.Caption>
+              </Carousel.Item>
+            ))}
           </Carousel>
         </div>
-        <div className="container">
+        <div className="container mt-5">
           <h4 className="text-danger">Recent Postings:</h4>
-          <br className="br" />
+          <hr className="hr" />
+          <PropertyList queryParams="?status=available" {...this.props} />
         </div>
       </React.Fragment>
     );

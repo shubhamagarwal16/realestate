@@ -1,8 +1,10 @@
 import React from "react";
-import { Modal, Button } from "react-bootstrap";
-import Form from "../common/form";
 import Joi from "joi-browser";
-import { default as http } from "axios";
+
+import Form from "../common/form";
+import { Modal, Button } from "react-bootstrap";
+import * as authService from "../../services/authService";
+import * as commonService from "../../services/commonServices";
 
 class LoginModal extends Form {
   state = {
@@ -22,12 +24,26 @@ class LoginModal extends Form {
   };
 
   doSubmit = async () => {
-    console.log("submitted", this.state.data);
-    const { data } = await http.post(
-      "http://localhost:8080/api/auth/user/login",
-      this.state.data
-    );
-    console.log(data);
+    try {
+      const { data } = await commonService.post(
+        "/auth/user/login",
+        this.state.data
+      );
+      if (data && data.token) {
+        localStorage.setItem("token", data.token);
+        const user = authService.getCurrentUser();
+        if (user) {
+          this.props.setLoggedInUser(user);
+          this.props.toggleLoginModal();
+          window.location = "/users/dashboard";
+        }
+      }
+    } catch (error) {
+      let errors = {};
+      if (error && error.response.data)
+        errors.emailPhone = error.response.data.message;
+      this.setState({ errors });
+    }
   };
 
   render() {

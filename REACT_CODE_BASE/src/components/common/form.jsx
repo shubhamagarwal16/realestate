@@ -34,7 +34,7 @@ class Form extends Component {
     const obj = { [name]: value };
     const schema = { [name]: this.schema[name] };
     const { error } = Joi.validate(obj, schema);
-    console.log({ error });
+    // console.log({ error });
     return error ? error.details[0].message : null;
   };
 
@@ -49,13 +49,15 @@ class Form extends Component {
     this.setState({ data, errors });
   };
 
-  renderInput(label, name, type = "input") {
+  renderInput(label, name, type = "", placeholder = "") {
+    if (!type) type = "input";
     return (
       <Input
         label={label}
         handleChange={this.handleChange}
         name={name}
         type={type}
+        placeholder={placeholder}
         error={this.state.errors[name]}
       />
     );

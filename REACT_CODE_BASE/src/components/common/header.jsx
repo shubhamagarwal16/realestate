@@ -4,6 +4,7 @@ import Form from "./form";
 import { Dropdown } from "react-bootstrap";
 
 import LOGO from "../../assets/images/Logo_SA.png";
+import * as authService from "../../services/authService";
 import LoginModal from "../auth/loginModal";
 import Navbar from "./navbar";
 
@@ -16,8 +17,14 @@ class Header extends Form {
       { path: "/property/search", name: "Find Property" },
       { path: "/property/listing", name: "My Listing" },
       { path: "/users/profile/edit", name: "My Profile" }
-    ]
+    ],
+    user: {}
   };
+
+  componentDidMount() {
+    const user = authService.getCurrentUser();
+    this.setState({ user });
+  }
 
   toggleLoginModal = () => {
     let loginModalToggle = this.state.loginModalToggle;
@@ -25,8 +32,18 @@ class Header extends Form {
     this.setState({ loginModalToggle });
   };
 
+  setLoggedInUser = user => {
+    this.setState({ user });
+  };
+
+  handleLogout = () => {
+    const isLoggedOut = authService.logOut();
+    if (isLoggedOut) window.location = "/";
+  };
+
   render() {
-    const { loginModalToggle, navItems } = this.state;
+    const { loginModalToggle, navItems, user } = this.state;
+
     return (
       <React.Fragment>
         <header style={{ marginBottom: "0px" }} className="">
@@ -46,52 +63,63 @@ class Header extends Form {
                 <div className="header-ryt text-right">
                   {/* <!-- <a routerLink="/" >Home</a>                  
                             <a routerLink="/" >Find Property</a> --> */}
-                  <button
-                    type="button"
-                    style={{ marginRight: "5px" }}
-                    className="btn btn-outline-primary btn-sm"
-                    onClick={this.toggleLoginModal}
-                  >
-                    Login
-                  </button>
-                  <Link
-                    to="/sign-up"
-                    className="btn btn-outline-primary btn-sm"
-                  >
-                    Register
-                  </Link>
-                  <div>
-                    <div className="user-image">
-                      <span>
-                        <span className="text-danger">Welcome</span>zxc
-                      </span>
-                      <img
-                        src="assets/images/user.jpg"
-                        className="rounded-circle p-cursor"
-                        alt="user"
-                      />
-                    </div>
-                    <Dropdown>
-                      <Dropdown.Toggle variant="success" id="dropdown-basic">
-                        Dropdown Button
-                      </Dropdown.Toggle>
+                  {!user && (
+                    <React.Fragment>
+                      <button
+                        type="button"
+                        style={{ marginRight: "5px" }}
+                        className="btn btn-outline-primary btn-sm"
+                        onClick={this.toggleLoginModal}
+                      >
+                        Login
+                      </button>
+                      <Link
+                        to="/sign-up"
+                        className="btn btn-outline-primary btn-sm"
+                      >
+                        Register
+                      </Link>
+                    </React.Fragment>
+                  )}
+                  {user && (
+                    <div>
+                      <div className="user-image">
+                        <span>
+                          <span className="text-danger">Welcome</span>zxc
+                        </span>
+                        <img
+                          src="assets/images/user.jpg"
+                          className="rounded-circle p-cursor"
+                          alt="user"
+                        />
+                      </div>
+                      <Dropdown>
+                        <Dropdown.Toggle variant="success" id="dropdown-basic">
+                          Dropdown Button
+                        </Dropdown.Toggle>
 
-                      <Dropdown.Menu>
-                        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                        <Dropdown.Item href="#/action-2">
-                          Another action
-                        </Dropdown.Item>
-                        <Dropdown.Item href="#/action-3">
-                          Something else
-                        </Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
-                    {/* <mat-menu #headerRytmenu="matMenu" xPosition="before">
+                        <Dropdown.Menu>
+                          <Dropdown.Item href="#/action-1">
+                            Action
+                          </Dropdown.Item>
+                          <Dropdown.Item href="#/action-2">
+                            Another action
+                          </Dropdown.Item>
+                          <button
+                            onClick={this.handleLogout}
+                            className="btn btn-light"
+                          >
+                            Logout
+                          </button>
+                        </Dropdown.Menu>
+                      </Dropdown>
+                      {/* <mat-menu #headerRytmenu="matMenu" xPosition="before">
                             <button routerLink="/users/dashboard" mat-menu-item>Dashboard</button>
                             <button *ngIf="userService.currentUser?.user.isAdmin" routerLink="/admin/dashboard" mat-menu-item>Admin</button>
                             <button (click)="loginService.logOut()" mat-menu-item>Logout</button>
                         </mat-menu> */}
-                  </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -102,8 +130,9 @@ class Header extends Form {
         <LoginModal
           toggle={loginModalToggle}
           toggleLoginModal={this.toggleLoginModal}
+          setLoggedInUser={this.setLoggedInUser}
         />
-        <Navbar navItems={navItems} />
+        {user && <Navbar navItems={navItems} />}
         {/* ---------------------- LOGIN MODAL ----------------------------- */}
       </React.Fragment>
     );
