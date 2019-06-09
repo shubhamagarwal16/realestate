@@ -1,4 +1,7 @@
 import { default as http } from "axios";
+import { getJwt } from "./authService";
+
+// http.defaults.headers.common["x-auth-token"] = getJwt();
 
 http.interceptors.response.use(null, error => {
   const expectedError =

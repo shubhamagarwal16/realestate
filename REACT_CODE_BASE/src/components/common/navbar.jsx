@@ -1,5 +1,7 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
+
+import "../../assets/styles/header&footer&navbar.scss";
 
 const Navbar = ({ navItems }) => {
   return (
@@ -17,9 +19,9 @@ const Navbar = ({ navItems }) => {
           <div className="container">
             <ul className="navbar-nav">
               <li className="nav-item">
-                <NavLink className="nav-link" to="/">
+                <Link className="nav-link" to="/">
                   <i className="fa fa-home" aria-hidden="true" /> |
-                </NavLink>
+                </Link>
               </li>
               {navItems.map(item => (
                 <li key={item.name} className="nav-item clickable">

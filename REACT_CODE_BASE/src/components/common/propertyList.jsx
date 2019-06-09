@@ -3,19 +3,27 @@ import { get, showGFSImage } from "../../services/commonServices";
 
 class PropertyList extends Component {
   state = {
-    propertyList: []
+    propertyList: [],
+    queryParams: ""
   };
 
-  async componentDidMount() {
-    let { queryParams } = this.props;
-
-    const { data: propertyList } = await get(`/property/filter${queryParams}`);
-    console.log(propertyList);
-    this.setState({ propertyList });
+  componentDidMount() {
+    this.getPropertyListings();
   }
 
+  componentDidUpdate() {
+    if (this.props.queryParams !== this.state.queryParams)
+      this.getPropertyListings();
+  }
+
+  getPropertyListings = async () => {
+    let { queryParams: queryProps } = this.props;
+    const queryParams = queryProps;
+    const { data: propertyList } = await get(`/property/filter${queryProps}`);
+    this.setState({ propertyList, queryParams });
+  };
+
   openPropertyPage = slug => {
-    // console.log({ slug });
     return this.props.history.push(`/property/view/${slug}`);
   };
 

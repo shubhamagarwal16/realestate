@@ -1,5 +1,7 @@
 import React from "react";
 
+import "../../assets/styles/header&footer&navbar.scss";
+
 const Footer = () => {
   return (
     <React.Fragment>

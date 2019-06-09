@@ -1,26 +1,28 @@
 import React, { Component } from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route } from "react-router-dom";
+import { getCurrentUser } from "./services/authService";
 
-import Header from "./components/common/header";
-import Footer from "./components/common/footer";
-import Home from "./components/home/home";
-import Registration from "./components/users/registration";
-import ViewProperty from "./components/property/viewProperty";
-
+import MainComponent from "./components/mainComponent";
 import "./App.scss";
 import "font-awesome/css/font-awesome.css";
 
 class App extends Component {
+  state = {
+    user: {}
+  };
+
+  componentDidMount() {
+    const user = getCurrentUser();
+    this.setState({ user });
+  }
+
   render() {
     return (
       <React.Fragment>
-        <Header />
-        <Switch>
-          <Route path="/property/view/:slug" component={ViewProperty} />
-          <Route path="/sign-up" component={Registration} />
-          <Route path="/" component={Home} />
-        </Switch>
-        <Footer />
+        <Route
+          path="/"
+          render={props => <MainComponent user={this.state.user} {...props} />}
+        />
       </React.Fragment>
     );
   }

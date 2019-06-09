@@ -32,15 +32,16 @@ class Registration extends Form {
     password: Joi.string()
       .required()
       .label("Password"),
-    cPassword: Joi.string()
+    cPassword: Joi.any()
+      .valid(Joi.ref("password"))
       .required()
-      .label("Password1")
+      .options({ language: { any: { allowOnly: "password does not match" } } })
   };
 
   render() {
     return (
       <React.Fragment>
-        <div className="container mr-t-b-60">
+        <div className="container mt-5 mb-5">
           <h3>Fill the following details to register as a new user-</h3>
           <form onSubmit={this.handleSubmit}>
             <div className="form-row">

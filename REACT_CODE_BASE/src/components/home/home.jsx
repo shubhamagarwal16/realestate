@@ -15,12 +15,14 @@ class Home extends Component {
   }
 
   getImages = async () => {
-    const { data: imgs } = await http.get("https://picsum.photos/list");
-    const images = [1, 2, 3].map(() => {
-      const randomId = imgs[Math.floor(Math.random() * imgs.length)].id;
-      return `https://picsum.photos/900/500?image=${randomId}`;
-    });
-    this.setState({ images });
+    try {
+      const { data: imgs } = await http.get("https://picsum.photos/list");
+      const images = [1, 2, 3].map(() => {
+        const randomId = imgs[Math.floor(Math.random() * imgs.length)].id;
+        return `https://picsum.photos/900/500?image=${randomId}`;
+      });
+      this.setState({ images });
+    } catch (error) {}
   };
 
   render() {
@@ -28,24 +30,26 @@ class Home extends Component {
     return (
       <React.Fragment>
         <div>
-          <Carousel>
-            {images.map(item => (
-              <Carousel.Item key={item}>
-                <img
-                  width="100%"
-                  className="d-block w-100"
-                  src={item}
-                  alt="First slide"
-                />
-                <Carousel.Caption>
-                  <h3>First slide label</h3>
-                  <p>
-                    Nulla vitae elit libero, a pharetra augue mollis interdum.
-                  </p>
-                </Carousel.Caption>
-              </Carousel.Item>
-            ))}
-          </Carousel>
+          {images.length && (
+            <Carousel>
+              {images.map(item => (
+                <Carousel.Item key={item + Date.now()}>
+                  <img
+                    width="100%"
+                    className="d-block w-100"
+                    src={item}
+                    alt="First slide"
+                  />
+                  <Carousel.Caption>
+                    <h3>First slide label</h3>
+                    <p>
+                      Nulla vitae elit libero, a pharetra augue mollis interdum.
+                    </p>
+                  </Carousel.Caption>
+                </Carousel.Item>
+              ))}
+            </Carousel>
+          )}
         </div>
         <div className="container mt-5">
           <h4 className="text-danger">Recent Postings:</h4>

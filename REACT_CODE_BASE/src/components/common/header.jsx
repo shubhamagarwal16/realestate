@@ -4,6 +4,7 @@ import Form from "./form";
 import { Dropdown } from "react-bootstrap";
 
 import LOGO from "../../assets/images/Logo_SA.png";
+import userImg from "../../assets/images/user.jpg";
 import * as authService from "../../services/authService";
 import LoginModal from "../auth/loginModal";
 import Navbar from "./navbar";
@@ -15,15 +16,21 @@ class Header extends Form {
       { path: "/users/dashboard", name: "Dashboard" },
       { path: "/property/new", name: "Add New Property" },
       { path: "/property/search", name: "Find Property" },
-      { path: "/property/listing", name: "My Listing" },
+      { path: "/property/listing/all", name: "My Listing" },
       { path: "/users/profile/edit", name: "My Profile" }
-    ],
-    user: {}
+    ]
   };
 
-  componentDidMount() {
-    const user = authService.getCurrentUser();
-    this.setState({ user });
+  componentDidUpdate() {
+    // console.log(this.props);
+    const { location } = this.props;
+    const locationState = (location && location.state) || {};
+    if (
+      locationState &&
+      locationState.loginModalToggle &&
+      !this.state.loginModalToggle
+    )
+      this.toggleLoginModal();
   }
 
   toggleLoginModal = () => {
@@ -42,8 +49,8 @@ class Header extends Form {
   };
 
   render() {
-    const { loginModalToggle, navItems, user } = this.state;
-
+    const { loginModalToggle, navItems } = this.state;
+    const { user } = this.props;
     return (
       <React.Fragment>
         <header style={{ marginBottom: "0px" }} className="">
@@ -82,20 +89,19 @@ class Header extends Form {
                     </React.Fragment>
                   )}
                   {user && (
-                    <div>
-                      <div className="user-image">
-                        <span>
-                          <span className="text-danger">Welcome</span>zxc
-                        </span>
-                        <img
-                          src="assets/images/user.jpg"
-                          className="rounded-circle p-cursor"
-                          alt="user"
-                        />
-                      </div>
+                    <div className="user-image">
                       <Dropdown>
-                        <Dropdown.Toggle variant="success" id="dropdown-basic">
-                          Dropdown Button
+                        <Dropdown.Toggle variant="" id="dropdown-basic">
+                          <span>
+                            <span className="text-danger">Welcome </span>
+                            {(user && user.fname) || ""}
+                          </span>
+                          <img
+                            src={userImg}
+                            className="rounded-circle p-cursor"
+                            alt="user"
+                            width="50px"
+                          />
                         </Dropdown.Toggle>
 
                         <Dropdown.Menu>
@@ -113,12 +119,12 @@ class Header extends Form {
                           </button>
                         </Dropdown.Menu>
                       </Dropdown>
-                      {/* <mat-menu #headerRytmenu="matMenu" xPosition="before">
-                            <button routerLink="/users/dashboard" mat-menu-item>Dashboard</button>
-                            <button *ngIf="userService.currentUser?.user.isAdmin" routerLink="/admin/dashboard" mat-menu-item>Admin</button>
-                            <button (click)="loginService.logOut()" mat-menu-item>Logout</button>
-                        </mat-menu> */}
                     </div>
+                    // <mat-menu #headerRytmenu="matMenu" xPosition="before">
+                    //       <button routerLink="/users/dashboard" mat-menu-item>Dashboard</button>
+                    //       <button *ngIf="userService.currentUser?.user.isAdmin" routerLink="/admin/dashboard" mat-menu-item>Admin</button>
+                    //       <button (click)="loginService.logOut()" mat-menu-item>Logout</button>
+                    //   </mat-menu>
                   )}
                 </div>
               </div>
@@ -131,6 +137,7 @@ class Header extends Form {
           toggle={loginModalToggle}
           toggleLoginModal={this.toggleLoginModal}
           setLoggedInUser={this.setLoggedInUser}
+          {...this.props}
         />
         {user && <Navbar navItems={navItems} />}
         {/* ---------------------- LOGIN MODAL ----------------------------- */}

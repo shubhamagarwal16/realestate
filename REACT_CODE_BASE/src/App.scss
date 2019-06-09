@@ -10,26 +10,3 @@ header {
 .clickable {
   cursor: pointer;
 }
-
-// ------------------ NAVBAR -------------------
-.navbar-dash a {
-  color: white;
-  font-size: 14px;
-  padding: 5px 0.5rem;
-}
-.nav-link.active {
-  background-color: #f9797d;
-}
-// ------------------ NAVBAR -------------------
-
-// ===================== FOOTER ===================
-footer {
-  padding: 20px 0px;
-}
-footer p,
-footer p a {
-  color: white;
-  font-weight: bold;
-  margin-bottom: 0px;
-}
-// ===================== FOOTER ===================
