@@ -1,0 +1,12 @@
+@import "bootstrap/scss/bootstrap.scss";
+
+header {
+  padding-top: 15px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+  box-shadow: 0px 0px 9px 0px #888;
+}
+
+.clickable {
+  cursor: pointer;
+}

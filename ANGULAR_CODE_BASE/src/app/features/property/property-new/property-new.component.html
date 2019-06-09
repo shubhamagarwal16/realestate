@@ -1,0 +1,207 @@
+<h3 class="text-center text-danger">Post a New Property-</h3>
+<!-- <p>{{ f.value | json }}</p> -->
+<div class="container border-main border-box-manage card">
+  <form #f="ngForm" (ngSubmit)="submitForm(f)" enctype="multipart/form-data">
+    <h4>Property Info- </h4>
+    <hr class="hr">
+    <div class="form-group">
+      <label for=""> Upload images: <small class="text-info">(Auto-preview)</small> <small *ngIf="imgUrls.length;"
+          (click)="imgUrls.length = 0;" class="p-cursor text-primary">(remove all)</small></label> <br>
+      <div *ngIf="!imgUrls.length; else imgBOx" class="dropbox">
+        <input type="file" multiple name="uploadFieldName" (change)="filesChange($event.target.name, $event.target.files)" accept="image/*" #photos>
+        <p *ngIf="currentStatus === STATUS_INITIAL">
+          Drag your file(s) here to begin<br>
+          or click to browse<br>
+          <small>max size: 80kb (or else will be ignored)</small>
+        </p>
+        <!-- <p *ngIf="currentStatus === STATUS_SAVING">
+          Uploading {{ photos.files.length }} files...
+        </p> -->
+      </div>
+      <ng-template #imgBOx>
+        <div class="row">
+          <div *ngFor="let img of imgUrls" class="col-md-2">
+            <div class="singlImg">
+              <img title="{{img?.name}}" src="{{img.path}}" alt="img">
+              <div title="{{img?.name}}" class="imgOverlay">
+                  <i (click)="removeSinglePic(img);" class="fa fa-times p-cursor" aria-hidden="true"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+    <hr class="hr">
+    <div class="form-group">
+      <div class="form-row">
+        <div class="col-4">
+          <label for="">Property For: </label> <br>
+          <label> <input type="radio" ngModel #propertyFor="ngModel" required name="propertyFor" value="sell"> Sell </label> &nbsp;
+          <label> <input type="radio" ngModel #propertyFor="ngModel" required name="propertyFor" value="rent"> Rent </label>
+
+          <small class="text-danger" *ngIf="propertyFor.touched && propertyFor.invalid">This field is required</small>
+        </div>
+        <div class="col-4">
+          <label for="">Property Type:</label>
+          <select required name="Proptype" ngModel #Proptype="ngModel" class="custom-select">
+            <option value="">Select Property Type</option>
+            <option *ngFor="let property of propertyTypeList" value="{{property._id}}">{{property.title}}</option>
+          </select>
+          <small class="text-danger" *ngIf="Proptype.touched && Proptype.invalid">This field is required</small>
+        </div>
+        <div class="col-4">
+          <label for="">Enter Total Amount <small class="text-primary">(optional)</small> </label>
+          <input type="number" name="price" ngModel #price="ngModel" class="form-control" style="-webkit-appearance: none;" >
+        </div>
+      </div>
+    </div>
+
+    <!-- <div *ngIf="propertyFormData.type == '5abbd8585536e81408846d6f'"> -->
+    <h5>Additional Data -</h5>
+    <hr class="hr">
+
+    <div class="form-row form-group">
+      <div class="col-md-6">
+        <p>Plot Dimensions - </p>
+        <div class="row">
+          <div class="col-md-3">
+            <small>Length</small>
+            <input type="number" min="0" ngModel #length="ngModel" name="length" required placeholder="Plot length"
+              class="form-control form-field-small">
+              <small class="text-danger" *ngIf="length.touched && length.invalid">required*</small>
+          </div>
+          <div class="col-md-3">
+            <small>Breadth</small>
+            <input type="number" min="0" ngModel #breadth="ngModel" name="breadth" required placeholder="Plot breadth"
+              class="form-control form-field-small">
+              <small class="text-danger" *ngIf="breadth.touched && breadth.invalid">required*</small>
+          </div>
+          <div class="col-md-6">
+            <p>Total-</p>
+            <h5 *ngIf="breadth.value && length.value">
+              {{ (breadth.value | number) * (length.value | number) }} sqft</h5>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <p>Corner Plot?</p>
+        <div class="custom-control custom-checkbox">
+          <input class="custom-control-input" ngModel #cornrPlot="ngModel" name="cornrPlot" value="true" id="cornrPlotId" type="checkbox">
+          <label class="custom-control-label" for="cornrPlotId">Yes</label>
+        </div>
+      </div>
+      <div>
+      </div>
+    </div>
+    <!-- </div> -->
+
+    <h4>Location -</h4>
+    <hr class="hr">
+
+    <div class="form-row">
+      <div class="form-group col-md-3">
+        <label for="">State:</label>
+        <select name="state" ngModel #state="ngModel" (change)="getCityList(state.value);city.value = ''" required
+          class="custom-select">
+          <option value="">Select State</option>
+          <option *ngFor="let state of stateList" value="{{state._id}}">{{state.name}}</option>
+        </select>
+        <small class="text-danger" *ngIf="state.touched && state.invalid">
+          This field is required</small>
+      </div>
+      <div class="form-group col-md-3">
+        <label for="">City: <small *ngIf="FetchingCityList"><i class="fa fa-refresh fa-spin fa-fw"></i></small></label>
+        <select name="city" ngModel #city="ngModel" required class="custom-select">
+          <option value="">Select City</option>
+          <option *ngFor="let city of cityList" value="{{city._id}}">{{city.name}}</option>
+        </select>
+        <small class="text-danger" *ngIf="city.touched && city.invalid">
+          This field is required</small>
+      </div>
+      <div class="form-group col-md-3">
+        <label for="">Pincode:</label>
+        <input type="text" placeholder="Enter Pincode" ngModel #pincode="ngModel" required name="pincode"
+          class="form-control">
+        <small class="text-danger" *ngIf="pincode.touched && pincode.invalid">
+          This field is required</small>
+      </div>
+      <div class="form-group col-md-3">
+        <label for="">Locality:</label>
+        <input type="text" name="locality" [appInputFormat]="'capitalize'" ngModel #locality="ngModel" required placeholder="Enter locality"
+          class="form-control">
+        <small class="text-danger" *ngIf="locality.touched && locality.invalid">
+          This field is required</small>
+      </div>
+      <div class="form-group col-md-4">
+        <label>Is it a Society?</label> <br>
+        <label> <input type="radio" ngModel #isSociety="ngModel" required name="isSociety" value="true"> Yes </label>
+        &nbsp;
+        <label> <input type="radio" ngModel #isSociety="ngModel" required name="isSociety" value="false"> No </label>
+      </div>
+      <div [hidden]="isSociety.value != 'true'" class="form-group col-md-4">
+        <label for="">Society Name:</label>
+        <input type="text" name="societyName" [appInputFormat]="'capitalize'" ngModel #societyName="ngModel" [required]="isSociety.value == 'true'"
+          placeholder="Enter Society Name" class="form-control">
+        <small class="text-danger" *ngIf="societyName.touched && societyName.invalid">
+          This field is required</small>
+      </div>
+      <div [hidden]="isSociety.value != 'true'" class="form-group col-md-4">
+        <label for="">Flat No.:</label>
+        <input type="text" name="flatNo" ngModel #flatNo="ngModel" [required]="isSociety.value == 'true'"
+          placeholder="Enter Flat Number" class="form-control">
+        <small class="text-danger" *ngIf="flatNo.touched && flatNo.invalid">
+          This field is required</small>
+      </div>
+    </div>
+
+    <h4>Other Information -</h4>
+    <hr class="hr">
+
+    <div class="row">
+      <div class="form-group col-md-12">
+        <label for="">Description: <small class="text-primary">({{ 500 - description.value?.length | number }}) </small> <app-small-components [componentName]="'moreInfoQstnMark'" [toolTipData]="{ position: 'right', text: 'max number of letters - 500' }" ></app-small-components> 
+        </label>
+        <textarea name="description" required [appInputFormat]="'capitalize'" ngModel #description="ngModel" class="form-control" resize="none"
+          cols="30" maxlength="500" rows="5"></textarea>
+
+        <small class="text-danger" *ngIf="description.touched && description.invalid">
+          This field is required</small>
+      </div>
+      <div class="form-group col-md-12">
+        <label for="">Property Complete Address:</label>
+        <input type="text" required [appInputFormat]="'capitalize'" name="address" ngModel #address="ngModel"
+          placeholder="Enter complete Property's Address" class="form-control">
+
+        <small class="text-danger" *ngIf="address.touched && address.invalid">
+          This field is required</small>
+      </div>
+
+      <div class="form-group col-md-4">
+        <label for="">Email:</label>
+        <input type="text" placeholder="Enter Email" name="email" ngModel #email="ngModel" required
+          value="{{userService.currentUser.user.email}}" class="form-control">
+        <small class="text-danger" *ngIf="email.touched && email.invalid">
+          This field is required</small>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="">Phone Number: </label>
+        <input type="text" ngModel #phoneNo="ngModel" required name="phoneNo" placeholder="Enter Phone Number"
+          value="{{userService.currentUser.user.phoneNo}}" class="form-control">
+        <small class="text-danger" *ngIf="phoneNo.touched && phoneNo.invalid">
+          This field is required</small>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="">Property Title: <small class="text-info">(Auto-generated) </small>
+        <app-small-components [componentName]="'moreInfoQstnMark'" [toolTipData]="{ position: 'right', text: 'On the basics of values entered above' }" ></app-small-components> 
+      </label>
+      <input type="text" #title="ngModel" name="title" (change)="log(title.value)"
+        [ngModel]="(cornrPlot.value ? 'Corner ' : '') + getDataTitleViaId(Proptype.value, 'propertyTypeList', 'title') + (societyName?.value ? ' at ' +  societyName.value : '') + (city.value ? ' in ' + getDataTitleViaId(city.value, 'cityList', 'name') : '') + (state.value ? (city.value ? ', ': ' in ') + getDataTitleViaId(state.value, 'stateList', 'name') : '')"
+        placeholder="Enter property's title" required class="form-control">
+
+      <small class="text-danger" *ngIf="title.touched && title.invalid">
+        This field is required</small>
+    </div>
+    <button [disabled]="f.invalid || isSubmittingForm" class="btn btn-danger btn-block"> <i *ngIf="isSubmittingForm" class="fa fa-spinner fa-spin" aria-hidden="true"></i> Post a New Property</button>
+  </form>
+</div>

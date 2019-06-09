@@ -1,0 +1,72 @@
+.dropbox {
+    outline: 2px dashed grey; /* the dash box */
+    outline-offset: -10px;
+    background: lightcyan;
+    color: dimgray;
+    padding: 10px 10px;
+    min-height: 200px; /* minimum height */
+    position: relative;
+    cursor: pointer;
+}
+
+.dropbox:hover {
+    background: lightblue; /* when mouse over to the drop zone, change color */
+}
+
+input[type="file"] {
+    opacity: 0; /* invisible but it's there! */
+    width: 100%;
+    height: 200px;
+    position: absolute;
+    cursor: pointer;
+}
+
+.dropbox p {
+    font-size: 1.2em;
+    text-align: center;
+    padding: 50px 0;
+}
+
+// Single Image
+.singlImg{
+    position: relative;
+    // max-width: 150px;
+    overflow: hidden;
+}
+.singlImg img{
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+}
+.singlImg .imgOverlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: .3s ease;
+    background-color: #495057bd;
+    border-radius: 5px;
+}
+.singlImg:hover .imgOverlay {
+    opacity: 1;
+}
+.singlImg i{
+    color: white;
+    font-size: 24px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+    padding: 3%;
+}
+.singlImg i:hover {
+    font-size: 33px;
+}

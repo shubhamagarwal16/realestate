@@ -1,0 +1,66 @@
+<div class="searchProp-cont">
+  <ngb-carousel *ngIf="images">
+      <ng-template *ngFor="let item of [0, 1, 2]" ngbSlide>
+        <img [src]="images[item]" class="carousal-img" width="100%" alt="Random first slide">
+        <!-- <div class="carousel-caption">
+          <h3>First slide label</h3>
+          <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+        </div> -->
+      </ng-template>
+  </ngb-carousel>
+
+  <div class="container searchProp">
+    <!-- <h4 class="text-danger">Search Property:</h4>
+    <hr class="hr"> -->
+
+    <form #searchData="ngForm" (ngSubmit)="searchProp(searchData.value)" >
+      <ngb-tabset type="pills">
+        <ngb-tab>
+          <ng-template ngbTabTitle>
+            <label (click)="searchPropData.propertyFor = 'sell'" >BUY</label>
+          </ng-template>
+          <ng-template ngbTabContent>
+          </ng-template>
+        </ngb-tab>
+        <ngb-tab>
+          <ng-template ngbTabTitle>
+            <label (click)="searchPropData.propertyFor = 'rent'" >RENT</label>
+          </ng-template>
+          
+          <ng-template ngbTabContent>
+          </ng-template>
+        </ngb-tab>
+        <ngb-tab>
+          <ng-template ngbTabTitle><label><b routerLink="/property/new">POST A PROPERTY</b></label></ng-template>
+          <ng-template ngbTabContent>
+          </ng-template>
+        </ngb-tab>
+      </ngb-tabset>
+      <div class="text-center searchFields">
+        <div class="form-group">
+            <input id="typeahead-basic" placeholder="Enter a location" type="text" class="rounded-left" ngModel #location="ngModel" name="city" [value]="searchPropData.location" [ngbTypeahead]="search" />
+
+          <select ngModel #city="ngModel" style="width: auto;" name="type" class="custom-select searchType rounded-0 p-cursor">
+            <option value="">Property Type</option>
+            <option *ngFor="let type of propertyTypeList" [value]="type._id">{{ type.title }}</option>
+          </select>
+
+          <button class="btn btn-danger searchButton rounded-0 rounded-right">Search</button>
+        </div>
+      </div>   
+    </form>
+  </div>
+</div>
+
+<div class="container">
+  <div class="mar-top-40">
+    <h4 class="text-danger">Recent Postings:</h4>
+    <hr class="hr">
+    <!-- <p>{{ searchPropData | json }}</p>
+    <p>{{ cityList | json }}</p> -->
+    
+    <div ngbSlide >
+      <app-propertylist [blockView]="true" [blockSize]="4" [hideOwnProperty]="hideOwnProperty" [queryParams]="queryParams" ></app-propertylist>
+    </div>
+  </div>
+</div>

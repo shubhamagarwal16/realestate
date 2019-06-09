@@ -1,0 +1,94 @@
+<div class="container find-properties">
+  <div class="row">
+    <div class="col-md-3">
+      <form #filter="ngForm" class="positn-sticky" (ngSubmit)="filterProperties()">
+        <h4 class="pad-btm-15">
+          <i class="fa fa-filter" aria-hidden="true"></i> Filters
+          <a href="javascript:void(0);" (click)="clearFilters()">
+            <small>clear</small>
+          </a>
+          <button class="btn btn-success btn-sm float-right">Search</button>
+        </h4>
+        <div class="border-main border-box-manage side-bar-filter card">
+          <div class="form-group">
+            <h5>Property For:
+              <i (click)="hideSidebarItem(1);" [ngClass]="{ 
+              'fa-plus-square-o': SidebarHiddenItem == 1,
+              'fa-minus-square-o': SidebarHiddenItem != 1
+             }" class="fa  p-cursor float-right" aria-hidden="true"></i>
+            </h5>
+            <hr class="hr">
+            <div class="custom-control custom-checkbox" [hidden]="SidebarHiddenItem == 1">
+              <div class="row">
+                <div *ngFor="let propertyFor of [{ key: 'sell', val: 'buy'}, { key: 'rent', val: 'rent'}];let loop = index" class="col">
+                  <input name="propertyFor" type="checkbox" class="custom-control-input" id="forCheck{{loop}}" value="{{propertyFor.key}}" [checked]="checkCheckedValue(propertyFor.key, 'propertyFor')" (change)="$event.target.checked? manageCheckedValue(propertyFor.key, 'propertyFor', true) : manageCheckedValue(propertyFor.key, 'propertyFor', false)">
+                  <label class="custom-control-label" style="padding-left: 5px;" for="forCheck{{loop}}">{{propertyFor.val | titlecase }}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <h5>Property Type:
+              <i (click)="hideSidebarItem(2);" [ngClass]="{ 
+              'fa-plus-square-o': SidebarHiddenItem == 2,
+              'fa-minus-square-o': SidebarHiddenItem != 2
+             }" class="fa  p-cursor float-right" aria-hidden="true"></i>
+            </h5>
+            <hr class="hr">
+            <div [hidden]="SidebarHiddenItem == 2" class="options-block">
+              <div *ngFor="let type of propertyTypeList; let loop = index" class="custom-control custom-checkbox d-block">
+                <input name="type" type="checkbox" class="custom-control-input" id="customCheck{{loop}}" value="{{type._id}}" [checked]="checkCheckedValue(type._id, 'type')" (change)="$event.target.checked? manageCheckedValue(type._id, 'type', true) : manageCheckedValue(type._id, 'type', false)">
+                <label class="custom-control-label" for="customCheck{{loop}}">{{type.title}}</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <h5>City:
+              <i (click)="hideSidebarItem(3);" [ngClass]="{ 
+              'fa-plus-square-o': SidebarHiddenItem == 3,
+              'fa-minus-square-o': SidebarHiddenItem != 3
+             }" class="fa p-cursor float-right" aria-hidden="true"></i>
+            </h5>
+            <hr class="hr">
+            <div [hidden]="SidebarHiddenItem == 3" class="options-block">
+              <!-- <label class="d-block" *ngFor="let city of cityList" >
+                <input name="city" [value]="city._id" type="checkbox"
+                (change)="$event.target.checked? manageCheckedValue(city._id, 'city', true) : manageCheckedValue(city._id, 'city', false)" > {{city.name}}
+              </label>  -->
+              <!-- #city="ngModel" ngModel -->
+              <div *ngFor="let city of cityList; let loop = index" class="custom-control custom-checkbox d-block">
+                <input name="type" type="checkbox" class="custom-control-input" id="cityCheck{{loop}}" value="{{city._id}}" [checked]="checkCheckedValue(city._id, 'city')" (change)="$event.target.checked? manageCheckedValue(city._id, 'city', true) : manageCheckedValue(city._id, 'city', false)">
+                <label class="custom-control-label" for="cityCheck{{loop}}">{{city.name}}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-9">
+      <div class="pad-btm-15">
+        <div class="row">
+          <div class="col-md-7 text-right">
+            <b>--Your properties will not show here-- 
+              <app-small-components [componentName]="'moreInfoQstnMark'" [toolTipData]="{ position: 'right', text: 'Head to `My Listing tab` to see your properties' }" ></app-small-components>  
+            </b>
+          </div>
+          <div class="col-md-5">
+            <div class="text-right">
+              <!-- {{ filter.value | json }} {{ filter.status }} -->
+              <button [class.btn-danger]="!blockView.status" (click)="blockView = { status: false, size: 12 };" class="btn">
+                <i class="fa fa-list" aria-hidden="true"></i>
+              </button>
+              <button [class.btn-danger]="blockView.status" (click)="blockView = { status: true, size: 6 }; " class="btn mar-left-10">
+                <i class="fa fa-th-large" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="border-main border-box-manage"> -->
+      <app-propertylist [queryParams]="queryParams" [blockSize]="blockView.size" [hideOwnProperty]="true" [blockView]="blockView.status"></app-propertylist>
+      <!-- </div> -->
+    </div>
+  </div>
+</div>

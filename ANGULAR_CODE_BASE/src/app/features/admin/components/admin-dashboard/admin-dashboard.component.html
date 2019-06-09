@@ -1,0 +1,8 @@
+<div class="container">
+  <div *ngFor="let user of userList" >
+    <p>{{user.email}} 
+      <input type="text" placeholder="New Pass" name="pass" ngModel #pass="ngModel" >
+    <a (click)="changePass(user._id, pass.value)" href="javascript:void(0)">change pass</a>  
+    </p>
+  </div>
+</div>

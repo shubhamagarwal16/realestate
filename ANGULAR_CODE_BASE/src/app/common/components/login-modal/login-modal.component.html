@@ -1,0 +1,36 @@
+<div class="modal-header">
+  <h4 class="modal-title">Sign In</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+
+  <div *ngIf="alertMessage.message != ''" class="alert alert-{{ alertMessage.type }}">
+    {{ alertMessage.message }}
+  </div>
+
+  <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+    <div class="form-group">
+      <label for="">Email / Phone Number</label>
+      <input ngModel name="emailPhno" type="text" #emailPhno="ngModel" class="form-control" required>
+      <small class="text-danger" *ngIf="emailPhno.touched && emailPhno.invalid">
+        This field is required</small>
+    </div>
+    <div class="form-group">
+      <label for="">Password</label>
+      <input ngModel type="password" name="loginPassword" #loginPassword="ngModel" class="form-control"
+        required>
+      <small class="text-danger" *ngIf="loginPassword.touched && loginPassword.invalid">
+        This field is required</small>
+    </div>
+    <div class="form-group">
+      <button class="btn btn-success form-control" [disabled]="!loginForm.valid || loginCheck">Login
+        <i *ngIf="loginCheck" class="fa fa-spinner fa-pulse fa-fw"></i>
+      </button>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss('Close click')">Close</button>
+</div>

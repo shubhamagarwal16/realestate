@@ -1,0 +1,56 @@
+.carousal-img{
+    height: 350px;
+}
+
+:host /deep/ .nav.nav-pills{
+    text-align: center;
+    display: block;
+    margin-bottom: 20px;
+}
+:host /deep/ .nav.nav-pills .nav-item{
+    display: inline-block;
+}
+:host /deep/ .nav.nav-pills .nav-item a {
+    border-radius: 0px;
+    background-color: #eee;
+    border: 1px solid #fff;
+    color: black;
+    padding: 0px;
+}
+:host /deep/ .nav.nav-pills .nav-item a.active {
+    background-color: #dc4045;
+    color: white;
+}
+:host /deep/ .nav.nav-pills .nav-item a label{
+    padding: 10px 80px;
+    cursor: pointer;
+    margin-bottom: 0px;
+}
+
+.searchProp{
+    // position: relative;
+    // top: -165px;
+}
+.searchProp-cont {
+    position: relative;
+}
+.searchProp {
+    position: absolute;
+    bottom: 80px;
+    left: 6%;
+}
+.searchProp .form-group select{
+    border-radius: 0px;
+}
+.searchFields input, .searchFields select, .searchFields button {
+    padding: 10px 110px 10px 10px;
+    margin-right: 0px;
+    height: auto;
+    border: none;
+}
+.searchFields input{
+    padding: 8px 110px 12px 10px;
+}
+.searchFields button{
+    padding: 10px 35px;
+}

@@ -1,0 +1,80 @@
+<header style="margin-bottom: 0px;" class="">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4"> <img src="assets/images/Logo_SA.png" class="p-cursor" width="50px" alt="LOGO" routerLink="/"></div>
+            <div class="col-md-8">
+                <div class="header-ryt text-right">  
+                    <!-- <a routerLink="/" >Home</a>                  
+                    <a routerLink="/" >Find Property</a> -->
+                    <button type="button" style="margin-right: 5px;" *ngIf="!loginService.isLoggedIn()" (click)="openloginModal()" class="btn btn-outline-primary btn-sm">Login </button>
+                    <button type="button"routerLink="/users/sign-up" *ngIf="!loginService.isLoggedIn()" class="btn btn-outline-primary btn-sm">Register</button>
+                    
+                    <div *ngIf="loginService.isLoggedIn()">
+                        <div class="user-image" >
+                            <span><span class="text-danger" >Welcome</span> {{userService.currentUser.user.fname}} </span>
+                            <img [matMenuTriggerFor]="headerRytmenu" src="assets/images/user.jpg" 
+                                (click)="headerDropdown = !headerDropdown"
+                            class="rounded-circle p-cursor" alt="user">
+                        </div>
+                        <mat-menu #headerRytmenu="matMenu" xPosition="before">
+                            <button routerLink="/users/dashboard" mat-menu-item>Dashboard</button>
+                            <button *ngIf="userService.currentUser?.user.isAdmin" routerLink="/admin/dashboard" mat-menu-item>Admin</button>
+                            <button (click)="loginService.logOut()" mat-menu-item>Logout</button>
+                        </mat-menu>
+                        <!-- <ul *ngIf="headerDropdown" class="header-drp-dwn" >
+                            <li><button (click)="headerDropdown = !headerDropdown"
+                                class="btn btn-light btn-block">Dashboard</button></li>
+                            <li *ngIf="userService.currentUser?.user.isAdmin" ><button routerLink="/admin/dashboard" class="btn btn-light btn-block">Admin</button></li>
+                            <li><button (click)="headerDropdown = !headerDropdown"
+                                 routerLink="/users/sign-up" (click)="loginService.logOut()"
+                            class="btn btn-light btn-block">Logout</button></li>
+                        </ul> -->
+                    </div>
+                    <!-- <button type="button" *ngIf="!loginService.isLoggedIn()" routerLink="/users/sign-up" (click)="loginService.logOut()" class="btn btn-outline-primary btn-sm">Logout</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- ---------- NAV BAR ---------- -->
+
+<nav *ngIf="loginService.isLoggedIn()" class="navbar navbar-expand-md bg-danger navbar-dash nav-dash">
+    <!-- <a class="navbar-brand" href="#">Navbar</a> -->
+    <button class="navbar-toggler" (click)="toggleMenuItems = !toggleMenuItems" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" [class.show-collapsed-menu]="toggleMenuItems" id="collapsibleNavbar">
+        <div class="container">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/"><i class="fa fa-home" aria-hidden="true"></i> | </a>
+            </li>
+            <li *ngFor="let nav of navItems;" routerLink="{{nav.path}}" routerLinkActive="active" class="nav-item p-cursor">
+                <a class="nav-link">{{ nav.name }}</a>
+            </li>
+        </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- ---------- NAV BAR ---------- -->
+
+<!-- ------------------ PAGE LOADER ---------------- -->
+<app-small-components [componentName]="'barLoader'" [loaderActive] ="pageloaderStatus" ></app-small-components>
+<!-- ------------------ PAGE LOADER ---------------- -->
+
+<div *ngIf="HeaderMessage.message" class="container header-message">
+    <div class="alert alert-{{HeaderMessage.type}}" >{{HeaderMessage.message}}
+        <button type="button" class="close" (click)="closeHeaderMessage()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+</div>
+
+<!-- <div class="fullPageLoaderMain">
+    <div class="fullPageLoader">
+        <mat-spinner [diameter]="150" ></mat-spinner>
+    </div>
+</div> -->
+

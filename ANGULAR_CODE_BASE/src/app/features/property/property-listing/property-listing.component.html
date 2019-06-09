@@ -1,0 +1,8 @@
+<div *ngIf="!isHidden; else noData" class="container">
+    <app-propertylist [queryParams]="queryParams" ></app-propertylist>
+</div>
+
+<ng-template #noData >
+    <p class="text-center text-warning">No data || Under Development</p>
+</ng-template>
+<!-- [blockSize]="6" [blockView]="true" -->

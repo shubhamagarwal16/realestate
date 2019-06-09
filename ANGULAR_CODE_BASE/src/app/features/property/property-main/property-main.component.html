@@ -1,0 +1,15 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="border-main border-box-manage side-bar-filter card" >
+        <button *ngFor="let btn of buttons;" routerLink="{{btn.route}}" routerLinkActive="btn-outline-danger" class="btn btn-danger btn-block">{{btn.name}}</button>
+      </div>      
+    </div>
+    <div class="col-md-9">
+      <div class="text-right" >
+        <button routerLink="../new" class="btn btn-primary mar-btm-15"> <i class="fa fa-plus" ></i> Add New</button>
+      </div>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

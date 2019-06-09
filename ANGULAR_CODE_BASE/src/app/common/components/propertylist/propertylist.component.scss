@@ -1,0 +1,16 @@
+.propBoxHover:hover{
+    box-shadow: 0px 0px 9px 2px #ccc;
+    transition: box-shadow 0.3s ease-in-out;
+}
+.soldOutBg{
+    background-image: url('/assets/images/sold.png');
+    background-repeat: no-repeat;
+}
+.col-md-12 .soldOutBg{
+    background-position: 118% 0%;
+    background-size: 50%;
+}
+.col-md-4 .soldOutBg{
+    background-position: 80% 100%;
+    background-size: 80%;
+}

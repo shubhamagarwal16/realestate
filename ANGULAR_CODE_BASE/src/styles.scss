@@ -1,0 +1,98 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
+ul{
+    padding-left: 0px;
+}
+.form-control.ng-invalid.ng-touched{
+    border-color: #f5c6cb;
+}
+.mr-t-b-40{
+    margin-bottom: 40px;
+    margin-top: 40px;
+}
+.mr-t-b-60{
+    margin-bottom: 60px;
+    margin-top: 60px;
+}
+
+.input-with-icon{
+    position: relative;
+}
+.input-icon{
+    position: absolute;
+    top: 4px;
+    right: 2px;
+}
+.remove-numbr-icn::-webkit-inner-spin-button, .remove-numbr-icn::-webkit-outer-spin-button{
+    -webkit-appearance: none;
+}
+
+.p-cursor{
+    cursor: pointer;
+}
+.disp-none{
+    display: none;
+}
+.main-section{
+    padding-top: 60px;
+    padding-bottom: 60px;
+    background: #eee;
+}
+.border-main{
+    border: 2px solid #efeaea;
+}
+.border-box-manage{
+    padding: 30px 25px;
+}
+
+.options-block {
+    max-height: 230px;
+    overflow-y: scroll;
+}
+
+/* property */
+.property-box, .mar-btm-25{
+    margin-bottom: 25px;
+}
+.property-box .propertyLocation{
+    list-style-type: none;
+}
+.property-box .propertyLocation li{
+    display: inline-block;
+}
+.form-field-small{
+    
+}
+
+.pad-btm-15{
+    padding-bottom: 15px;
+}
+.mar-ryt-15{
+    margin-right: 15px;
+}
+.mar-btm-15{
+    margin-bottom: 15px;
+}
+.mar-top-40{
+    margin-top: 40px;
+}
+.mar-left-10{
+    margin-left: 10px;
+}
+
+::-webkit-scrollbar {
+    width: 7px;
+    height: 2em;
+    background: white;
+}
+::-webkit-scrollbar-track {
+    background: #fff; 
+}
+::-webkit-scrollbar-thumb {
+    background: #aaa;
+}​
+::-webkit-scrollbar-thumb:hover {
+    background: #888; 
+}

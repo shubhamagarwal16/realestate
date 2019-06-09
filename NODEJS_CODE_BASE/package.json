@@ -1,0 +1,25 @@
+{
+  "name": "realestate-api",
+  "version": "1.0.0",
+  "description": "Backend API service for the project",
+  "main": "index.js",
+  "scripts": {
+    "start": "set DEBUG=app:* & nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Shubham Agarwal",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "body-parser": "^1.18.2",
+    "debug": "^4.1.1",
+    "express": "^4.16.3",
+    "gridfs-stream": "^1.1.1",
+    "jsonwebtoken": "^8.2.0",
+    "moment": "^2.22.1",
+    "mongoose": "^5.4.11",
+    "morgan": "^1.9.0",
+    "multer": "^1.4.1",
+    "multer-gridfs-storage": "^3.2.3"
+  }
+}

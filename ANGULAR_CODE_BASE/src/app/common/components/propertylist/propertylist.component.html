@@ -1,0 +1,77 @@
+<div class="row">
+  <div (click)="viewProperty(property.slug);"
+    *ngFor="let property of propertyList;index as propNum;trackBy: setMaxLength('propNum'+index)"
+    class="col-md-{{blockSize}} pad-btm-15 p-cursor" id="propNum{{propNum}}"
+    [ngStyle]="{ 'height': maxLength ? maxLength : 'initial' }" ng-init="setMaxLength('propNum'+ propNum)">
+    <!-- [ngClass]="{  routerLink="/users/property/view/{{property._id}}"
+    'col-md-12': !blockView,
+    'col-md-6': blockView
+  }"> -->
+    <div id="propNum{{propNum}}" [class.soldOutBg]="property?.status!= 'available'"
+      class="border-main propBoxHover card">
+      <!-- mar-ryt-15-->
+      <div class="row border-box-manage">
+        <!-- property-box  -->
+        <div class="text-center" [ngClass]="{
+          'col-md-3 border-right': !blockView,
+          'col-md-12 border-bottom': blockView
+        }">
+          <div *ngIf="property.images.length; else noImg;">
+            <button *ngIf="property.images.length > 1 && blockView;"
+              (click)="toggleImages('imgCounter', propNum, -1, property.images.length, $event);"
+              class="btn btn-xs btn-default">-</button>
+            <img [ngStyle]="blockView ? { 'margin-bottom': '10px' } : ''" id="propImg{{propNum}}" src="{{commonService.base_url}}/property/showGFSImage/{{ property.images[0] }}" width="120px" height="120px" alt="Img">
+            <input type="hidden" name="imgCounter" ngModel="0" #imgCounter="ngModel" id="imgCounter{{propNum}}">
+            <button *ngIf="property.images.length > 1 && blockView;"
+              (click)="toggleImages('imgCounter', propNum, +1, property.images.length, $event);"
+              class="btn btn-xs btn-default mar-left-10">+
+            </button>
+            <div style="margin-top: 10px;" *ngIf="property.images.length > 1 && !blockView;">
+              <button (click)="toggleImages('imgCounter', propNum, -1, property.images.length, $event);"
+                class="btn btn-xs btn-default">
+                -</button>
+              <button (click)="toggleImages('imgCounter', propNum, +1, property.images.length, $event);"
+                class="btn btn-xs btn-default mar-left-10">+
+              </button>
+            </div>
+          </div>
+          <ng-template #noImg>
+            <img [ngStyle]="blockView ? { 'margin-bottom': '10px' } : ''" *ngIf="!property.images.length" width="120px" height="120px" src="assets/images/no-image.png" alt="no-image">
+          </ng-template>
+        </div>
+        <div [ngClass]="{
+          'col-md-7': !blockView,
+          'col-md-12 text-center': blockView
+        }" class="">
+          <h5>{{property.title}}</h5>
+          <ul style="padding-left: 0px; list-style-type: none;" class="propertyLocation">
+            <li><small>{{property.locality}}, {{property.city.name}}, {{property.state.name}}</small></li>
+            <li style="font-size: 14px;">{{property.type?.title? property.type?.title : '--'  }} <b>|</b>
+              {{ getFormattedDate(property.updatedOn) }}</li>
+          </ul>
+          <p>{{property.description}}</p>
+        </div>
+        <div *ngIf="loginService.isLoggedIn() && property?.userId?._id == userService?.currentUser?.user?._id"
+          [ngClass]="{
+            'col-md-2': !blockView,
+            'col-md-12 text-center': blockView
+          }">
+          <!-- <small class="float-right" >{{ property.updatedOn | date:'fullDate' }}</small>  -->
+          <!-- <button [class.btn-block]="!blockView" class="btn btn-primary btn-sm">View Property</button> -->
+          <button [class.btn-block]="!blockView" routerLink="/property/edit/{{property.slug}}"
+            class="btn btn-info btn-sm"><small>Edit Property</small></button>
+          <button [class.btn-block]="!blockView" [class.mar-left-10]="blockView"
+            *ngIf="property?.status == 'available';" (click)="markAsSold(property?.slug, property?.propertyFor, $event)"
+            class="btn btn-success btn-sm"><small>
+              {{ property?.propertyFor == 'sell' ? 'Mark as Sold' : 'Mark as Acquired' }}</small></button>
+          <!-- <ng-template #soldAcquired  else soldAcquired >
+            <p class="badge badge-success">Sold</p>
+          </ng-template> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div>
+  <h4 *ngIf="propertyList.length <= 0" class="text-center text-warning">No data found</h4>
+</div>

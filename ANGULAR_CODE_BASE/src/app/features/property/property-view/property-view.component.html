@@ -1,0 +1,10 @@
+<div class="container">
+  <div class="row mar-btm-25">
+    <div *ngFor="let img of imageDetail;" class="col-md-3">
+        <img  src="{{commonService.base_url}}/property/showGFSImage/{{ img.filename }}" alt="">
+    </div>
+  </div>
+  <div class="row">
+    <h5>{{propertyDetail?.title}}</h5>
+  </div>
+</div>
