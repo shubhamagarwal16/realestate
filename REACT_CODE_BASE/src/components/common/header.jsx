@@ -8,6 +8,10 @@ import userImg from "../../assets/images/user.jpg";
 import * as authService from "../../services/authService";
 import LoginModal from "../auth/loginModal";
 import Navbar from "./navbar";
+import CommonUIAddons from "./commonAddons";
+import queryString from "query-string";
+
+var togglePageLoaderFlag = false;
 
 class Header extends Form {
   state = {
@@ -22,21 +26,30 @@ class Header extends Form {
   };
 
   componentDidUpdate() {
-    // console.log(this.props);
+    console.log("Header ", this.props, this.state.loginModalToggle);
     const { location } = this.props;
     const locationState = (location && location.state) || {};
+    let queryParams = {};
     if (
       locationState &&
       locationState.loginModalToggle &&
       !this.state.loginModalToggle
     )
       this.toggleLoginModal();
+    else if (location && location.search && !this.state.loginModalToggle) {
+      queryParams = queryString.parse(location.search);
+      if (queryParams && queryParams.action === "signUpsuccess")
+        this.toggleLoginModal();
+    }
+    console.log({ queryParams });
   }
 
   toggleLoginModal = () => {
     let loginModalToggle = this.state.loginModalToggle;
+    console.log("toggleLoginModal ", loginModalToggle);
     loginModalToggle = !loginModalToggle;
     this.setState({ loginModalToggle });
+    // this.props.history.push("/");
   };
 
   setLoggedInUser = user => {
@@ -139,11 +152,16 @@ class Header extends Form {
           setLoggedInUser={this.setLoggedInUser}
           {...this.props}
         />
-        {user && <Navbar navItems={navItems} />}
         {/* ---------------------- LOGIN MODAL ----------------------------- */}
+        {user && <Navbar navItems={navItems} />}
+        <CommonUIAddons pageLoaderFlag={togglePageLoaderFlag} />
       </React.Fragment>
     );
   }
 }
+
+export const togglePageLoader = () => {
+  togglePageLoaderFlag = !togglePageLoaderFlag;
+};
 
 export default Header;

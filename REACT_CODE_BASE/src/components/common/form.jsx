@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Joi from "joi-browser";
 
 import Input from "./input";
+import Select from "./select";
 
 class Form extends Component {
   state = {
@@ -38,7 +39,7 @@ class Form extends Component {
     return error ? error.details[0].message : null;
   };
 
-  handleChange = ({ currentTarget }) => {
+  handleChange = ({ currentTarget }, optionalFnCall) => {
     const data = { ...this.state.data };
     const errors = { ...this.state.errors };
     data[currentTarget.name] = currentTarget.value;
@@ -47,9 +48,14 @@ class Form extends Component {
     else delete errors[currentTarget.name];
 
     this.setState({ data, errors });
+    if (optionalFnCall) this[optionalFnCall](currentTarget.value);
   };
 
-  renderInput(label, name, type = "", placeholder = "") {
+  asda() {
+    console.log("=======================");
+  }
+
+  renderInput(label, name, type = "", placeholder = "", optionalFnCall = "") {
     if (!type) type = "input";
     return (
       <Input
@@ -59,6 +65,19 @@ class Form extends Component {
         type={type}
         placeholder={placeholder}
         error={this.state.errors[name]}
+        optionalFnCall={optionalFnCall}
+      />
+    );
+  }
+  renderSelect(label, name, options, optionalFnCall = "") {
+    return (
+      <Select
+        label={label}
+        handleChange={this.handleChange}
+        name={name}
+        options={options}
+        error={this.state.errors[name]}
+        optionalFnCall={optionalFnCall}
       />
     );
   }

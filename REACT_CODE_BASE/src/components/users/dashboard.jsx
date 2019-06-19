@@ -29,7 +29,11 @@ class UserDashboard extends React.Component {
           <h4 className="text-danger">Your recent Postings:</h4>
           <hr className="hr" />
 
-          <PropertyList queryParams={queryParams} {...this.props} />
+          <PropertyList
+            togglePageLoader={this.props.togglePageLoader}
+            queryParams={queryParams}
+            {...this.props}
+          />
         </div>
       </React.Fragment>
     );

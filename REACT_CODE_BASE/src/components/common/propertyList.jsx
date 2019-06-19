@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { get, showGFSImage } from "../../services/commonServices";
+import { togglePageLoader } from "./header";
 
 class PropertyList extends Component {
   state = {
@@ -19,7 +20,9 @@ class PropertyList extends Component {
   getPropertyListings = async () => {
     let { queryParams: queryProps } = this.props;
     const queryParams = queryProps;
+    togglePageLoader();
     const { data: propertyList } = await get(`/property/filter${queryProps}`);
+    togglePageLoader();
     this.setState({ propertyList, queryParams });
   };
 

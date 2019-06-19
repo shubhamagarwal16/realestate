@@ -1,12 +1,20 @@
 import React from "react";
 
-const Input = ({ label, name, type, handleChange, error, placeholder }) => {
+const Input = ({
+  label,
+  name,
+  type,
+  handleChange,
+  error,
+  placeholder,
+  optionalFnCall
+}) => {
   return (
     <div className="form-group">
       {label && <label htmlFor={name}>{label}</label>}
       <input
         type={type}
-        onChange={handleChange}
+        onChange={event => handleChange(event, optionalFnCall)}
         name={name}
         placeholder={placeholder}
         id={name}
