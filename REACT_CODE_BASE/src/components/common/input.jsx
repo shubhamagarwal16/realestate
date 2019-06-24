@@ -7,7 +7,8 @@ const Input = ({
   handleChange,
   error,
   placeholder,
-  optionalFnCall
+  optionalFnCall,
+  value
 }) => {
   return (
     <div className="form-group">
@@ -16,6 +17,7 @@ const Input = ({
         type={type}
         onChange={event => handleChange(event, optionalFnCall)}
         name={name}
+        value={value}
         placeholder={placeholder}
         id={name}
         className="form-control"

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Form from "./form";
-import { Dropdown } from "react-bootstrap";
+import { Dropdown, Alert } from "react-bootstrap";
 
 import LOGO from "../../assets/images/Logo_SA.png";
 import userImg from "../../assets/images/user.jpg";
@@ -21,35 +21,80 @@ class Header extends Form {
       { path: "/property/new", name: "Add New Property" },
       { path: "/property/search", name: "Find Property" },
       { path: "/property/listing/all", name: "My Listing" },
-      { path: "/users/profile/edit", name: "My Profile" }
-    ]
+      { path: "/users/profile", name: "My Profile" }
+    ],
+    alertNotification: {
+      status: false,
+      message: "",
+      variant: ""
+    }
   };
 
   componentDidUpdate() {
-    console.log("Header ", this.props, this.state.loginModalToggle);
-    const { location } = this.props;
-    const locationState = (location && location.state) || {};
-    let queryParams = {};
-    if (
-      locationState &&
-      locationState.loginModalToggle &&
-      !this.state.loginModalToggle
-    )
-      this.toggleLoginModal();
-    else if (location && location.search && !this.state.loginModalToggle) {
-      queryParams = queryString.parse(location.search);
-      if (queryParams && queryParams.action === "signUpsuccess")
+    const queryParams = queryString.parse(this.props.location.search);
+    if (queryParams) {
+      // ============= NEW USER ===============
+      if (
+        queryParams.action === "signUpsuccess" &&
+        queryParams.modal === "open"
+      ) {
+        this.setState({
+          alertNotification: {
+            status: true,
+            message: "Congratulations! You have registered successfully..",
+            variant: "success"
+          }
+        });
         this.toggleLoginModal();
+      }
+      // =============== LOGOUT ===================
+      else if (
+        queryParams.action === "logOut" &&
+        queryParams.control === "completed"
+      ) {
+        this.refineQueryParams();
+
+        this.setState({
+          alertNotification: {
+            status: true,
+            message: "You have logged out successfully..",
+            variant: "primary"
+          }
+        });
+      }
+      // ============== PROTECTED URL =============
+      else if (queryParams.redirectUrl && queryParams.modal === "open") {
+        this.toggleLoginModal();
+
+        this.setState({
+          alertNotification: {
+            status: true,
+            message: "Kindly login to continue..",
+            variant: "info"
+          }
+        });
+      }
     }
-    console.log({ queryParams });
   }
 
+  refineQueryParams = () => {
+    const queryParams = queryString.parse(this.props.location.search);
+    if (queryParams) {
+      if (queryParams.modal === "open") delete queryParams.modal;
+      if (queryParams.control === "completed") delete queryParams.control;
+
+      const stringified = queryString.stringify(queryParams);
+      // console.log(stringified);
+      this.props.history.push(`?${stringified}`);
+    }
+  };
+
   toggleLoginModal = () => {
+    this.refineQueryParams();
+
     let loginModalToggle = this.state.loginModalToggle;
-    console.log("toggleLoginModal ", loginModalToggle);
     loginModalToggle = !loginModalToggle;
     this.setState({ loginModalToggle });
-    // this.props.history.push("/");
   };
 
   setLoggedInUser = user => {
@@ -58,11 +103,17 @@ class Header extends Form {
 
   handleLogout = () => {
     const isLoggedOut = authService.logOut();
-    if (isLoggedOut) window.location = "/";
+    if (isLoggedOut) window.location = "/?action=logOut&control=completed";
+  };
+
+  handleAlertDismiss = () => {
+    this.setState({
+      alertNotification: { status: false, message: "", variant: " " }
+    });
   };
 
   render() {
-    const { loginModalToggle, navItems } = this.state;
+    const { loginModalToggle, navItems, alertNotification } = this.state;
     const { user } = this.props;
     return (
       <React.Fragment>
@@ -109,6 +160,7 @@ class Header extends Form {
                             <span className="text-danger">Welcome </span>
                             {(user && user.fname) || ""}
                           </span>
+                          &nbsp;
                           <img
                             src={userImg}
                             className="rounded-circle p-cursor"
@@ -116,20 +168,15 @@ class Header extends Form {
                             width="50px"
                           />
                         </Dropdown.Toggle>
-
                         <Dropdown.Menu>
-                          <Dropdown.Item href="#/action-1">
-                            Action
+                          <Dropdown.Item>
+                            <button
+                              onClick={this.handleLogout}
+                              className="btn btn-light btn-block"
+                            >
+                              Logout
+                            </button>
                           </Dropdown.Item>
-                          <Dropdown.Item href="#/action-2">
-                            Another action
-                          </Dropdown.Item>
-                          <button
-                            onClick={this.handleLogout}
-                            className="btn btn-light"
-                          >
-                            Logout
-                          </button>
                         </Dropdown.Menu>
                       </Dropdown>
                     </div>
@@ -155,6 +202,20 @@ class Header extends Form {
         {/* ---------------------- LOGIN MODAL ----------------------------- */}
         {user && <Navbar navItems={navItems} />}
         <CommonUIAddons pageLoaderFlag={togglePageLoaderFlag} />
+
+        {/* =================== ALERT MESSAGE =================== */}
+        {alertNotification.status && (
+          <div className="container mt-3">
+            <Alert
+              variant={alertNotification.variant}
+              onClose={this.handleAlertDismiss}
+              dismissible
+            >
+              {alertNotification.message}
+            </Alert>
+          </div>
+        )}
+        {/* =================== ALERT MESSAGE =================== */}
       </React.Fragment>
     );
   }

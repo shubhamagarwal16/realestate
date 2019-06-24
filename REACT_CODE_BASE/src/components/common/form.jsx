@@ -55,13 +55,21 @@ class Form extends Component {
     console.log("=======================");
   }
 
-  renderInput(label, name, type = "", placeholder = "", optionalFnCall = "") {
+  renderInput(
+    label,
+    name,
+    type = "",
+    placeholder = "",
+    optionalFnCall = "",
+    value
+  ) {
     if (!type) type = "input";
     return (
       <Input
         label={label}
         handleChange={this.handleChange}
         name={name}
+        value={value}
         type={type}
         placeholder={placeholder}
         error={this.state.errors[name]}

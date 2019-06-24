@@ -12,8 +12,7 @@ const ProtectedRoute = ({ component: Component, user, render, ...rest }) => {
             <Redirect
               to={{
                 pathname: "/",
-                search: `?redirectUrl=${props.location.pathname}`,
-                state: { loginModalToggle: true }
+                search: `?redirectUrl=${props.location.pathname}&modal=open`
               }}
             />
           );

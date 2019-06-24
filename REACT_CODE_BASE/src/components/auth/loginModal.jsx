@@ -1,6 +1,5 @@
 import React from "react";
 import Joi from "joi-browser";
-import queryString from "query-string";
 
 import Form from "../common/form";
 import { Modal, Button } from "react-bootstrap";
@@ -37,15 +36,6 @@ class LoginModal extends Form {
           this.props.setLoggedInUser(user);
           this.props.toggleLoginModal();
           let redirectUrl = "/users/dashboard";
-          // if (this.props.location && this.props.location.search) {
-          //   const { redirectUrl: queryParam } = queryString(
-          //     this.props.location.search
-          //   );
-          //   console.log("queryParam", queryString(this.props.location.search));
-          //   redirectUrl = queryParam;
-          // }
-          // this.props.history.push("/users/dasKshboard");
-          console.log(redirectUrl, this.props.location.search);
           window.location = redirectUrl;
         }
       }

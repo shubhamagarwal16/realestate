@@ -3,7 +3,7 @@ import { Route } from "react-router-dom";
 import { getCurrentUser } from "./services/authService";
 
 import MainComponent from "./components/mainComponent";
-import "./App.scss";
+import "./App.css";
 import "font-awesome/css/font-awesome.css";
 
 class App extends Component {

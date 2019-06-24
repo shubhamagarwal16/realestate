@@ -10,7 +10,7 @@
   "author": "Shubham Agarwal",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^1.0.3",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.2",
     "debug": "^4.1.1",
     "express": "^4.16.3",

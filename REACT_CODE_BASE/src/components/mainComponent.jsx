@@ -12,6 +12,7 @@ import AddProperty from "./property/addProperty";
 import FindProperty from "./property/findProperty";
 import PropertyListing from "./property/propertyListing";
 import UserProfile from "./users/profile";
+import ProfileEdit from "./users/profileEdit";
 
 const MainComponent = props => {
   // console.log("MainComponent ", props);
@@ -28,6 +29,13 @@ const MainComponent = props => {
         />
         <ProtectedRoute
           path="/users/profile/edit"
+          exact
+          user={props.user}
+          component={ProfileEdit}
+        />
+        <ProtectedRoute
+          path="/users/profile"
+          exact
           user={props.user}
           component={UserProfile}
         />

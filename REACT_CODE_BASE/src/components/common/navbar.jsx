@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink, Link } from "react-router-dom";
 
-import "../../assets/styles/header&footer&navbar.scss";
+import "../../assets/styles/header&footer&navbar.css";
 
 const Navbar = ({ navItems }) => {
   return (

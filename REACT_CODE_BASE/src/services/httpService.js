@@ -1,5 +1,5 @@
 import { default as http } from "axios";
-import { getJwt } from "./authService";
+// import { getJwt } from "./authService";
 
 // http.defaults.headers.common["x-auth-token"] = getJwt();
 

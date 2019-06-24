@@ -1,18 +1,18 @@
 import React from "react";
 import Joi from "joi-browser";
 
-import Form from "./../common/form";
+import Form from "../common/form";
 import * as commonService from "../../services/commonServices";
+import { getUserData } from "../../services/authService";
 
-class Registration extends Form {
+class ProfileEdit extends Form {
   state = {
     data: {
+      _id: "",
       fname: "",
       lName: "",
       email: "",
       phoneNo: "",
-      password: "",
-      cPassword: "",
       state: "",
       city: "",
       pincode: ""
@@ -56,6 +56,13 @@ class Registration extends Form {
   };
 
   async componentDidMount() {
+    const data = await getUserData();
+    console.log({ data });
+    this.setState({ isProfileEdit: true, data });
+    this.renderStateList();
+  }
+
+  renderStateList = async () => {
     try {
       const { data: stateList } = await commonService.get("/common/state");
       this.setState({
@@ -64,7 +71,7 @@ class Registration extends Form {
     } catch (error) {
       console.log("Error while fetching stateList: ", error);
     }
-  }
+  };
 
   renderCityList = async stateId => {
     try {
@@ -98,27 +105,28 @@ class Registration extends Form {
 
   doSubmit = async () => {
     console.log("---- ", this.state.data);
-    const { password, cPassword } = this.state.data;
-    if (password !== cPassword) {
-      const errors = { cPassword: "Password does not match." };
-      this.setState({ errors });
-      return;
-    }
-    try {
-      const { data: response } = await commonService.post(
-        "/auth/user/register",
-        this.state.data
-      );
-      console.log(response);
-      if (response && response.message) {
-        return this.props.history.push("/?action=signUpsuccess&modal=open");
-      }
-    } catch (error) {
-      console.log("Error in registration: ", error);
-    }
+    // const { password, cPassword } = this.state.data;
+    // if (password !== cPassword) {
+    //   const errors = { cPassword: "Password does not match." };
+    //   this.setState({ errors });
+    //   return;
+    // }
+    // try {
+    //   const { data: response } = await commonService.post(
+    //     "/auth/user/register",
+    //     this.state.data
+    //   );
+    //   console.log(response);
+    //   if (response && response.message) {
+    //     return this.props.history.push("/?action=signUpsuccess&modal=open");
+    //   }
+    // } catch (error) {
+    //   console.log("Error in registration: ", error);
+    // }
   };
 
   render() {
+    // const { data } = this.state;
     return (
       <React.Fragment>
         <div className="container mt-5 mb-5">
@@ -228,4 +236,4 @@ class Registration extends Form {
   }
 }
 
-export default Registration;
+export default ProfileEdit;

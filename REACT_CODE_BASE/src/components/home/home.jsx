@@ -3,7 +3,7 @@ import { Carousel } from "react-bootstrap";
 import PropertyList from "../common/propertyList";
 import http from "../../services/httpService";
 
-import "../../assets/styles/home.scss";
+import "../../assets/styles/home.css";
 
 class Home extends Component {
   state = {
@@ -32,8 +32,8 @@ class Home extends Component {
         <div>
           {images.length && (
             <Carousel>
-              {images.map(item => (
-                <Carousel.Item key={item + Date.now()}>
+              {images.map((item, index) => (
+                <Carousel.Item key={item + index}>
                   <img
                     width="100%"
                     className="d-block w-100"

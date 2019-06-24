@@ -1,6 +1,6 @@
 import React from "react";
 
-import "../../assets/styles/header&footer&navbar.scss";
+import "../../assets/styles/header&footer&navbar.css";
 
 const Footer = () => {
   return (
