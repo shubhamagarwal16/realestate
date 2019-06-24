@@ -154,10 +154,10 @@ class Header extends Form {
                   )}
                   {user && (
                     <div className="user-image">
-                      <Dropdown>
+                      <Dropdown alignRight>
                         <Dropdown.Toggle variant="" id="dropdown-basic">
                           <span>
-                            <span className="text-danger">Welcome </span>
+                            <span className="text-danger">Welcome </span> &nbsp;
                             {(user && user.fname) || ""}
                           </span>
                           &nbsp;
@@ -169,6 +169,16 @@ class Header extends Form {
                           />
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
+                          {user && user.isAdmin && (
+                            <Dropdown.Item href="/admin">
+                              {/* <Link
+                                to="/admin"
+                                className="btn btn-light btn-block"
+                              >
+                              </Link> */}
+                              Admin Dashboard
+                            </Dropdown.Item>
+                          )}
                           <Dropdown.Item>
                             <button
                               onClick={this.handleLogout}

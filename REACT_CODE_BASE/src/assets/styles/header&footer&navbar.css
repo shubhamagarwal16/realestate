@@ -14,11 +14,15 @@
   background-color: #f9797d;
 }
 .nav-dash {
-  position: sticky;
+  position: sticky !important;
   top: 0px;
   z-index: 1;
 }
 /* // ------------------ NAVBAR ------------------- */
+
+.user-image .dropdown-item {
+  padding: 0px;
+}
 
 /* LOADER */
 
