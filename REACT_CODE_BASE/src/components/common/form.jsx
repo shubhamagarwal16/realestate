@@ -3,6 +3,7 @@ import Joi from "joi-browser";
 
 import Input from "./input";
 import Select from "./select";
+import RadioButtons from "./radioButtons";
 
 class Form extends Component {
   state = {
@@ -86,6 +87,15 @@ class Form extends Component {
         options={options}
         error={this.state.errors[name]}
         optionalFnCall={optionalFnCall}
+      />
+    );
+  }
+  renderRadioButton(buttons, label) {
+    return (
+      <RadioButtons
+        buttons={buttons}
+        onChange={this.handleChange}
+        label={label}
       />
     );
   }

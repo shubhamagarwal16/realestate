@@ -5,25 +5,57 @@ import Joi from "joi-browser";
 class AddProperty extends Form {
   state = {
     data: {
-      title: ""
+      title: "",
+      propertyFor: ""
     },
-    errors: {}
+    errors: {},
+    propertyTypeList: []
   };
 
   schema = {
     title: Joi.string()
       .required()
-      .label("Property Title")
+      .label("Property Title"),
+    propertyFor: Joi.string()
+      .required()
+      .label("Property For")
   };
 
   renderPropertyTitle = data => {};
 
   render() {
+    const { propertyTypeList } = this.state;
     return (
       <React.Fragment>
         <div className="container mt-5 mb-5">
           <h4 className="text-danger">Add a New Property-</h4>
           <hr className="hr" />
+          <div className="form-row">
+            <div className="col-md-4">
+              {this.renderRadioButton(
+                [
+                  {
+                    name: "propertyFor",
+                    value: "sell",
+                    title: "Sell"
+                  },
+                  {
+                    name: "propertyFor",
+                    value: "rent",
+                    title: "Rent"
+                  }
+                ],
+                "Property For"
+              )}
+            </div>
+            <div className="col-md-4">
+              {this.renderSelect(
+                "Property Type:",
+                "Proptype",
+                propertyTypeList
+              )}
+            </div>
+          </div>
           <div className="form-row">
             <div className="col-md-12">
               {this.renderInput(
