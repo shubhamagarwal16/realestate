@@ -41,7 +41,7 @@ class Form extends Component {
   };
 
   handleChange = ({ currentTarget }, optionalFnCall) => {
-    console.log(currentTarget.name, currentTarget.value);
+    // console.log(currentTarget.name, currentTarget.value);
     const data = { ...this.state.data };
     const errors = { ...this.state.errors };
     data[currentTarget.name] = currentTarget.value;
@@ -77,7 +77,8 @@ class Form extends Component {
     options,
     optionalFnCall = "",
     valueProperty,
-    textProperty
+    textProperty,
+    isLoading
   ) {
     return (
       <Select
@@ -89,6 +90,7 @@ class Form extends Component {
         textProperty={textProperty}
         error={this.state.errors[name]}
         optionalFnCall={optionalFnCall}
+        isLoading={isLoading}
       />
     );
   }

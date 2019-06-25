@@ -8,11 +8,13 @@ const Select = ({
   valueProperty,
   textProperty,
   error,
-  optionalFnCall
+  optionalFnCall,
+  isLoading
 }) => {
   return (
     <div className="form-group">
-      {label && <label htmlFor={name}>{label}</label>}
+      {label && <label htmlFor={name}>{label}</label>} &nbsp;
+      {isLoading && <i class="fa fa-refresh fa-spin fa-fw" />}
       <select
         name={name}
         onChange={event => handleChange(event, optionalFnCall)}

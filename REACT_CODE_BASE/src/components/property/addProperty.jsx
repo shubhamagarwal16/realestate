@@ -13,12 +13,18 @@ class AddProperty extends Form {
       price: 0,
       length: 0,
       breadth: 0,
-      cornrPlot: false
+      cornrPlot: false,
+      state: "",
+      city: "",
+      pincode: "",
+      locality: "",
+      isSociety: false
     },
     errors: {},
     propertyTypeList: [],
     stateList: [],
-    cityList: []
+    cityList: [],
+    isCityListLoading: false
   };
 
   schema = {
@@ -38,7 +44,22 @@ class AddProperty extends Form {
     breadth: Joi.number()
       .required()
       .label("Breadth"),
-    cornrPlot: Joi.boolean().label("Corner Plot")
+    cornrPlot: Joi.boolean().label("Corner Plot"),
+    state: Joi.string()
+      .required()
+      .label("State"),
+    city: Joi.string()
+      .required()
+      .label("City"),
+    pincode: Joi.string()
+      .required()
+      .label("Pincode"),
+    locality: Joi.string()
+      .required()
+      .label("Locality"),
+    isSociety: Joi.boolean()
+      .required()
+      .label("Society option")
   };
 
   async componentDidMount() {
@@ -56,10 +77,19 @@ class AddProperty extends Form {
 
   renderPropertyTitle = data => {};
   calculateArea = data => {};
-  renderCityList = async data => {};
+  renderCityList = async stateId => {
+    this.setState({ isCityListLoading: true });
+    const cityList = await commonService.renderCityList(stateId);
+    this.setState({ cityList, isCityListLoading: false });
+  };
 
   render() {
-    const { propertyTypeList, stateList } = this.state;
+    const {
+      propertyTypeList,
+      stateList,
+      cityList,
+      isCityListLoading
+    } = this.state;
     return (
       <React.Fragment>
         <div className="container mt-5 mb-5">
@@ -144,6 +174,8 @@ class AddProperty extends Form {
               </div>
             </div>
             <div className="col-md-6">
+              {" "}
+              <br />
               <label htmlFor="cornrPlot">Corner Plot?</label>
               <input
                 type="checkbox"
@@ -165,10 +197,83 @@ class AddProperty extends Form {
                 "renderCityList"
               )}
             </div>
-            <div className="col-md-3" />
-            <div className="col-md-3" />
-            <div className="col-md-3" />
+            <div className="col-md-3">
+              {this.renderSelect(
+                "City:",
+                "city",
+                cityList,
+                "",
+                "_id",
+                "name",
+                isCityListLoading
+              )}
+            </div>
+            <div className="col-md-3">
+              {this.renderInput(
+                "Pincode",
+                "pincode",
+                "number",
+                "Enter Pincode"
+              )}
+            </div>
+            <div className="col-md-3">
+              {this.renderInput(
+                "Locality:",
+                "locality",
+                "input",
+                "Enter Locality"
+              )}
+            </div>
           </div>
+          <div className="form-row">
+            <div className="col-md-3">
+              {this.renderRadioButton(
+                [
+                  {
+                    name: "isSociety",
+                    value: true,
+                    title: "Yes"
+                  },
+                  {
+                    name: "isSociety",
+                    value: false,
+                    title: "No"
+                  }
+                ],
+                "Is it a Society?"
+              )}
+            </div>
+            <div className="col-md-4">
+              {this.state.data.isSociety == "true" &&
+                this.renderInput(
+                  "Society Name:",
+                  "societyName",
+                  "",
+                  "Enter Society Name"
+                )}
+            </div>
+            <div className="col-md-1" />
+            <div className="col-md-4">
+              {this.state.data.isSociety == "true" &&
+                this.renderInput(
+                  "Flat No.:",
+                  "flatNo",
+                  "",
+                  "Enter Flat Number"
+                )}
+            </div>
+          </div>
+          <h4>Other Information -</h4>
+          <hr className="hr" />
+          <label htmlFor="description">Description:</label>
+          <textarea
+            name="description"
+            id="description"
+            cols="30"
+            maxlength="500"
+            rows="5"
+            className="form-control"
+          />
         </div>
       </React.Fragment>
     );
