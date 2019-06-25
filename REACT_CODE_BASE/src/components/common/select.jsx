@@ -17,7 +17,7 @@ const Select = ({
         name={name}
         onChange={event => handleChange(event, optionalFnCall)}
         id={name}
-        className="form-control"
+        className="custom-select"
       >
         {options.map(option => (
           <option key={option[valueProperty]} value={option[valueProperty]}>

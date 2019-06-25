@@ -41,6 +41,7 @@ class Form extends Component {
   };
 
   handleChange = ({ currentTarget }, optionalFnCall) => {
+    console.log(currentTarget.name, currentTarget.value);
     const data = { ...this.state.data };
     const errors = { ...this.state.errors };
     data[currentTarget.name] = currentTarget.value;
@@ -56,21 +57,13 @@ class Form extends Component {
     console.log("=======================");
   }
 
-  renderInput(
-    label,
-    name,
-    type = "",
-    placeholder = "",
-    optionalFnCall = "",
-    value
-  ) {
+  renderInput(label, name, type = "", placeholder = "", optionalFnCall = "") {
     if (!type) type = "input";
     return (
       <Input
         label={label}
         handleChange={this.handleChange}
         name={name}
-        value={value}
         type={type}
         placeholder={placeholder}
         error={this.state.errors[name]}
@@ -78,13 +71,22 @@ class Form extends Component {
       />
     );
   }
-  renderSelect(label, name, options, optionalFnCall = "") {
+  renderSelect(
+    label,
+    name,
+    options,
+    optionalFnCall = "",
+    valueProperty,
+    textProperty
+  ) {
     return (
       <Select
         label={label}
         handleChange={this.handleChange}
         name={name}
         options={options}
+        valueProperty={valueProperty}
+        textProperty={textProperty}
         error={this.state.errors[name]}
         optionalFnCall={optionalFnCall}
       />

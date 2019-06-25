@@ -4,8 +4,8 @@ const RadioButtons = ({ buttons, label, onChange }) => {
   return (
     <React.Fragment>
       <label htmlFor={label}>{label}</label> <br />
-      {buttons.map(btn => (
-        <label htmlFor={btn.value}>
+      {buttons.map((btn, index) => (
+        <label key={index} htmlFor={btn.value}>
           <input
             type="radio"
             name={btn.name}
