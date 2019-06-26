@@ -41,7 +41,6 @@ class Form extends Component {
   };
 
   handleChange = ({ currentTarget }, optionalFnCall) => {
-    console.log({ currentTarget });
     const data = { ...this.state.data };
     const errors = { ...this.state.errors };
     let attrType = "value";
@@ -51,13 +50,10 @@ class Form extends Component {
     if (errorMessage) errors[currentTarget.name] = errorMessage;
     else delete errors[currentTarget.name];
 
-    this.setState({ data, errors });
-    if (optionalFnCall) this[optionalFnCall](currentTarget.value);
+    this.setState({ data, errors }, () => {
+      if (optionalFnCall) this[optionalFnCall](currentTarget.value);
+    });
   };
-
-  asda() {
-    console.log("=======================");
-  }
 
   renderInput(
     label,
@@ -104,12 +100,13 @@ class Form extends Component {
       />
     );
   }
-  renderRadioButton(buttons, label) {
+  renderRadioButton(buttons, label, optionalFnCall) {
     return (
       <RadioButtons
         buttons={buttons}
         onChange={this.handleChange}
         label={label}
+        optionalFnCall={optionalFnCall}
       />
     );
   }

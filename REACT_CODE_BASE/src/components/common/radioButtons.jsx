@@ -1,6 +1,6 @@
 import React from "react";
 
-const RadioButtons = ({ buttons, label, onChange }) => {
+const RadioButtons = ({ buttons, label, onChange, optionalFnCall = "" }) => {
   return (
     <React.Fragment>
       <label htmlFor={label}>{label}</label> <br />
@@ -10,7 +10,7 @@ const RadioButtons = ({ buttons, label, onChange }) => {
             type="radio"
             name={btn.name}
             id={index + btn.value.toString()}
-            onChange={onChange}
+            onChange={event => onChange(event, optionalFnCall)}
             value={btn.value}
           />{" "}
           {btn.title} &nbsp;
