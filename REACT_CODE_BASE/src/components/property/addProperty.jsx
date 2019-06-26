@@ -18,7 +18,13 @@ class AddProperty extends Form {
       city: "",
       pincode: "",
       locality: "",
-      isSociety: false
+      isSociety: false,
+      societyName: "",
+      flatNo: "",
+      description: "",
+      address: "",
+      email: "",
+      phoneNo: 0
     },
     errors: {},
     propertyTypeList: [],
@@ -59,7 +65,22 @@ class AddProperty extends Form {
       .label("Locality"),
     isSociety: Joi.boolean()
       .required()
-      .label("Society option")
+      .label("Society option"),
+    societyName: Joi.string().label("Society Name"),
+    flatNo: Joi.string().label("Flat Number"),
+    description: Joi.string()
+      .required()
+      .label("Description"),
+    address: Joi.string()
+      .required()
+      .label("Address"),
+    email: Joi.string()
+      .email()
+      .required()
+      .label("Email"),
+    phoneNo: Joi.number()
+      .required()
+      .label("Phone Number")
   };
 
   async componentDidMount() {
@@ -75,12 +96,25 @@ class AddProperty extends Form {
     this.setState({ propertyTypeList, stateList });
   }
 
-  renderPropertyTitle = data => {};
+  renderPropertyTitle = txt => {
+    const data = { ...this.state.data };
+    data.title = "";
+    data.title = data.cornrPlot ? "Corner Plot at " : "";
+    data.title += data.locality ? " " + data.locality : "";
+    data.title += data.city ? ", " + data.city : "";
+    data.title += data.state ? ", " + data.state : "";
+
+    console.log("renderPropertyTitle", data.title);
+    this.setState({ data });
+  };
+
   calculateArea = data => {};
+
   renderCityList = async stateId => {
     this.setState({ isCityListLoading: true });
     const cityList = await commonService.renderCityList(stateId);
     this.setState({ cityList, isCityListLoading: false });
+    this.renderPropertyTitle("");
   };
 
   render() {
@@ -88,7 +122,8 @@ class AddProperty extends Form {
       propertyTypeList,
       stateList,
       cityList,
-      isCityListLoading
+      isCityListLoading,
+      data
     } = this.state;
     return (
       <React.Fragment>
@@ -130,17 +165,6 @@ class AddProperty extends Form {
                 "price",
                 "number",
                 "Enter total amount"
-              )}
-            </div>
-          </div>
-          <div className="form-row">
-            <div className="col-md-12">
-              {this.renderInput(
-                "Add Property Title",
-                "title",
-                "input",
-                "Add property title",
-                "renderPropertyTitle"
               )}
             </div>
           </div>
@@ -202,7 +226,7 @@ class AddProperty extends Form {
                 "City:",
                 "city",
                 cityList,
-                "",
+                "renderPropertyTitle",
                 "_id",
                 "name",
                 isCityListLoading
@@ -270,10 +294,50 @@ class AddProperty extends Form {
             name="description"
             id="description"
             cols="30"
-            maxlength="500"
+            maxLength="500"
             rows="5"
             className="form-control"
           />
+          <div className="form-row">
+            <div className="col-md-12">
+              {this.renderInput(
+                "Property Complete Address:",
+                "address",
+                "",
+                "Enter complete Property's Address"
+              )}
+            </div>
+          </div>
+          <div className="form-row">
+            <div className="col-md-6">
+              {this.renderInput("Email:", "email", "email", "Enter email")}
+            </div>
+            <div className="col-md-6">
+              {this.renderInput(
+                "Phone Number:",
+                "phoneNo",
+                "number",
+                "Enter phone number"
+              )}
+            </div>
+          </div>
+          <div className="form-row">
+            <div className="col-md-12">
+              {this.renderInput(
+                "Add Property Title",
+                "title",
+                "input",
+                "Add property title",
+                "renderPropertyTitle",
+                data.title
+              )}
+            </div>
+          </div>
+          <div className="form-row">
+            <button className="btn btn-primary btn-block">
+              Add New Property
+            </button>
+          </div>
         </div>
       </React.Fragment>
     );

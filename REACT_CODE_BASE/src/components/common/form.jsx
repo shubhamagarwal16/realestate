@@ -41,10 +41,12 @@ class Form extends Component {
   };
 
   handleChange = ({ currentTarget }, optionalFnCall) => {
-    // console.log(currentTarget.name, currentTarget.value);
+    console.log({ currentTarget });
     const data = { ...this.state.data };
     const errors = { ...this.state.errors };
-    data[currentTarget.name] = currentTarget.value;
+    let attrType = "value";
+    if (currentTarget.type === "checkbox") attrType = "checked";
+    data[currentTarget.name] = currentTarget[attrType];
     const errorMessage = this.validateProperty(currentTarget);
     if (errorMessage) errors[currentTarget.name] = errorMessage;
     else delete errors[currentTarget.name];
@@ -57,7 +59,14 @@ class Form extends Component {
     console.log("=======================");
   }
 
-  renderInput(label, name, type = "", placeholder = "", optionalFnCall = "") {
+  renderInput(
+    label,
+    name,
+    type = "",
+    placeholder = "",
+    optionalFnCall = "",
+    value
+  ) {
     if (!type) type = "input";
     return (
       <Input
@@ -68,6 +77,7 @@ class Form extends Component {
         placeholder={placeholder}
         error={this.state.errors[name]}
         optionalFnCall={optionalFnCall}
+        value={value}
       />
     );
   }
