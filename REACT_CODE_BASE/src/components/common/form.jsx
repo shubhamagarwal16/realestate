@@ -107,6 +107,12 @@ class Form extends Component {
         onChange={this.handleChange}
         label={label}
         optionalFnCall={optionalFnCall}
+        error={
+          (buttons &&
+            buttons[0].name &&
+            this.state.errors[buttons && buttons[0].name]) ||
+          ""
+        }
       />
     );
   }

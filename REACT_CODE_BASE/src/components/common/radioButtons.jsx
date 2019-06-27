@@ -1,6 +1,12 @@
 import React from "react";
 
-const RadioButtons = ({ buttons, label, onChange, optionalFnCall = "" }) => {
+const RadioButtons = ({
+  buttons,
+  label,
+  onChange,
+  optionalFnCall = "",
+  error
+}) => {
   return (
     <React.Fragment>
       <label htmlFor={label}>{label}</label> <br />
@@ -16,6 +22,8 @@ const RadioButtons = ({ buttons, label, onChange, optionalFnCall = "" }) => {
           {btn.title} &nbsp;
         </label>
       ))}
+      <br />
+      <small className="text-danger">{error}</small>
     </React.Fragment>
   );
 };
