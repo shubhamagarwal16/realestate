@@ -49,28 +49,52 @@ class PropertyList extends Component {
               className={blockClasses}
             >
               <div className="card clickable">
-                <img
-                  src={showGFSImage(property.images[0])}
-                  height="120px"
-                  className="card-img-top"
-                  alt="img"
-                />
-                <div className="card-body">
-                  <h5 className="card-title text-center">{property.title}</h5>
-                  <ul className="list-unstyled">
-                    <li className="text-center">
-                      <small>
-                        {property.locality}, {property.city.name},{" "}
-                        {property.state.name}
-                      </small>
-                    </li>
-                    <li className="text-center">
-                      <small>
-                        {property.type.title} <b>|</b> {property.updatedOn}{" "}
-                      </small>
-                    </li>
-                  </ul>
-                  <p className="card-text">{property.description}</p>
+                <div className="row">
+                  <div
+                    className={this.props.blockSize == 12 ? "col-3" : "col-12"}
+                  >
+                    <img
+                      src={showGFSImage(property.images[0])}
+                      height="120px"
+                      className="card-img-top"
+                      alt="img"
+                    />
+                  </div>
+                  <div
+                    className={this.props.blockSize == 12 ? "col-9" : "col-12"}
+                  >
+                    <div className="card-body">
+                      <h5
+                        className={
+                          this.props.blockSize == 12
+                            ? "card-title"
+                            : "card-title text-center"
+                        }
+                      >
+                        {property.title}
+                      </h5>
+                      <ul
+                        className={
+                          this.props.blockSize == 12
+                            ? "list-unstyled"
+                            : "list-unstyled text-center"
+                        }
+                      >
+                        <li>
+                          <small>
+                            {property.locality}, {property.city.name},{" "}
+                            {property.state.name}
+                          </small>
+                        </li>
+                        <li>
+                          <small>
+                            {property.type.title} <b>|</b> {property.updatedOn}{" "}
+                          </small>
+                        </li>
+                      </ul>
+                      <p className="card-text">{property.description}</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
