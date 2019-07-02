@@ -1,6 +1,8 @@
 import React, { Component } from "react";
-import { get, showGFSImage } from "../../services/commonServices";
 import { togglePageLoader } from "./header";
+
+import { get, showGFSImage } from "../../services/commonServices";
+import { getCurrentUser } from "../../services/authService";
 
 class PropertyList extends Component {
   state = {
@@ -18,12 +20,26 @@ class PropertyList extends Component {
   }
 
   getPropertyListings = async () => {
-    let { queryParams: queryProps } = this.props;
-    const queryParams = queryProps;
+    let { queryParams, userId, notUserId, listingCount } = this.props;
+    const user = getCurrentUser();
+    const queryTemp = this.props.queryParams;
+
+    if (userId && user && user._id) {
+      if (queryParams) queryParams += `&userId=${user._id}`;
+      else queryParams = `?userId=${user._id}`;
+    } else if (notUserId && user && user._id) {
+      if (queryParams) queryParams += `&notUserId=${user._id}`;
+      else queryParams = `?notUserId=${user._id}`;
+    }
+    // console.log({ user });
+
     togglePageLoader();
-    const { data: propertyList } = await get(`/property/filter${queryProps}`);
+    const { data: propertyList } = await get(`/property/filter${queryParams}`);
     togglePageLoader();
-    this.setState({ propertyList, queryParams });
+    if (listingCount) {
+      this.props.listingCount(propertyList.length);
+    }
+    this.setState({ propertyList, queryParams: queryTemp });
   };
 
   openPropertyPage = slug => {

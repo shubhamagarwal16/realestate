@@ -10,14 +10,27 @@ class PropertyListing extends Component {
     listingType: ""
   };
 
+  componentDidMount() {
+    this.getUriParam();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { match } = this.props;
+    if (
+      prevState.listingType !==
+      ((match && match.params && match.params.type) || "")
+    )
+      this.getUriParam();
+  }
+
   getUriParam = () => {
     const { match } = this.props;
     if (match && match.params && match.params.type)
       this.setState({ listingType: match.params.type });
   };
 
-  toggleUrl = type => {
-    this.props.history.push(`/property/listing/${type}`);
+  filterProperties = () => {
+    const { queryParams } = this.state;
   };
 
   render() {
@@ -60,6 +73,7 @@ class PropertyListing extends Component {
               <PropertyList
                 // togglePageLoader={this.props.togglePageLoader}
                 queryParams={queryParams}
+                userId={true}
                 blockSize={blockSize}
                 {...this.props}
               />

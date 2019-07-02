@@ -74,6 +74,11 @@ class FindProperty extends Component {
     this.props.history.push(`?${stringifiedString}`);
   };
 
+  setPropCount = count => {
+    console.log("==========", count);
+    this.setState({ count });
+  };
+
   clearFilters = () => {
     window.location = "/property/search";
     // this.setState({
@@ -88,7 +93,13 @@ class FindProperty extends Component {
   };
 
   render() {
-    const { propertyTypeList, cityList, queryParams, blockSize } = this.state;
+    const {
+      propertyTypeList,
+      cityList,
+      queryParams,
+      blockSize,
+      count
+    } = this.state;
 
     return (
       <React.Fragment>
@@ -224,7 +235,8 @@ class FindProperty extends Component {
             </div>
             <div className="col-md-9 filteredPropertyBox">
               <div className="row">
-                <div className="col-8">
+                <div className="col-4">Showing {count} properties</div>
+                <div className="col-4">
                   <h5 className="text-center">
                     Your properties will not list here
                   </h5>
@@ -250,6 +262,8 @@ class FindProperty extends Component {
                 // togglePageLoader={this.props.togglePageLoader}
                 queryParams={queryParams}
                 blockSize={blockSize}
+                listingCount={count => this.setPropCount(count)}
+                notUserId={true}
                 {...this.props}
               />
             </div>
