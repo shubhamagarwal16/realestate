@@ -25,7 +25,7 @@ class UserDashboard extends React.Component {
 
     return (
       <React.Fragment>
-        <div className="container mt-5 mb-5">
+        <div className="container">
           <h4 className="text-danger">Your recent Postings:</h4>
           <hr className="hr" />
 

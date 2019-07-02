@@ -5,6 +5,27 @@ header {
   box-shadow: 0px 0px 9px 0px #888;
 }
 
+.contentArea {
+  background-color: #eee;
+}
+
 .clickable {
   cursor: pointer;
+}
+
+.optionsBlock {
+  max-height: 180px;
+  overflow: scroll;
+}
+.optionsBlock::-webkit-scrollbar {
+  width: 8px;
+}
+/* .optionsBlock::-webkit-scrollbar-button {
+  background: #ccc;
+} */
+.optionsBlock::-webkit-scrollbar-thumb {
+  background: #aaa;
+}
+​ .optionsBlock::-webkit-scrollbar-track-piece {
+  background: #aaa;
 }

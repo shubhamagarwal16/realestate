@@ -40,7 +40,7 @@ module.exports = {
     addNewProperty: async (req, res) => {
         let imgs = [];      
         try{
-            if(req.files.length)
+            if(req.files && req.files.length)
                 req.files.forEach(ele => imgs.push(ele.filename) )
             //Creating slug for the listing 
             var slug  = await helpers.slugGenerator(req.body.title, 'title', 'property');

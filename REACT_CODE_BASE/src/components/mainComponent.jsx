@@ -19,47 +19,49 @@ const MainComponent = props => {
   return (
     <React.Fragment>
       <Header {...props} />
-      <Switch>
-        <Route path="/property/view/:slug" component={ViewProperty} />
-        <ProtectedRoute
-          path="/users/dashboard"
-          user={props.user}
-          togglePageLoader={props.togglePageLoader}
-          component={UserDashboard}
-        />
-        <ProtectedRoute
-          path="/users/profile/edit"
-          exact
-          user={props.user}
-          component={ProfileEdit}
-        />
-        <ProtectedRoute
-          path="/users/profile"
-          exact
-          user={props.user}
-          component={UserProfile}
-        />
-        {/* ----------------- PROPERTY --------------------- */}
-        <ProtectedRoute
-          path="/property/new"
-          user={props.user}
-          component={AddProperty}
-        />
-        <ProtectedRoute
-          path="/property/search"
-          user={props.user}
-          component={FindProperty}
-        />
-        <ProtectedRoute
-          path="/property/listing/:type"
-          user={props.user}
-          component={PropertyListing}
-        />
+      <div className="contentArea pt-5 pb-5">
+        <Switch>
+          <Route path="/property/view/:slug" component={ViewProperty} />
+          <ProtectedRoute
+            path="/users/dashboard"
+            user={props.user}
+            togglePageLoader={props.togglePageLoader}
+            component={UserDashboard}
+          />
+          <ProtectedRoute
+            path="/users/profile/edit"
+            exact
+            user={props.user}
+            component={ProfileEdit}
+          />
+          <ProtectedRoute
+            path="/users/profile"
+            exact
+            user={props.user}
+            component={UserProfile}
+          />
+          {/* ----------------- PROPERTY --------------------- */}
+          <ProtectedRoute
+            path="/property/new"
+            user={props.user}
+            component={AddProperty}
+          />
+          <ProtectedRoute
+            path="/property/search"
+            user={props.user}
+            component={FindProperty}
+          />
+          <ProtectedRoute
+            path="/property/listing/:type"
+            user={props.user}
+            component={PropertyListing}
+          />
 
-        {/* ----------------- PROPERTY --------------------- */}
-        <Route path="/sign-up" component={Registration} />
-        <Route path="/" component={Home} />
-      </Switch>
+          {/* ----------------- PROPERTY --------------------- */}
+          <Route path="/sign-up" component={Registration} />
+          <Route path="/" component={Home} />
+        </Switch>
+      </div>
       <Footer />
     </React.Fragment>
   );

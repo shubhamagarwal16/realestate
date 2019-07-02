@@ -176,10 +176,10 @@ class AddProperty extends Form {
     } = this.state;
     return (
       <React.Fragment>
-        <div className="mt-5 mb-5">
+        <div className="">
           <h4 className="text-danger text-center">Add a New Property-</h4>
           <div className="container card pb-3 pt-3">
-            <form enctype="multipart/form-data">
+            <form encType="multipart/form-data">
               <div className="form-row">
                 <div className="col-md-3">
                   {this.renderRadioButton(

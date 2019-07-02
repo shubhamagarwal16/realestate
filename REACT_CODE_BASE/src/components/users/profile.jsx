@@ -24,7 +24,7 @@ class UserProfile extends Component {
     return (
       <React.Fragment>
         <div className="container">
-          <div className="row mt-5 mb-5">
+          <div className="row">
             <div className="col-md-12 text-right mt-2">
               {/* /users/profile/edit" */}
               <Link

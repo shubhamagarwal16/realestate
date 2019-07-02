@@ -32,6 +32,10 @@ class PropertyList extends Component {
 
   render() {
     const { propertyList } = this.state;
+    let blockClasses = "col-md-4  mt-4";
+    if (this.props.blockSize)
+      blockClasses = `col-md-${this.props.blockSize}  mt-4`;
+
     return (
       <React.Fragment>
         {!propertyList.length && (
@@ -42,9 +46,9 @@ class PropertyList extends Component {
             <div
               onClick={() => this.openPropertyPage(property.slug)}
               key={property._id}
-              className="col-md-4 mt-4"
+              className={blockClasses}
             >
-              <div className="card">
+              <div className="card clickable">
                 <img
                   src={showGFSImage(property.images[0])}
                   height="120px"

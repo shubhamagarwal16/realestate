@@ -51,7 +51,7 @@ class Home extends Component {
             </Carousel>
           )}
         </div>
-        <div className="container mt-5">
+        <div className="container mt-5 mb-5">
           <h4 className="text-danger">Recent Postings:</h4>
           <hr className="hr" />
           <PropertyList queryParams="?status=available" {...this.props} />

@@ -1,0 +1,5 @@
+.sideMenuSticky,
+.filterBox {
+  position: sticky;
+  top: 59px;
+}
