@@ -20,7 +20,7 @@ class Header extends Form {
       { path: "/users/dashboard", name: "Dashboard" },
       { path: "/property/new", name: "Add New Property" },
       { path: "/property/search", name: "Find Property" },
-      { path: "/property/listing/all", name: "My Listing" },
+      { path: "/property/listing/", name: "My Listing" },
       { path: "/users/profile", name: "My Profile" }
     ],
     alertNotification: {

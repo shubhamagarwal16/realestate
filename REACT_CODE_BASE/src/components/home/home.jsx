@@ -29,7 +29,7 @@ class Home extends Component {
     const { images } = this.state;
     return (
       <React.Fragment>
-        <div>
+        <div style={{ marginTop: "-50px" }}>
           {images.length && (
             <Carousel>
               {images.map((item, index) => (

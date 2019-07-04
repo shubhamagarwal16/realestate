@@ -18,7 +18,7 @@ class AddProperty extends Form {
       city: "",
       pincode: "",
       locality: "",
-      isSociety: false,
+      isSociety: "false",
       societyName: "",
       flatNo: "",
       description: "",
@@ -156,7 +156,7 @@ class AddProperty extends Form {
       );
       console.log({ result });
       let data = (result && result["result"]) || {};
-      let message = (result && result["message"]) || "";
+      // let message = (result && result["message"]) || "";
       if (data && data["slug"]) {
         console.log("property added successfully");
         this.props.location.history(`/property/view/${data.slug}`);
@@ -324,7 +324,7 @@ class AddProperty extends Form {
                   )}
                 </div>
                 <div className="col-md-4">
-                  {this.state.data.isSociety == "true" &&
+                  {this.state.data.isSociety === "true" &&
                     this.renderInput(
                       "Society Name:",
                       "societyName",
@@ -334,7 +334,7 @@ class AddProperty extends Form {
                 </div>
                 <div className="col-md-1" />
                 <div className="col-md-4">
-                  {this.state.data.isSociety == "true" &&
+                  {this.state.data.isSociety === "true" &&
                     this.renderInput(
                       "Flat No.:",
                       "flatNo",

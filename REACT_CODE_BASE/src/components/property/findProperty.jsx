@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import * as commonService from "../../services/commonServices";
 import PropertyList from "../common/propertyList";
 import queryString from "query-string";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 import "../../assets/styles/property.css";
 
@@ -110,6 +111,7 @@ class FindProperty extends Component {
                 <h4>
                   Filters
                   <a
+                    href="javascript:void(0);"
                     onClick={this.clearFilters}
                     className="text-info clickable"
                   >
@@ -235,11 +237,21 @@ class FindProperty extends Component {
             </div>
             <div className="col-md-9 filteredPropertyBox">
               <div className="row">
-                <div className="col-4">Showing {count} properties</div>
-                <div className="col-4">
-                  <h5 className="text-center">
-                    Your properties will not list here
-                  </h5>
+                <div className="col-3">Showing {count} properties</div>
+                <div className="col-5">
+                  <OverlayTrigger
+                    key="top"
+                    placement="top"
+                    overlay={
+                      <Tooltip>
+                        To view your properties head to My Listing tab
+                      </Tooltip>
+                    }
+                  >
+                    <h5 variant="secondary" className="text-center">
+                      Your properties will not list here
+                    </h5>
+                  </OverlayTrigger>
                 </div>
                 <div className="col-4 text-right">
                   <button

@@ -46,6 +46,12 @@ class PropertyList extends Component {
     return this.props.history.push(`/property/view/${slug}`);
   };
 
+  handleBtnClick = (e, type) => {
+    e.preventDefault();
+    e.stoppropagation();
+    console.log(e, type);
+  };
+
   render() {
     const { propertyList } = this.state;
     let blockClasses = "col-md-4  mt-4";
@@ -67,7 +73,7 @@ class PropertyList extends Component {
               <div className="card clickable">
                 <div className="row">
                   <div
-                    className={this.props.blockSize == 12 ? "col-3" : "col-12"}
+                    className={this.props.blockSize === 12 ? "col-3" : "col-12"}
                   >
                     <img
                       src={showGFSImage(property.images[0])}
@@ -77,12 +83,12 @@ class PropertyList extends Component {
                     />
                   </div>
                   <div
-                    className={this.props.blockSize == 12 ? "col-9" : "col-12"}
+                    className={this.props.blockSize === 12 ? "col-7" : "col-12"}
                   >
                     <div className="card-body">
                       <h5
                         className={
-                          this.props.blockSize == 12
+                          this.props.blockSize === 12
                             ? "card-title"
                             : "card-title text-center"
                         }
@@ -91,7 +97,7 @@ class PropertyList extends Component {
                       </h5>
                       <ul
                         className={
-                          this.props.blockSize == 12
+                          this.props.blockSize === 12
                             ? "list-unstyled"
                             : "list-unstyled text-center"
                         }
@@ -109,6 +115,36 @@ class PropertyList extends Component {
                         </li>
                       </ul>
                       <p className="card-text">{property.description}</p>
+                    </div>
+                  </div>
+                  <div
+                    className={this.props.blockSize === 12 ? "col-2" : "col-12"}
+                  >
+                    <div
+                      className={
+                        this.props.blockSize === 12
+                          ? "pt-2 text-left"
+                          : "pb-2 text-center"
+                      }
+                    >
+                      <button
+                        onClick={event => this.handleBtnClick(event, "edit")}
+                        className="btn btn-info btn-sm mt-2"
+                      >
+                        <small>Edit Property</small>
+                      </button>
+                      <button
+                        onClick={event =>
+                          this.handleBtnClick(event, property.propertyFor)
+                        }
+                        className="btn btn-success btn-sm mt-2"
+                      >
+                        <small>
+                          {property.propertyFor === "sell"
+                            ? "Mark as sold"
+                            : "Mark as acquired"}
+                        </small>
+                      </button>
                     </div>
                   </div>
                 </div>

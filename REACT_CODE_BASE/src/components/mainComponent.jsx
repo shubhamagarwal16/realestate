@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 
 import Header from "./common/header";
 import Footer from "./common/footer";
@@ -53,9 +53,11 @@ const MainComponent = props => {
           />
           <ProtectedRoute
             path="/property/listing/:type"
+            exact
             user={props.user}
             component={PropertyListing}
           />
+          <Redirect from="/property/listing/" to="/property/listing/all" />
 
           {/* ----------------- PROPERTY --------------------- */}
           <Route path="/sign-up" component={Registration} />
