@@ -90,7 +90,6 @@ class PropertyListing extends Component {
             <div className="col-md-9">
               <h5>Showing {propertyCount} properties</h5>
               <PropertyList
-                // togglePageLoader={this.props.togglePageLoader}
                 queryParams={queryParams}
                 listingCount={count => this.getPropertyCount(count)}
                 userId={true}

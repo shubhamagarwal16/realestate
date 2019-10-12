@@ -3,6 +3,7 @@ import { togglePageLoader } from "./header";
 
 import { get, showGFSImage } from "../../services/commonServices";
 import { getCurrentUser } from "../../services/authService";
+import { connect } from "react-redux";
 
 class PropertyList extends Component {
   state = {
@@ -33,9 +34,11 @@ class PropertyList extends Component {
     }
     // console.log({ user });
 
-    togglePageLoader();
+    // togglePageLoader();
+    this.props.togglePageLoader(true);
     const { data: propertyList } = await get(`/property/filter${queryParams}`);
-    togglePageLoader();
+    this.props.togglePageLoader(false);
+    // togglePageLoader();
     if (listingCount) {
       this.props.listingCount(propertyList.length);
     }
@@ -157,4 +160,19 @@ class PropertyList extends Component {
   }
 }
 
-export default PropertyList;
+// const mapStateToProps = (state) => {
+//   return {
+
+//   }
+// }
+
+const handleReducers = dispatch => {
+  return {
+    togglePageLoader: value => dispatch({ type: "TOGGLE_PAGELOADER", value })
+  };
+};
+
+export default connect(
+  null,
+  handleReducers
+)(PropertyList);

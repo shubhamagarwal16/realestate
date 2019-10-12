@@ -21,6 +21,7 @@ export async function renderStateList() {
     console.log("Error while fetching stateList: ", error);
   }
 }
+
 export async function renderCityList(stateId) {
   try {
     const { data: cityList } = await this.get(`/common/cities/${stateId}`);

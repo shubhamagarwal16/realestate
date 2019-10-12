@@ -25,7 +25,6 @@ const MainComponent = props => {
           <ProtectedRoute
             path="/users/dashboard"
             user={props.user}
-            togglePageLoader={props.togglePageLoader}
             component={UserDashboard}
           />
           <ProtectedRoute

@@ -271,7 +271,6 @@ class FindProperty extends Component {
                 </div>
               </div>
               <PropertyList
-                // togglePageLoader={this.props.togglePageLoader}
                 queryParams={queryParams}
                 blockSize={blockSize}
                 listingCount={count => this.setPropCount(count)}

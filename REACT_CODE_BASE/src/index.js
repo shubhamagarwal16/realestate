@@ -3,14 +3,25 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter } from "react-router-dom";
+import { createStore, combineReducers } from "redux";
+import { Provider } from "react-redux";
 
+import commonReducer from "./store/reducers/common";
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+const resultReducer = combineReducers({
+  common: commonReducer
+});
+
+const store = createStore(resultReducer);
+
 ReactDOM.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>,
+  <Provider store={store}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </Provider>,
   document.getElementById("root")
 );
 
