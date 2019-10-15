@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { togglePageLoader } from "./header";
+// import { togglePageLoader } from "./header";
 
 import { get, showGFSImage } from "../../services/commonServices";
 import { getCurrentUser } from "../../services/authService";
@@ -45,14 +45,17 @@ class PropertyList extends Component {
     this.setState({ propertyList, queryParams: queryTemp });
   };
 
-  openPropertyPage = slug => {
-    return this.props.history.push(`/property/view/${slug}`);
-  };
+  // openPropertyPage = slug => {
+  //   return this.props.history.push(`/property/view/${slug}`);
+  // };
 
   handleBtnClick = (e, type) => {
-    e.preventDefault();
-    e.stoppropagation();
-    console.log(e, type);
+    if (type === 'rent' || type === 'sell') {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    else if (type === 'edit') return this.props.history.push(`/property/edit/${type}`);
+    else return this.props.history.push(`/property/view/${type}`);
   };
 
   render() {
@@ -69,7 +72,7 @@ class PropertyList extends Component {
         <div className="row">
           {propertyList.map(property => (
             <div
-              onClick={() => this.openPropertyPage(property.slug)}
+              onClick={(event) => this.handleBtnClick(event, property.slug)}
               key={property._id}
               className={blockClasses}
             >
@@ -121,7 +124,7 @@ class PropertyList extends Component {
                     </div>
                   </div>
                   <div
-                    className={this.props.blockSize === 12 ? "col-2" : "col-12"}
+                    className={this.props.blockSize === 12 ? "col-2" : "col-12 buttonContainer"}
                   >
                     <div
                       className={
@@ -140,7 +143,7 @@ class PropertyList extends Component {
                         onClick={event =>
                           this.handleBtnClick(event, property.propertyFor)
                         }
-                        className="btn btn-success btn-sm mt-2"
+                        className="btn btn-success btn-sm mt-2 blockPropBtnMargn"
                       >
                         <small>
                           {property.propertyFor === "sell"

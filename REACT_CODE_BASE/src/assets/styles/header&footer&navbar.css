@@ -1,6 +1,7 @@
 /* // ------------------ NAVBAR ------------------- */
 .navbar {
   padding: 0px !important;
+  z-index: 999;
 }
 .navbar-dash a {
   color: white;

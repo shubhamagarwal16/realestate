@@ -10,6 +10,8 @@ const commonReducer = (state = initialState, action) => {
         ...state,
         isPageLoaderActive: action.value
       };
+    default:
+      break;
   }
   return state;
 };

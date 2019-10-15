@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import * as moment from "moment";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
 import { getUserData } from "../../services/authService";
 
@@ -10,7 +11,9 @@ class UserProfile extends Component {
   };
 
   async componentDidMount() {
+    this.props.togglePageLoader(true);
     this.setState({ userData: await getUserData() });
+    this.props.togglePageLoader(false);
   }
 
   async componentDidUpdate(prevProps, prevState) {
@@ -96,4 +99,13 @@ class UserProfile extends Component {
   }
 }
 
-export default UserProfile;
+const handleReducers = dispatch => {
+  return {
+    togglePageLoader: value => dispatch({ type: "TOGGLE_PAGELOADER", value })
+  };
+};
+
+export default connect(
+  null,
+  handleReducers
+)(UserProfile);

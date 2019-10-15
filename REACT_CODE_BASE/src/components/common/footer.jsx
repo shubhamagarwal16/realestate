@@ -13,7 +13,7 @@ const Footer = () => {
             </div>
             <div className="col-6">
               <p className="text-right">
-                <a target="_blank" href="https://github.com/shubhamagarwal16/">
+                <a target="_blank" rel="noopener noreferrer" href="https://github.com/shubhamagarwal16/">
                   Developer url
                 </a>
               </p>

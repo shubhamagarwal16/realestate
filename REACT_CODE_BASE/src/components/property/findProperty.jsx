@@ -110,13 +110,9 @@ class FindProperty extends Component {
               <div className="filterBox">
                 <h4>
                   Filters
-                  <a
-                    href="javascript:void(0);"
-                    onClick={this.clearFilters}
-                    className="text-info clickable"
-                  >
-                    <small> clear</small>
-                  </a>
+                  <button type="button" onClick={this.clearFilters}
+                    className="btn btn-link pl-1"
+                  >clear</button>
                   <button
                     onClick={this.filterProperties}
                     className="btn btn-danger btn-sm float-right"
