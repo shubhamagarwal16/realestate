@@ -8,7 +8,8 @@
       <label for=""> Upload images: <small class="text-info">(Auto-preview)</small> <small *ngIf="imgUrls.length;"
           (click)="imgUrls.length = 0;" class="p-cursor text-primary">(remove all)</small></label> <br>
       <div *ngIf="!imgUrls.length; else imgBOx" class="dropbox">
-        <input type="file" multiple name="uploadFieldName" (change)="filesChange($event.target.name, $event.target.files)" accept="image/*" #photos>
+        <input type="file" multiple name="uploadFieldName"
+          (change)="filesChange($event.target.name, $event.target.files)" accept="image/*" #photos>
         <p *ngIf="currentStatus === STATUS_INITIAL">
           Drag your file(s) here to begin<br>
           or click to browse<br>
@@ -24,7 +25,7 @@
             <div class="singlImg">
               <img title="{{img?.name}}" src="{{img.path}}" alt="img">
               <div title="{{img?.name}}" class="imgOverlay">
-                  <i (click)="removeSinglePic(img);" class="fa fa-times p-cursor" aria-hidden="true"></i>
+                <i (click)="removeSinglePic(img);" class="fa fa-times p-cursor" aria-hidden="true"></i>
               </div>
             </div>
           </div>
@@ -36,8 +37,10 @@
       <div class="form-row">
         <div class="col-4">
           <label for="">Property For: </label> <br>
-          <label> <input type="radio" ngModel #propertyFor="ngModel" required name="propertyFor" value="sell"> Sell </label> &nbsp;
-          <label> <input type="radio" ngModel #propertyFor="ngModel" required name="propertyFor" value="rent"> Rent </label>
+          <label> <input type="radio" ngModel #propertyFor="ngModel" required name="propertyFor" value="sell"> Sell
+          </label> &nbsp;
+          <label> <input type="radio" ngModel #propertyFor="ngModel" required name="propertyFor" value="rent"> Rent
+          </label>
 
           <small class="text-danger" *ngIf="propertyFor.touched && propertyFor.invalid">This field is required</small>
         </div>
@@ -51,7 +54,8 @@
         </div>
         <div class="col-4">
           <label for="">Enter Total Amount <small class="text-primary">(optional)</small> </label>
-          <input type="number" name="price" ngModel #price="ngModel" class="form-control" style="-webkit-appearance: none;" >
+          <input type="number" name="price" ngModel #price="ngModel" class="form-control"
+            style="-webkit-appearance: none;">
         </div>
       </div>
     </div>
@@ -68,13 +72,13 @@
             <small>Length</small>
             <input type="number" min="0" ngModel #length="ngModel" name="length" required placeholder="Plot length"
               class="form-control form-field-small">
-              <small class="text-danger" *ngIf="length.touched && length.invalid">required*</small>
+            <small class="text-danger" *ngIf="length.touched && length.invalid">required*</small>
           </div>
           <div class="col-md-3">
             <small>Breadth</small>
             <input type="number" min="0" ngModel #breadth="ngModel" name="breadth" required placeholder="Plot breadth"
               class="form-control form-field-small">
-              <small class="text-danger" *ngIf="breadth.touched && breadth.invalid">required*</small>
+            <small class="text-danger" *ngIf="breadth.touched && breadth.invalid">required*</small>
           </div>
           <div class="col-md-6">
             <p>Total-</p>
@@ -86,7 +90,8 @@
       <div class="col-md-2">
         <p>Corner Plot?</p>
         <div class="custom-control custom-checkbox">
-          <input class="custom-control-input" ngModel #cornrPlot="ngModel" name="cornrPlot" value="true" id="cornrPlotId" type="checkbox">
+          <input class="custom-control-input" ngModel #cornrPlot="ngModel" name="cornrPlot" value="true"
+            id="cornrPlotId" type="checkbox">
           <label class="custom-control-label" for="cornrPlotId">Yes</label>
         </div>
       </div>
@@ -127,8 +132,8 @@
       </div>
       <div class="form-group col-md-3">
         <label for="">Locality:</label>
-        <input type="text" name="locality" [appInputFormat]="'capitalize'" ngModel #locality="ngModel" required placeholder="Enter locality"
-          class="form-control">
+        <input type="text" name="locality" [appInputFormat]="'capitalize'" ngModel #locality="ngModel" required
+          placeholder="Enter locality" class="form-control">
         <small class="text-danger" *ngIf="locality.touched && locality.invalid">
           This field is required</small>
       </div>
@@ -140,8 +145,8 @@
       </div>
       <div [hidden]="isSociety.value != 'true'" class="form-group col-md-4">
         <label for="">Society Name:</label>
-        <input type="text" name="societyName" [appInputFormat]="'capitalize'" ngModel #societyName="ngModel" [required]="isSociety.value == 'true'"
-          placeholder="Enter Society Name" class="form-control">
+        <input type="text" name="societyName" [appInputFormat]="'capitalize'" ngModel #societyName="ngModel"
+          [required]="isSociety.value == 'true'" placeholder="Enter Society Name" class="form-control">
         <small class="text-danger" *ngIf="societyName.touched && societyName.invalid">
           This field is required</small>
       </div>
@@ -159,10 +164,12 @@
 
     <div class="row">
       <div class="form-group col-md-12">
-        <label for="">Description: <small class="text-primary">({{ 500 - description.value?.length | number }}) </small> <app-small-components [componentName]="'moreInfoQstnMark'" [toolTipData]="{ position: 'right', text: 'max number of letters - 500' }" ></app-small-components> 
+        <label for="">Description: <small class="text-primary">({{ 500 - description.value?.length | number }}) </small>
+          <app-small-components [componentName]="'moreInfoQstnMark'"
+            [toolTipData]="{ position: 'right', text: 'max number of letters - 500' }"></app-small-components>
         </label>
-        <textarea name="description" required [appInputFormat]="'capitalize'" ngModel #description="ngModel" class="form-control" resize="none"
-          cols="30" maxlength="500" rows="5"></textarea>
+        <textarea name="description" required [appInputFormat]="'capitalize'" ngModel #description="ngModel"
+          class="form-control" resize="none" cols="30" maxlength="500" rows="5"></textarea>
 
         <small class="text-danger" *ngIf="description.touched && description.invalid">
           This field is required</small>
@@ -191,9 +198,10 @@
           This field is required</small>
       </div>
     </div>
-    <div class="form-group">
+    <div class="form-group propertyTitle">
       <label for="">Property Title: <small class="text-info">(Auto-generated) </small>
-        <app-small-components [componentName]="'moreInfoQstnMark'" [toolTipData]="{ position: 'right', text: 'On the basics of values entered above' }" ></app-small-components> 
+        <app-small-components [componentName]="'moreInfoQstnMark'"
+          [toolTipData]="{ position: 'right', text: 'On the basics of values entered above' }"></app-small-components>
       </label>
       <input type="text" #title="ngModel" name="title" (change)="log(title.value)"
         [ngModel]="(cornrPlot.value ? 'Corner ' : '') + getDataTitleViaId(Proptype.value, 'propertyTypeList', 'title') + (societyName?.value ? ' at ' +  societyName.value : '') + (city.value ? ' in ' + getDataTitleViaId(city.value, 'cityList', 'name') : '') + (state.value ? (city.value ? ', ': ' in ') + getDataTitleViaId(state.value, 'stateList', 'name') : '')"
@@ -202,6 +210,7 @@
       <small class="text-danger" *ngIf="title.touched && title.invalid">
         This field is required</small>
     </div>
-    <button [disabled]="f.invalid || isSubmittingForm" class="btn btn-danger btn-block"> <i *ngIf="isSubmittingForm" class="fa fa-spinner fa-spin" aria-hidden="true"></i> Post a New Property</button>
+    <button [disabled]="f.invalid || isSubmittingForm" class="btn btn-danger btn-block"> <i *ngIf="isSubmittingForm"
+        class="fa fa-spinner fa-spin" aria-hidden="true"></i> Post a New Property</button>
   </form>
 </div>

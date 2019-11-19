@@ -2,6 +2,9 @@
     box-shadow: 0px 0px 9px 2px #ccc;
     transition: box-shadow 0.3s ease-in-out;
 }
+.propBoxHover{
+    min-height: 350px;
+}
 .soldOutBg{
     background-image: url('/assets/images/sold.png');
     background-repeat: no-repeat;
@@ -13,4 +16,15 @@
 .col-md-4 .soldOutBg{
     background-position: 80% 100%;
     background-size: 80%;
+}
+.propertyDescription{
+    // white-space: nowrap; 
+    // width:850px; 
+    // overflow: hidden;
+    // text-overflow: ellipsis;
+    max-height: 61px;
+    overflow: hidden;
+    margin-bottom: 0px;
+    line-height: 1.2;
+    text-align: left;
 }

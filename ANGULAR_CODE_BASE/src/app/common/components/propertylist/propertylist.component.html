@@ -1,7 +1,7 @@
 <div class="row">
   <div (click)="viewProperty(property.slug);"
     *ngFor="let property of propertyList;index as propNum;trackBy: setMaxLength('propNum'+index)"
-    class="col-md-{{blockSize}} pad-btm-15 p-cursor" id="propNum{{propNum}}"
+    class="col-md-{{blockSize}} pb-3 p-cursor" id="propNum{{propNum}}"
     [ngStyle]="{ 'height': maxLength ? maxLength : 'initial' }" ng-init="setMaxLength('propNum'+ propNum)">
     <!-- [ngClass]="{  routerLink="/users/property/view/{{property._id}}"
     'col-md-12': !blockView,
@@ -20,7 +20,9 @@
             <button *ngIf="property.images.length > 1 && blockView;"
               (click)="toggleImages('imgCounter', propNum, -1, property.images.length, $event);"
               class="btn btn-xs btn-default">-</button>
-            <img [ngStyle]="blockView ? { 'margin-bottom': '10px' } : ''" id="propImg{{propNum}}" src="{{commonService.base_url}}/property/showGFSImage/{{ property.images[0] }}" width="120px" height="120px" alt="Img">
+            <img [ngStyle]="blockView ? { 'margin-bottom': '10px' } : ''" id="propImg{{propNum}}"
+              src="{{commonService.base_url}}/property/showGFSImage/{{ property.images[0] }}" width="120px"
+              height="120px" alt="Img">
             <input type="hidden" name="imgCounter" ngModel="0" #imgCounter="ngModel" id="imgCounter{{propNum}}">
             <button *ngIf="property.images.length > 1 && blockView;"
               (click)="toggleImages('imgCounter', propNum, +1, property.images.length, $event);"
@@ -36,7 +38,8 @@
             </div>
           </div>
           <ng-template #noImg>
-            <img [ngStyle]="blockView ? { 'margin-bottom': '10px' } : ''" *ngIf="!property.images.length" width="120px" height="120px" src="assets/images/no-image.png" alt="no-image">
+            <img [ngStyle]="blockView ? { 'margin-bottom': '10px' } : ''" *ngIf="!property.images.length" width="120px"
+              height="120px" src="assets/images/no-image.png" alt="no-image">
           </ng-template>
         </div>
         <div [ngClass]="{
@@ -49,7 +52,7 @@
             <li style="font-size: 14px;">{{property.type?.title? property.type?.title : '--'  }} <b>|</b>
               {{ getFormattedDate(property.updatedOn) }}</li>
           </ul>
-          <p>{{property.description}}</p>
+          <p class="propertyDescription">{{property.description}}</p>
         </div>
         <div *ngIf="loginService.isLoggedIn() && property?.userId?._id == userService?.currentUser?.user?._id"
           [ngClass]="{
