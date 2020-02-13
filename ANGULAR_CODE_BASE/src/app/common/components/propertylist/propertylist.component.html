@@ -8,7 +8,7 @@
     'col-md-6': blockView
   }"> -->
     <div id="propNum{{propNum}}" [class.soldOutBg]="property?.status!= 'available'"
-      class="border-main propBoxHover card">
+      [class.minHeightBox]="blockSize !== 12" class="border-main propBoxHover card">
       <!-- mar-ryt-15-->
       <div class="row border-box-manage">
         <!-- property-box  -->
