@@ -1,37 +1,76 @@
 version: 2.1
 orbs:
-  # node: circleci/node@1.1.6
+  node: circleci/node@1.1.6
   heroku: circleci/heroku@0.0.10 # Invoke the Heroku orb
 
 jobs:
-  HEROKU-NODEJS-DEPLOY:
-    working_directory: ~/realestate/NODEJS_CODE_BASE
-    executor:
-      name: node/default
+  FIREBASE-REACTJS-DEPLOY:
+    machine:
+      image: ubuntu-1604:201903-01
+    working_directory: ~/realestate
     steps:
       - checkout
-      - node/with-cache:
-          steps:
-            - run:
-                name: Install npm modules
-                command: npm ci
+      - run:
+          name: Install npm modules
+          command: |
+            cd REACT_CODE_BASE
+            npm ci
 
-            - run:
-                name: Run tests
-                command: npm test
+      - run:
+          name: Firebase REACTJS Deploy
+          command: |
+            cd REACT_CODE_BASE
+            ./node_modules/.bin/firebase deploy --token $REACTJS_FIREBASE_TOKEN
 
-            # - run:
-            #     environment:
-            #       HEROKU_APP: "sleepy-refuge-55486"
-            #     name: Deploy to heroku
-            #     command: |
-            #       echo "working"
+  HEROKU-NODEJS-DEPLOY:
+    docker:
+      - image: "circleci/node:12.9.1-browsers"
+    working_directory: ~/realestate
+    steps:
+      - checkout
+      - setup_remote_docker
+
+      # - restore_cache:
+      #     key: 'v1-dependencies-{{ checksum "package.json" }}'
+
+      - run:
+          name: Install npm modules
+          command: |
+            cd NODEJS_CODE_BASE
+            npm ci
+
+      # - save_cache:
+      #     paths:
+      #       - node_modules
+      #     key: 'v1-dependencies-{{ checksum "package.json" }}'
+
+      - run:
+          name: Deploy to heroku
+          command: |
+            cd NODEJS_CODE_BASE
+            ls
+            git init
+            git config user.email "shubhamagarwal1694@gmail.com"
+            git config user.name "Shubham Agarwal"
+            # git remote set-url origin https://git.heroku.com/github-realestate.git
+            git remote add origin https://git.heroku.com/$HEROKU_APP_NAME.git
+            # git:remote -a $HEROKU_APP_NAME
+            git add -f .
+            git commit -am "heroku commit"
+            git push -f https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git $CIRCLE_BRANCH:master
+
+      # - heroku/deploy-via-git:
+      #     force: true
 
 workflows:
+  version: 2
   REALESTATE-DEPLOY:
     jobs:
+      - FIREBASE-REACTJS-DEPLOY:
+          filters:
+            branches:
+              only: /release/reactjs\.*/
       - HEROKU-NODEJS-DEPLOY:
           filters:
             branches:
-              only:
-                - /release/node.*
+              only: /release/nodejs\.*/
