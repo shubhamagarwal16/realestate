@@ -69,7 +69,8 @@ workflows:
       - FIREBASE-REACTJS-DEPLOY:
           filters:
             branches:
-              only: /release-reactjs\.*/
+              only: release-reactjs
+              # only: /release-reactjs\.*/
       - HEROKU-NODEJS-DEPLOY:
           filters:
             branches:
