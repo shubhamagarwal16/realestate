@@ -49,6 +49,13 @@ jobs:
           command: |
             sudo npm install -g @angular/cli@7.3.1
             ng --version
+
+      - run:
+          name: Rebuild node-sass
+          command: |
+            cd ANGULAR_CODE_BASE 
+            npm rebuild node-sass
+
       - run:
           name: Make build
           command: |
