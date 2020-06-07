@@ -3,15 +3,11 @@ orbs:
   node: circleci/node@1.1.6
   heroku: circleci/heroku@0.0.10 # Invoke the Heroku orb
 
-# executors:
-#   my-executor:
-
 jobs:
   HEROKU-NODEJS-DEPLOY:
-    # executor: my-executor
     docker:
       - image: "circleci/node:12.9.1-browsers"
-    working_directory: $CIRCLE_WORKING_DIRECTORY/NODEJS_CODE_BASE
+    working_directory: ~/realestate
     steps:
       - checkout
       - setup_remote_docker
@@ -23,7 +19,6 @@ jobs:
           name: Install npm modules
           command: |
             cd NODEJS_CODE_BASE
-            ls
             npm ci
 
       # - save_cache:
@@ -31,14 +26,14 @@ jobs:
       #       - node_modules
       #     key: 'v1-dependencies-{{ checksum "package.json" }}'
 
-      - heroku/deploy-via-git:
-          force: true
-      # - run:
-      #     environment:
-      #       HEROKU_APP: "sleepy-refuge-55486"
-      #     name: Deploy to heroku
-      #     command: |
-      #       echo "working"
+      - run:
+          name: Deploy to heroku
+          command: |
+            cd NODEJS_CODE_BASE
+            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git $CIRCLE_BRANCH:master
+
+      # - heroku/deploy-via-git:
+      #     force: true
 
 workflows:
   version: 2
