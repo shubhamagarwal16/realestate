@@ -4,6 +4,25 @@ orbs:
   heroku: circleci/heroku@0.0.10 # Invoke the Heroku orb
 
 jobs:
+  FIREBASE-REACTJS-DEPLOY:
+    docker:
+      - image: circleci/node:10
+    working_directory: ~/realestate
+    steps:
+      - checkout
+
+      - run:
+          name: Install npm modules
+          command: |
+            cd REACT_CODE_BASE
+            npm ci
+
+      - run:
+          name: Firebase REACTJS Deploy
+          command: |
+            cd REACT_CODE_BASE
+            ./node_modules/.bin/firebase deploy --token $REACTJS_FIREBASE_TOKEN
+
   HEROKU-NODEJS-DEPLOY:
     docker:
       - image: "circleci/node:12.9.1-browsers"
@@ -48,8 +67,13 @@ workflows:
   version: 2
   REALESTATE-DEPLOY:
     jobs:
-      - HEROKU-NODEJS-DEPLOY
-        # filters:
-        #   branches:
-        #     only:
-        #       - release/node.*
+      - FIREBASE-REACTJS-DEPLOY:
+          filters:
+            branches:
+              only:
+                - release/reactjs.*
+      - HEROKU-NODEJS-DEPLOY:
+          filters:
+            branches:
+              only:
+                - release/node.*
