@@ -3,27 +3,30 @@ orbs:
   node: circleci/node@1.1.6
   heroku: circleci/heroku@0.0.10 # Invoke the Heroku orb
 
-executors:
-  my-executor:
-    docker:
-      - image: "circleci/node:12.9.1-browsers"
-
 jobs:
   HEROKU-NODEJS-DEPLOY:
     working_directory: ~/realestate/NODEJS_CODE_BASE
-    executor: my-executor
+    docker:
+      - image: "circleci/node:12.9.1-browsers"
     steps:
       - checkout
-      - node/with-cache:
-          steps:
-            - run:
-                name: Install npm modules
-                command: npm ci
+      - setup_remote_docker
+      - restore_cache:
+          key: 'v1-dependencies-{{ checksum "package.json" }}'
 
-            - run:
-                name: Run tests
-                command: npm test
+      - run:
+          name: Install npm modules
+          command: npm ci
 
+      - save_cache:
+          paths:
+            - node_modules
+          key: 'v1-dependencies-{{ checksum "package.json" }}'
+
+      - run:
+          name: Run tests
+          command:
+            npm test
             # - run:
             #     environment:
             #       HEROKU_APP: "sleepy-refuge-55486"
@@ -35,8 +38,8 @@ workflows:
   version: 2
   REALESTATE-DEPLOY:
     jobs:
-      - HEROKU-NODEJS-DEPLOY:
-          # filters:
-          #   branches:
-          #     only:
-          #       - /release/node.*
+      - HEROKU-NODEJS-DEPLOY
+        # filters:
+        #   branches:
+        #     only:
+        #       - /release/node.*
