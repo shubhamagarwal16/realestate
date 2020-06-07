@@ -29,13 +29,13 @@ jobs:
       - run:
           name: Deploy to heroku
           command: |
-            # cd NODEJS_CODE_BASE
-            ls
             git config user.email "shubhamagarwal1694@gmail.com"
             git config user.name "Shubham Agarwal"
-            git status
-            git add -f NODEJS_CODE_BASE
-            git status
+            cd NODEJS_CODE_BASE
+            ls
+            git init
+            git remote set-url origin https://git.heroku.com/github-realestate.git
+            git add -f .
             git commit -am "heroku commit"
             git push -f https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git $CIRCLE_BRANCH:master
 
