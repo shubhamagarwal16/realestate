@@ -28,8 +28,7 @@ jobs:
       #     key: 'v1-dependencies-{{ checksum "package.json" }}'
 
       - heroku/deploy-via-git:
-          parameters:
-            force: true
+          force: true
       # - run:
       #     environment:
       #       HEROKU_APP: "sleepy-refuge-55486"
