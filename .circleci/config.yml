@@ -5,7 +5,7 @@ orbs:
 
 jobs:
   HEROKU-NODEJS-DEPLOY:
-    working_directory: ~/realestate/NODEJS_CODE_BASE
+    working_directory: ~/realestate
     docker:
       - image: "circleci/node:12.9.1-browsers"
     steps:
@@ -27,11 +27,7 @@ jobs:
             - node_modules
           key: 'v1-dependencies-{{ checksum "package.json" }}'
 
-      # - run:
-      #     name: Run tests
-      #     command: |
-      #       cd NODEJS_CODE_BASE
-      #       npm test
+      - heroku/deploy-via-git
       # - run:
       #     environment:
       #       HEROKU_APP: "sleepy-refuge-55486"
@@ -47,4 +43,4 @@ workflows:
         # filters:
         #   branches:
         #     only:
-        #       - /release/node.*
+        #       - release/node.*
