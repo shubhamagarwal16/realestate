@@ -36,7 +36,7 @@ workflows:
   REALESTATE-DEPLOY:
     jobs:
       - HEROKU-NODEJS-DEPLOY:
-          filters:
-            branches:
-              only:
-                - /release/node.*
+          # filters:
+          #   branches:
+          #     only:
+          #       - /release/node.*
