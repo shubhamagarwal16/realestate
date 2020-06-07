@@ -38,21 +38,16 @@ jobs:
       - image: "circleci/node:10.16.3"
     steps:
       - checkout
-      # - node/install:
-      #     node-version: v10.16.3
-      - run: node --version
       - run:
           name: Install npm modules
           command: |
-            chown -R $USER:$USER ANGULAR_CODE_BASE
             cd ANGULAR_CODE_BASE
             sudo npm ci
+
       - run:
-          environment:
-            NG_CLI_ANALYTICS: "ci"
           name: Install angular/cli
           command: |
-            sudo npm install -g @angular/cli@latest
+            sudo npm install -g @angular/cli@7.3.1
             ng --version
       - run:
           name: Make build
