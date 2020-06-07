@@ -48,10 +48,12 @@ jobs:
             cd ANGULAR_CODE_BASE
             sudo npm ci
       - run:
+          environment:
+            NG_CLI_ANALYTICS: "ci"
           name: Install angular/cli
           command: |
             sudo npm install -g @angular/cli@latest
-            N | command
+            ng --version
       - run:
           name: Make build
           command: |
