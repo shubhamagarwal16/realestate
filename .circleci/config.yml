@@ -12,8 +12,8 @@ jobs:
       - checkout
       - setup_remote_docker
 
-      - restore_cache:
-          key: 'v1-dependencies-{{ checksum "package.json" }}'
+      # - restore_cache:
+      #     key: 'v1-dependencies-{{ checksum "package.json" }}'
 
       - run:
           name: Install npm modules
@@ -22,12 +22,14 @@ jobs:
             ls
             npm ci
 
-      - save_cache:
-          paths:
-            - node_modules
-          key: 'v1-dependencies-{{ checksum "package.json" }}'
+      # - save_cache:
+      #     paths:
+      #       - node_modules
+      #     key: 'v1-dependencies-{{ checksum "package.json" }}'
 
-      - heroku/deploy-via-git
+      - heroku/deploy-via-git:
+          parameters:
+            force: true
       # - run:
       #     environment:
       #       HEROKU_APP: "sleepy-refuge-55486"
