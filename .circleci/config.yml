@@ -41,22 +41,23 @@ jobs:
       - node/install:
           node-version: latest
       - run: node --version
+      - working_directory: $CIRCLE_WORKING_DIRECTORY/ANGULAR_CODE_BASE
       - run:
           name: Install npm modules
           command: |
-            cd ANGULAR_CODE_BASE
+            # cd ANGULAR_CODE_BASE
             npm ci
 
       - run:
           name: Make build
           command: |
-            cd ANGULAR_CODE_BASE
-            ng build
+            # cd ANGULAR_CODE_BASE
+            npm run build
 
       - run:
           name: Firebase ANGULAR Deploy
           command: |
-            cd ANGULAR_CODE_BASE
+            # cd ANGULAR_CODE_BASE
             ls
             ./node_modules/.bin/firebase deploy --token $ANGULAR_FIREBASE_TOKEN
 
