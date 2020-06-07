@@ -21,6 +21,12 @@ jobs:
             npm ci
 
       - run:
+          name: Make build
+          command: |
+            cd REACT_CODE_BASE
+            npm run build
+
+      - run:
           name: Firebase REACTJS Deploy
           command: |
             cd REACT_CODE_BASE
