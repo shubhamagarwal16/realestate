@@ -35,7 +35,7 @@ jobs:
             ls
             git init
             # git remote set-url origin https://git.heroku.com/github-realestate.git
-            git remote set-url origin https://git.heroku.com/$HEROKU_APP_NAME.git
+            git remote add origin https://git.heroku.com/$HEROKU_APP_NAME.git
             # git:remote -a $HEROKU_APP_NAME
             git add -f .
             git commit -am "heroku commit"
