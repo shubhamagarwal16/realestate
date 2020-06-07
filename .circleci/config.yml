@@ -33,6 +33,33 @@ jobs:
             ls
             ./node_modules/.bin/firebase deploy --token $REACTJS_FIREBASE_TOKEN
 
+  FIREBASE-ANGULAR-DEPLOY:
+    machine:
+      image: ubuntu-1604:201903-01
+    steps:
+      - checkout
+      - node/install:
+          node-version: latest
+      - run: node --version
+      - run:
+          name: Install npm modules
+          command: |
+            cd ANGULAR_CODE_BASE
+            npm ci
+
+      - run:
+          name: Make build
+          command: |
+            cd ANGULAR_CODE_BASE
+            ng build
+
+      - run:
+          name: Firebase ANGULAR Deploy
+          command: |
+            cd ANGULAR_CODE_BASE
+            ls
+            ./node_modules/.bin/firebase deploy --token $ANGULAR_FIREBASE_TOKEN
+
   HEROKU-NODEJS-DEPLOY:
     docker:
       - image: "circleci/node:12.9.1-browsers"
@@ -81,7 +108,10 @@ workflows:
           filters:
             branches:
               only: release-reactjs
-              # only: /release-reactjs\.*/
+      - FIREBASE-ANGULAR-DEPLOY:
+          filters:
+            branches:
+              only: release-angular
       - HEROKU-NODEJS-DEPLOY:
           filters:
             branches:
