@@ -71,7 +71,7 @@ workflows:
           filters:
             branches:
               only:
-                - release/reactjs.*
+                - release-reactjs.*
       - HEROKU-NODEJS-DEPLOY:
           filters:
             branches:
