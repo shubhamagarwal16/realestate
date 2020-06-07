@@ -51,6 +51,7 @@ jobs:
           command: |
             cd ANGULAR_CODE_BASE
             ls -a
+            npm i @angular/cli 
             ng build
 
       - run:
