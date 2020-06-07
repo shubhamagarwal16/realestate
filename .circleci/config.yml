@@ -3,11 +3,15 @@ orbs:
   node: circleci/node@1.1.6
   heroku: circleci/heroku@0.0.10 # Invoke the Heroku orb
 
-jobs:
-  HEROKU-NODEJS-DEPLOY:
-    working_directory: ~/realestate
+executors:
+  my-executor:
     docker:
       - image: "circleci/node:12.9.1-browsers"
+    working_directory: ~/realestate/NODEJS_CODE_BASE
+
+jobs:
+  HEROKU-NODEJS-DEPLOY:
+    executor: my-executor
     steps:
       - checkout
       - setup_remote_docker
@@ -29,6 +33,7 @@ jobs:
 
       - heroku/deploy-via-git:
           force: true
+          pre-deploy: [cd NODEJS_CODE_BASE]
       # - run:
       #     environment:
       #       HEROKU_APP: "sleepy-refuge-55486"
