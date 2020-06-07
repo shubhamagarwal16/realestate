@@ -5,13 +5,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { MainComponent } from './main/main.component';
 import { NotFoundComponent } from './common/components/not-found/not-found.component';
 
-// const routes: Routes = [
-//   {
-//     path: '',
-//     component: MainComponent
-//   }
-// ]
-
 const routes: Routes = [
   {
     path: '',
@@ -52,7 +45,7 @@ const routes: Routes = [
         loadChildren: 'app/features/admin/admin.module#AdminModule'
       }
     ],
-    data: {isAdmin : true}
+    data: { isAdmin: true }
   },
   {
     path: '**',
