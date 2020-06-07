@@ -11,8 +11,9 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      # - restore_cache:
-      #     key: 'v1-dependencies-{{ checksum "package.json" }}'
+
+      - restore_cache:
+          key: 'v1-dependencies-{{ checksum "package.json" }}'
 
       - run:
           name: Install npm modules
@@ -23,15 +24,14 @@ jobs:
 
       - save_cache:
           paths:
-            - NODEJS_CODE_BASE/node_modules
+            - node_modules
           key: 'v1-dependencies-{{ checksum "package.json" }}'
 
-      - run:
-          name: Run tests
-          command: |
-            cd NODEJS_CODE_BASE
-            npm test
-
+      # - run:
+      #     name: Run tests
+      #     command: |
+      #       cd NODEJS_CODE_BASE
+      #       npm test
       # - run:
       #     environment:
       #       HEROKU_APP: "sleepy-refuge-55486"
