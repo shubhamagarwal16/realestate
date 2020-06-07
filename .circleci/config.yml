@@ -1,13 +1,17 @@
 version: 2.1
 orbs:
-  # node: circleci/node@1.1.6
+  node: circleci/node@1.1.6
   heroku: circleci/heroku@0.0.10 # Invoke the Heroku orb
+
+executors:
+  my-executor:
+    docker:
+      - image: "circleci/node:12.9.1-browsers"
 
 jobs:
   HEROKU-NODEJS-DEPLOY:
     working_directory: ~/realestate/NODEJS_CODE_BASE
-    executor:
-      name: node/default
+    executor: my-executor
     steps:
       - checkout
       - node/with-cache:
@@ -28,6 +32,7 @@ jobs:
             #       echo "working"
 
 workflows:
+  version: 2
   REALESTATE-DEPLOY:
     jobs:
       - HEROKU-NODEJS-DEPLOY:
