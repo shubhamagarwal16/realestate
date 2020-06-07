@@ -10,6 +10,10 @@ jobs:
     working_directory: ~/realestate
     steps:
       - checkout
+      - node/install:
+          install-yarn: true
+          node-version: latest
+      - run: node --version
       - run:
           name: Install npm modules
           command: |
@@ -20,6 +24,7 @@ jobs:
           name: Firebase REACTJS Deploy
           command: |
             cd REACT_CODE_BASE
+            ls
             ./node_modules/.bin/firebase deploy --token $REACTJS_FIREBASE_TOKEN
 
   HEROKU-NODEJS-DEPLOY:
