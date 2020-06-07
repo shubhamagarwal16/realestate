@@ -34,7 +34,8 @@ jobs:
             cd NODEJS_CODE_BASE
             ls
             git init
-            git remote set-url origin https://git.heroku.com/github-realestate.git
+            # git remote set-url origin https://git.heroku.com/github-realestate.git
+            heroku git:remote -a $HEROKU_APP_NAME
             git add -f .
             git commit -am "heroku commit"
             git push -f https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git $CIRCLE_BRANCH:master
