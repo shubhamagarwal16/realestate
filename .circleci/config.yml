@@ -34,24 +34,25 @@ jobs:
             ./node_modules/.bin/firebase deploy --token $REACTJS_FIREBASE_TOKEN
 
   FIREBASE-ANGULAR-DEPLOY:
-    machine:
-      image: ubuntu-1604:201903-01
+    docker:
+      - image: "circleci/node:10.16.3"
     steps:
       - checkout
-      - node/install:
-          node-version: latest
+      # - node/install:
+      #     node-version: v10.16.3
+      - run: node --version
       - run:
           name: Install npm modules
           command: |
             cd ANGULAR_CODE_BASE
             sudo npm ci
-
+      - run:
+          name: Install angular/cli
+          command: sudo npm install -g @angular/cli@latest
       - run:
           name: Make build
           command: |
             cd ANGULAR_CODE_BASE
-            ls -a
-            npm i @angular/cli 
             ng build
 
       - run:
