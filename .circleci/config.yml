@@ -44,11 +44,14 @@ jobs:
       - run:
           name: Install npm modules
           command: |
+            chown -R $USER:$USER /ANGULAR_CODE_BASE
             cd ANGULAR_CODE_BASE
             sudo npm ci
       - run:
           name: Install angular/cli
-          command: sudo npm install -g @angular/cli@latest
+          command: |
+            sudo npm install -g @angular/cli@latest
+            N | command
       - run:
           name: Make build
           command: |
