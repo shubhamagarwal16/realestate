@@ -31,7 +31,6 @@ jobs:
   FIREBASE-ANGULAR-DEPLOY:
     docker:
       - image: "circleci/node:10.16.3"
-      - image: ubuntu:14.04
     steps:
       - checkout
       - run:
@@ -47,10 +46,10 @@ jobs:
             ng --version
 
       - run:
-          name: Rebuild node-sass
+          name: Install node-sass
           command: |
             cd ANGULAR_CODE_BASE 
-            sudo npm rebuild node-sass
+            sudo npm install node-sass@4.11.0
 
       - run:
           name: Make build
