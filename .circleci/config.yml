@@ -5,12 +5,11 @@ orbs:
 
 jobs:
   FIREBASE-REACTJS-DEPLOY:
-    docker:
-      - image: circleci/node:10
+    machine:
+      image: ubuntu-1604:201903-01
     working_directory: ~/realestate
     steps:
       - checkout
-
       - run:
           name: Install npm modules
           command: |
@@ -70,10 +69,8 @@ workflows:
       - FIREBASE-REACTJS-DEPLOY:
           filters:
             branches:
-              only:
-                - release-reactjs.*
+              only: /release-reactjs\.*/
       - HEROKU-NODEJS-DEPLOY:
           filters:
             branches:
-              only:
-                - release/node.*
+              only: /release-nodejs\.*/
