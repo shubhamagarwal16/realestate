@@ -44,7 +44,7 @@ jobs:
       - run:
           name: Install npm modules
           command: |
-            chown -R $USER:$USER /ANGULAR_CODE_BASE
+            chown -R $USER:$USER ANGULAR_CODE_BASE
             cd ANGULAR_CODE_BASE
             sudo npm ci
       - run:
