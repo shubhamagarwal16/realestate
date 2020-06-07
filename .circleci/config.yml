@@ -17,24 +17,27 @@ jobs:
       - run:
           name: Install npm modules
           command: |
+            cd NODEJS_CODE_BASE
             ls
             npm ci
 
       - save_cache:
           paths:
-            - node_modules
+            - NODEJS_CODE_BASE/node_modules
           key: 'v1-dependencies-{{ checksum "package.json" }}'
 
       - run:
           name: Run tests
-          command:
+          command: |
+            cd NODEJS_CODE_BASE
             npm test
-            # - run:
-            #     environment:
-            #       HEROKU_APP: "sleepy-refuge-55486"
-            #     name: Deploy to heroku
-            #     command: |
-            #       echo "working"
+
+      # - run:
+      #     environment:
+      #       HEROKU_APP: "sleepy-refuge-55486"
+      #     name: Deploy to heroku
+      #     command: |
+      #       echo "working"
 
 workflows:
   version: 2
