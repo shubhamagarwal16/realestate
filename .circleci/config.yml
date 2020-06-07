@@ -1,0 +1,37 @@
+version: 2.1
+orbs:
+  # node: circleci/node@1.1.6
+  heroku: circleci/heroku@0.0.10 # Invoke the Heroku orb
+
+jobs:
+  HEROKU-NODEJS-DEPLOY:
+    working_directory: ~/realestate/NODEJS_CODE_BASE
+    executor:
+      name: node/default
+    steps:
+      - checkout
+      - node/with-cache:
+          steps:
+            - run:
+                name: Install npm modules
+                command: npm ci
+
+            - run:
+                name: Run tests
+                command: npm test
+
+            # - run:
+            #     environment:
+            #       HEROKU_APP: "sleepy-refuge-55486"
+            #     name: Deploy to heroku
+            #     command: |
+            #       echo "working"
+
+workflows:
+  REALESTATE-DEPLOY:
+    jobs:
+      - HEROKU-NODEJS-DEPLOY:
+          filters:
+            branches:
+              only:
+                - /release/node.*
