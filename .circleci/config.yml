@@ -5,14 +5,10 @@ orbs:
 
 jobs:
   FIREBASE-REACTJS-DEPLOY:
-    machine:
-      image: ubuntu-1604:201903-01
-    working_directory: ~/realestate
+    docker:
+      - image: "circleci/node:10.16.3"
     steps:
       - checkout
-      - node/install:
-          install-yarn: true
-          node-version: latest
       - run: node --version
       - run:
           name: Install npm modules
@@ -30,8 +26,43 @@ jobs:
           name: Firebase REACTJS Deploy
           command: |
             cd REACT_CODE_BASE
-            ls
             ./node_modules/.bin/firebase deploy --token $REACTJS_FIREBASE_TOKEN
+
+  FIREBASE-ANGULAR-DEPLOY:
+    docker:
+      - image: "circleci/node:10.16.3"
+    steps:
+      - checkout
+      - run:
+          name: Install npm modules
+          command: |
+            cd ANGULAR_CODE_BASE
+            sudo npm ci
+
+      - run:
+          name: Install angular/cli
+          command: |
+            sudo npm install -g @angular/cli@7.3.1
+            ng --version
+
+      - run:
+          name: Install node-sass
+          command: |
+            cd ANGULAR_CODE_BASE 
+            sudo npm install node-sass@4.11.0
+
+      - run:
+          name: Make build
+          command: |
+            cd ANGULAR_CODE_BASE
+            ng build
+
+      - run:
+          name: Firebase ANGULAR Deploy
+          command: |
+            cd ANGULAR_CODE_BASE
+            ls -a
+            ./node_modules/.bin/firebase deploy --token $ANGULAR_FIREBASE_TOKEN
 
   HEROKU-NODEJS-DEPLOY:
     docker:
@@ -39,7 +70,7 @@ jobs:
     working_directory: ~/realestate
     steps:
       - checkout
-      - setup_remote_docker
+      # - setup_remote_docker
 
       # - restore_cache:
       #     key: 'v1-dependencies-{{ checksum "package.json" }}'
@@ -81,7 +112,10 @@ workflows:
           filters:
             branches:
               only: release-reactjs
-              # only: /release-reactjs\.*/
+      - FIREBASE-ANGULAR-DEPLOY:
+          filters:
+            branches:
+              only: release-angular
       - HEROKU-NODEJS-DEPLOY:
           filters:
             branches:

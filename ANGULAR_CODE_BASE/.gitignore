@@ -8,7 +8,6 @@ firebase-debug.log*
 
 # Firebase cache
 .firebase/
-firebase.json
 
 # Firebase config
 
