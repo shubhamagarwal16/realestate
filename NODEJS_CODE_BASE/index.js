@@ -3,10 +3,11 @@ var path = require('path');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
+const dotenv = require('dotenv')
+dotenv.config();
 
-const config = require('./config/config');
 var app = express();
-
+const config = require('./config/config');
 const startupdebug = require('debug')('app:startup');
 
 app.use(express.static(path.join(__dirname, 'uploads')));
@@ -16,17 +17,17 @@ var users = require('./routes/users');
 var auth = require('./routes/auth');
 var common = require('./routes/common');
 var property = require('./routes/property');
+var email = require('./routes/email');
 
-// Connect with DB
-// --- local     // mongoose.connect('mongodb://localhost/realEstatedb');
+// Connect with DB 
+let DB_URL = process.env.MLAB_DB_URL || config.localDB
 
-// ----- mLab
-mongoose.connect(config.dbUrl, {useNewUrlParser: true})
-.then((conn) => // we're connected!
-{
-  startupdebug('connected to dB');
-})
-.catch(err => console.error('Connection Error', err));
+mongoose.connect(DB_URL, { useNewUrlParser: true })
+  .then((conn) => // we're connected!
+  {
+    startupdebug('connected to dB');
+  })
+  .catch(err => console.error('Connection Error', err));
 
 
 // configure app to use bodyParser()
@@ -35,12 +36,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 // use morgan to log requests to the console
 app.use(morgan('dev'));
+
 //CORS
-app.use(function(req, res, next) {
-    res.header('Access-Control-Allow-Methods', 'GET,POST,PUT'); //,DELETE,OPTIONS
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT'); //,DELETE,OPTIONS
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
 });
 
 // Routes
@@ -48,13 +50,10 @@ app.use('/api/user', users);
 app.use('/api/auth', auth);
 app.use('/api/common', common);
 app.use('/api/property', property);
+app.use('/api/email', email);
 
-//console.log(process.env.PORT); //.PORT, ' -port');
-// var tokenn = require('./config/config').secretKey;
-// console.log('token ', tokenn);
-
-var port =  process.env.PORT || 8080;
+var port = process.env.PORT || 8080;
 
 app.listen(port, () => {
-  startupdebug('Listening @', port);    
+  startupdebug('Listening @', port);
 });
