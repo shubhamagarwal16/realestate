@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  node: circleci/node@1.1.6
+  node: circleci/node@3.0.0
   heroku: circleci/heroku@0.0.10 # Invoke the Heroku orb
 
 jobs:
@@ -10,6 +10,10 @@ jobs:
     working_directory: ~/realestate
     steps:
       - checkout
+      - node/install:
+          install-yarn: true
+          node-version: latest
+      - run: node --version
       - run:
           name: Install npm modules
           command: |
@@ -17,9 +21,16 @@ jobs:
             npm ci
 
       - run:
+          name: Make build
+          command: |
+            cd REACT_CODE_BASE
+            npm run build
+
+      - run:
           name: Firebase REACTJS Deploy
           command: |
             cd REACT_CODE_BASE
+            ls
             ./node_modules/.bin/firebase deploy --token $REACTJS_FIREBASE_TOKEN
 
   HEROKU-NODEJS-DEPLOY:
@@ -48,7 +59,7 @@ jobs:
           name: Deploy to heroku
           command: |
             cd NODEJS_CODE_BASE
-            ls
+            ls -a
             git init
             git config user.email "shubhamagarwal1694@gmail.com"
             git config user.name "Shubham Agarwal"
@@ -69,8 +80,9 @@ workflows:
       - FIREBASE-REACTJS-DEPLOY:
           filters:
             branches:
-              only: /release/reactjs\.*/
+              only: release-reactjs
+              # only: /release-reactjs\.*/
       - HEROKU-NODEJS-DEPLOY:
           filters:
             branches:
-              only: /release/nodejs\.*/
+              only: /release-nodejs\.*/
