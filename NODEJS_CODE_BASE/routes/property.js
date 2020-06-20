@@ -1,8 +1,8 @@
 const express = require('express');
-var multer  = require('multer');
+var multer = require('multer');
 const crypto = require('crypto');
 var path = require('path');
-var GridFsStorage  = require('multer-gridfs-storage');
+var GridFsStorage = require('multer-gridfs-storage');
 const config = require('../config/config');
 
 var router = express.Router();
@@ -10,7 +10,7 @@ var propertyController = require('../controllers/property.controller');
 
 // Create storage engine
 const storage = new GridFsStorage({
-  url: config.dbUrl,
+  url: process.env.MLAB_DB_URL || config.localDB,
   file: (req, file) => {
     return new Promise((resolve, reject) => {
       crypto.randomBytes(16, (err, buf) => {
