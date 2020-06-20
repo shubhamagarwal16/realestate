@@ -29,39 +29,24 @@ jobs:
             ./node_modules/.bin/firebase deploy --token $REACTJS_FIREBASE_TOKEN
 
   FIREBASE-ANGULAR-DEPLOY:
-    # docker:
-    #   - image: "circleci/node:10.16.3"
     docker:
       - image: circleci/node:12.9.1-browsers
 
     steps:
       - checkout
       - setup_remote_docker
-      # - node/install:
-      #     install-yarn: true
-      #     node-version: latest
+
       - run:
           name: Install npm modules
           command: |
-            ls
-            chown -R $USER:$USER ANGULAR_CODE_BASE
             cd ANGULAR_CODE_BASE
             yarn --frozen-lockfile
-            # sudo npm ci
 
       - run:
           name: Install angular/cli
           command: |
             sudo npm install -g @angular/cli@7.3.1
             ng --version
-
-      # - run:
-      #     name: Install node-sass
-      #     command: |
-      #       chown -R $USER:$USER ANGULAR_CODE_BASE
-      #       cd ANGULAR_CODE_BASE
-      #       # sudo npm install node-sass@4.11.0
-      #       yarn add node-sass@4.11.0
 
       - run:
           name: Make build
