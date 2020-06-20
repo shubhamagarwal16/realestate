@@ -64,10 +64,9 @@ jobs:
   HEROKU-NODEJS-DEPLOY:
     docker:
       - image: "circleci/node:12.9.1-browsers"
-    working_directory: ~/realestate
     steps:
       - checkout
-      # - setup_remote_docker
+      - setup_remote_docker
 
       # - restore_cache:
       #     key: 'v1-dependencies-{{ checksum "package.json" }}'
@@ -86,6 +85,7 @@ jobs:
       - run:
           name: Deploy to heroku
           command: |
+            sudo rm -rf .git
             cd NODEJS_CODE_BASE
             ls -a
             git init
@@ -97,9 +97,6 @@ jobs:
             git add -f .
             git commit -am "heroku commit"
             git push -f https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git $CIRCLE_BRANCH:master
-
-      # - heroku/deploy-via-git:
-      #     force: true
 
 workflows:
   version: 2
@@ -116,4 +113,5 @@ workflows:
       - HEROKU-NODEJS-DEPLOY:
           filters:
             branches:
-              only: /release-nodejs\.*/
+              only: release-nodejs
+              # only: /release-nodejs\.*/
