@@ -30,26 +30,23 @@ jobs:
 
   FIREBASE-ANGULAR-DEPLOY:
     docker:
-      - image: "circleci/node:10.16.3"
+      - image: circleci/node:12.9.1-browsers
+
     steps:
       - checkout
+      - setup_remote_docker
+
       - run:
           name: Install npm modules
           command: |
             cd ANGULAR_CODE_BASE
-            sudo npm ci
+            yarn --frozen-lockfile
 
       - run:
           name: Install angular/cli
           command: |
             sudo npm install -g @angular/cli@7.3.1
             ng --version
-
-      - run:
-          name: Install node-sass
-          command: |
-            cd ANGULAR_CODE_BASE 
-            sudo npm install node-sass@4.11.0
 
       - run:
           name: Make build
