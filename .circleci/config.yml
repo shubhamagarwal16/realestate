@@ -37,7 +37,7 @@ jobs:
           name: Install npm modules
           command: |
             ls
-            chown -R $USER:$USER realestate
+            chown -R $USER:$USER ANGULAR_CODE_BASE
             cd ANGULAR_CODE_BASE
             sudo npm ci
 
