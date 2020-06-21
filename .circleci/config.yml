@@ -72,11 +72,11 @@ jobs:
       # - restore_cache:
       #     key: 'v1-dependencies-{{ checksum "package.json" }}'
 
-      - run:
-          name: Install npm modules
-          command: |
-            cd NODEJS_CODE_BASE
-            npm ci
+      # - run:
+      #     name: Install npm modules
+      #     command: |
+      #       cd NODEJS_CODE_BASE
+      #       npm ci
 
       # - save_cache:
       #     paths:
