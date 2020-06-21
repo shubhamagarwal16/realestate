@@ -20,8 +20,8 @@ var property = require('./routes/property');
 var email = require('./routes/email');
 
 // Connect with DB 
-let DB_URL = process.env.MLAB_DB_URL || config.localDB
-
+const DB_URL = process.env.MLAB_DB_URL || config.localDB
+console.log(DB_URL)
 mongoose.connect(DB_URL, { useNewUrlParser: true })
   .then((conn) => // we're connected!
   {
