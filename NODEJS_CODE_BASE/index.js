@@ -3,32 +3,38 @@ var path = require('path');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
-const dotenv = require('dotenv')
+const dotenv = require('dotenv');
 dotenv.config();
 
 var app = express();
 const config = require('./config/config');
 const startupdebug = require('debug')('app:startup');
+const errordebug = require('debug')('app:error');
 
 app.use(express.static(path.join(__dirname, 'uploads')));
 
 // Routing
-var users = require('./routes/users');
-var auth = require('./routes/auth');
-var common = require('./routes/common');
-var property = require('./routes/property');
-var email = require('./routes/email');
+const users = require('./routes/users');
+const auth = require('./routes/auth');
+const common = require('./routes/common');
+const property = require('./routes/property');
+const email = require('./routes/email');
 
 // Connect with DB 
 const DB_URL = process.env.MLAB_DB_URL || config.localDB
-console.log(DB_URL)
-mongoose.connect(DB_URL, { useNewUrlParser: true })
-  .then((conn) => // we're connected!
-  {
-    startupdebug('connected to dB');
-  })
-  .catch(err => console.error('Connection Error', err));
 
+async function connectDB() {
+  await mongoose.connect(DB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => { // we're connected!
+      startupdebug('connected to dB');
+    })
+    .catch(err => {
+      errordebug("DB_URL - ", DB_URL);
+      errordebug('Connection Error', err);
+    });
+}
+
+connectDB();
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -45,12 +51,18 @@ app.use(function (req, res, next) {
   next();
 });
 
+app.get('/', (req, res) => {
+  const welcomeText = "<div style='text-align: center;'><h1>Welcome to Relestate.</h1><p>Server is up and running, visit <a href='https://github.com/shubhamagarwal16/realestate'>link</a> for more info.</p></div>";
+  res.status(200).send(welcomeText);
+})
+
 // Routes
 app.use('/api/user', users);
 app.use('/api/auth', auth);
 app.use('/api/common', common);
 app.use('/api/property', property);
 app.use('/api/email', email);
+
 
 var port = process.env.PORT || 8080;
 

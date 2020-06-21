@@ -8,6 +8,7 @@ const sendEmail = (data) => {
   return sgMail.send(data)
 }
 
+// THIS API IS FOR MY PERSONAL USE 
 router.post('/github-pages', (req, res) => {
   let errorMessage = ''
   const checkMissingKey = helpers.isKeyMissing(req.body, ['toEmail', 'fromEmail', 'name', 'email', 'message']);
