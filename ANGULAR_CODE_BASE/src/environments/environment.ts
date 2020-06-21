@@ -5,6 +5,6 @@
 
 export const environment = {
   production: false,
-  MAIN_URL: 'http://localhost:8080',
+  // BASE_URL: 'https://github-realestate.herokuapp.com/api'
   BASE_URL: 'http://localhost:8080/api'
 };

@@ -1,10 +1,11 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { CommonService } from '../../services/common.service';
-import { LoginService } from '../../services/login.service';
-import { UserService } from '../../services/user.service';
+import { CommonService } from '@sa-services/common.service';
+import { LoginService } from '@sa-services/login.service';
+import { UserService } from '@sa-services/user.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import * as moment from 'moment';
+import { environment } from '@sa-environments/environment';
 
 @Component({
   selector: 'app-propertylist',
@@ -26,11 +27,12 @@ export class PropertylistComponent implements OnInit, OnChanges {
   @Input('blockSize') blockSize = 12;
   @Input('queryParams') queryParams = '';
   @Input('hideOwnProperty') hideOwnProperty = false;
+  env = environment;
 
   propertyList = [];
 
   toggleImages(id, propNum, incDec, imgLen, e) {
-    let ele: any = document.getElementById(id+propNum);
+    let ele: any = document.getElementById(id + propNum);
     let value = parseInt(ele.value) || 0;
     if (value >= (imgLen - 1)) { ele.value = incDec == '-1' ? value - 1 : 0; }
     else if (value == 0) { ele.value = incDec == '-1' ? imgLen - 1 : value + 1; }
@@ -39,7 +41,7 @@ export class PropertylistComponent implements OnInit, OnChanges {
     let imgSrc = this.propertyList[propNum].images[ele.value];
     if (imgSrc) {
       let img: any = document.getElementById('propImg' + propNum);
-      img.src = this.commonService.main_url + '/api/property/showGFSImage/' + imgSrc;
+      img.src = environment.BASE_URL + '/property/showGFSImage/' + imgSrc;
     }
     //Preventing opening property view page on button click
     e.stopPropagation();
@@ -65,7 +67,7 @@ export class PropertylistComponent implements OnInit, OnChanges {
   markAsSold(propertySlug, status, e) {
     if (propertySlug) {
       status = status == 'sell' ? 'sold' : 'acquired';
-      this.http.post(this.commonService.base_url + `/property/markAsSold/${propertySlug}`, { status })
+      this.http.post(environment.BASE_URL + `/property/markAsSold/${propertySlug}`, { status })
         .subscribe(result => {
           let data = result && result['result'] || {};
           let message = result && result['message'];

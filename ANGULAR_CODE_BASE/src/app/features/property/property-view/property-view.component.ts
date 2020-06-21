@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonService } from '../../../common/services/common.service';
+import { environment } from '@sa-environments/environment';
 
 @Component({
   selector: 'app-property-view',
@@ -16,22 +17,23 @@ export class PropertyViewComponent implements OnInit {
 
   propertyDetail = {};
   imageDetail;
+  env = environment;
 
   getProperty(propertySlug) {
     this.commonService.togglePageLoaderFn(true);
     this.commonService.getSingleProperty(propertySlug)
       .subscribe(result => {
-        console.log({result});
+        console.log({ result });
         this.propertyDetail = result['result'];
         this.imageDetail = result['files'];
       },
-      (err) => { 
-        console.log({err});
-        this.commonService.togglePageLoaderFn(false);
-      },
-      () => {
-        this.commonService.togglePageLoaderFn(false);
-      }
+        (err) => {
+          console.log({ err });
+          this.commonService.togglePageLoaderFn(false);
+        },
+        () => {
+          this.commonService.togglePageLoaderFn(false);
+        }
       );
   }
 

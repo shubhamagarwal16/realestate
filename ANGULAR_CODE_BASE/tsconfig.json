@@ -17,6 +17,18 @@
       "dom"
     ],
     "module": "es2015",
-    "baseUrl": "./"
+    // "baseUrl": "./",
+    "baseUrl": "src",
+    "paths": {
+      "@sa-core/*": [
+        "app/common/components/*"
+      ],
+      "@sa-services/*": [
+        "app/common/services/*"
+      ],
+      "@sa-environments/*": [
+        "environments/*"
+      ]
+    }
   }
 }

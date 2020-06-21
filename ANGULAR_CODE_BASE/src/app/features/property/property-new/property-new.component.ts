@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { UserService } from '../../../common/services/user.service';
 import { CommonService } from '../../../common/services/common.service';
 import { Router } from '@angular/router';
+import { environment } from '@sa-environments/environment';
 
 @Component({
   selector: 'app-property-new',
@@ -67,9 +68,8 @@ export class PropertyNewComponent implements OnInit {
       // iterate and set other form data
       imageData.append(key, data.value[key])
     }
-    console.log({ imageData });
     this.commonService.togglePageLoaderFn(true);
-    this.http.post(this.commonService.base_url + '/property/new', imageData)
+    this.http.post(environment.BASE_URL + '/property/new', imageData)
       .subscribe(result => {
         console.log({ result });
         let data = result && result['result'] || {};

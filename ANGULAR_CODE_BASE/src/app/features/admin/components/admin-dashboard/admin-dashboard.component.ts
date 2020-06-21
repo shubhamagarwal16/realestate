@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonService } from '../../../../common/services/common.service';
+import { environment } from '@sa-environments/environment';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -17,7 +18,7 @@ export class AdminDashboardComponent implements OnInit {
   userList = [];
 
   getUserList() {
-    this.http.get(`${this.commonService.base_url}/auth/admin/userList`)
+    this.http.get(`${environment.BASE_URL}/auth/admin/userList`)
       .subscribe((response: any) => {
         if (response && response.data) this.userList = response.data
       },
@@ -26,12 +27,12 @@ export class AdminDashboardComponent implements OnInit {
       )
   }
 
-  changePass(_id, password){
+  changePass(_id, password) {
     console.log('zx, dsf ', _id, password);
-    this.http.put(`${this.commonService.base_url}/auth/admin/changePass`, { _id, password })
-    .subscribe(resp => {
-      console.log({resp});
-    })
+    this.http.put(`${environment.BASE_URL}/auth/admin/changePass`, { _id, password })
+      .subscribe(resp => {
+        console.log({ resp });
+      })
   }
 
   ngOnInit() {

@@ -21,8 +21,8 @@
               (click)="toggleImages('imgCounter', propNum, -1, property.images.length, $event);"
               class="btn btn-xs btn-default">-</button>
             <img [ngStyle]="blockView ? { 'margin-bottom': '10px' } : ''" id="propImg{{propNum}}"
-              src="{{commonService.base_url}}/property/showGFSImage/{{ property.images[0] }}" width="120px"
-              height="120px" alt="Img">
+              src="{{env.BASE_URL}}/property/showGFSImage/{{ property.images[0] }}" width="120px" height="120px"
+              alt="Img">
             <input type="hidden" name="imgCounter" ngModel="0" #imgCounter="ngModel" id="imgCounter{{propNum}}">
             <button *ngIf="property.images.length > 1 && blockView;"
               (click)="toggleImages('imgCounter', propNum, +1, property.images.length, $event);"
@@ -48,7 +48,7 @@
         }" class="">
           <h5>{{property.title}}</h5>
           <ul style="padding-left: 0px; list-style-type: none;" class="propertyLocation">
-            <li><small>{{property.locality}}, {{property.city.name}}, {{property.state.name}}</small></li>
+            <li><small>{{property.locality}}, {{property.city?.name}}, {{property.state?.name}}</small></li>
             <li style="font-size: 14px;">{{property.type?.title? property.type?.title : '--'  }} <b>|</b>
               {{ getFormattedDate(property.updatedOn) }}</li>
           </ul>

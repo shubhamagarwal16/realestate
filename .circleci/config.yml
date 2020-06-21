@@ -52,7 +52,7 @@ jobs:
           name: Make build
           command: |
             cd ANGULAR_CODE_BASE
-            ng build
+            ng build --prod --outputHashing=all
 
       - run:
           name: Firebase ANGULAR Deploy

@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Title } from '@angular/platform-browser';
 import { Subject } from 'rxjs/Subject';
-import { environment } from 'src/environments/environment';
+import { environment } from '@sa-environments/environment';
 
 @Injectable()
 export class CommonService {
@@ -35,35 +35,32 @@ export class CommonService {
   // showLoader() { this.togglePageLoader.next(true); }
   // hideLoader() { this.togglePageLoader.next(false); }
 
-  main_url = environment.MAIN_URL;
-  base_url = environment.BASE_URL;
-
   getStatelist(): Observable<any> {
-    return this.http.get(this.base_url + '/common/state');
+    return this.http.get(environment.BASE_URL + '/common/state');
   }
 
   getCitylist(): Observable<any> {
-    return this.http.get(this.base_url + '/common/cities');
+    return this.http.get(environment.BASE_URL + '/common/cities');
   }
 
   getCitylistByState(stateId): Observable<any> {
-    return this.http.get(this.base_url + '/common/cities/' + stateId);
+    return this.http.get(environment.BASE_URL + '/common/cities/' + stateId);
   }
 
   getPropertyTypeList(): Observable<any> {
-    return this.http.get(this.base_url + '/property/type');
+    return this.http.get(environment.BASE_URL + '/property/type');
   }
 
   propertyList(param = '') {
-    return this.http.get(this.base_url + '/property/list/' + param);
+    return this.http.get(environment.BASE_URL + '/property/list/' + param);
   }
 
   getSingleProperty(propertySlug) {
-    return this.http.get(this.base_url + '/property/single/' + propertySlug);
+    return this.http.get(environment.BASE_URL + '/property/single/' + propertySlug);
   }
 
   filterProperties(param = '') {
-    return this.http.get(this.base_url + '/property/filter' + param);
+    return this.http.get(environment.BASE_URL + '/property/filter' + param);
   }
 
 }
