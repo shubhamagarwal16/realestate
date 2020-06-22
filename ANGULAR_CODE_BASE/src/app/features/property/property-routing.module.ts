@@ -11,7 +11,7 @@ import { PropertyMainComponent } from '../property/property-main/property-main.c
 import { PropertyViewComponent } from '../property/property-view/property-view.component';
 import { DashboardComponent } from '../../common/components/dashboard-main/dashboard.component';
 
-const Routes: Routes = [
+const ChildRoutes: Routes = [
   {
     path: '',
     component: DashboardComponent,
@@ -69,14 +69,14 @@ const Routes: Routes = [
         path: '',
         redirectTo: 'new'
       }
-    ]    
+    ]
   }
 ];
 
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forChild(Routes)
+    RouterModule.forChild(ChildRoutes)
   ],
   exports: [
     RouterModule

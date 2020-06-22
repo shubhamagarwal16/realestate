@@ -14,14 +14,14 @@ export class PropertyNewComponent implements OnInit {
 
   constructor(
     private commonService: CommonService,
-    private userService: UserService,
+    public userService: UserService,
     private http: HttpClient,
     private router: Router
   ) { }
 
   propertyTypeList = [];
   stateList: any[];
-  private cityList = [];
+  cityList = [];
   FetchingCityList = false;
   imgUrls = [];
   imgsToUpload = [];

@@ -16,69 +16,66 @@ export class EditPropertyComponent implements OnInit {
     private location: Location
   ) { }
 
-  propertyDetail:any = {
+  propertyDetail: any = {
     type: {},
     state: {},
     city: {}
   };
   stateList;
-  private cityList = [];
+  cityList = [];
   FetchingCityList = false;
   propertyTypeList;
   newPropertyData: any = {};
 
-  getProperty(propertySlug){
+  getProperty(propertySlug) {
     this.commonService.getSingleProperty(propertySlug)
       .subscribe(result => {
-        console.log('propertydata: ', result);     
-        this.propertyDetail = result;   
+        this.propertyDetail = result;
       });
   }
 
-  getCityList(stateId){
+  getCityList(stateId) {
     this.cityList = [];
     this.FetchingCityList = true;
 
-    if(stateId != 0){
+    if (stateId != 0) {
       this.commonService.getCitylistByState(stateId)
-      .subscribe(response => {
-        if(response.length > 0){
-          this.cityList = response;
-          this.FetchingCityList = false;
-        }
-      });
+        .subscribe(response => {
+          if (response.length > 0) {
+            this.cityList = response;
+            this.FetchingCityList = false;
+          }
+        });
     }
-    else{
+    else {
       this.cityList = [];
     }
   }
 
-  submitForm(data){
-    console.log("submitForm: ", data);     
+  submitForm(data) {
+    console.log("submitForm: ", data);
   }
 
-  locationBack(){
+  locationBack() {
     this.location.back();
   }
 
   ngOnInit() {
     let propertySlug = this.activatedRoute.snapshot.paramMap.get('propertySlug');
-    // console.log('propertyId: ', propertyId);
-
-    if(propertySlug)
+    if (propertySlug)
       this.getProperty(propertySlug);
     else
-      console.log('not found');      
+      console.log('not found');
 
     this.commonService.getStatelist()
-    .subscribe(response => {
-      if(response.length > 0){
-        this.stateList = response;
-      }
+      .subscribe(response => {
+        if (response.length > 0) {
+          this.stateList = response;
+        }
       });
 
     this.commonService.getPropertyTypeList()
-    .subscribe(result => this.propertyTypeList = result );
+      .subscribe(result => this.propertyTypeList = result);
   }
 
 }

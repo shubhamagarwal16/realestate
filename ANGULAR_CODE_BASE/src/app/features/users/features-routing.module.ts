@@ -9,13 +9,13 @@ import { DashboardHomeComponent } from './components/dashboard/dashboard-home/da
 import { AuthGuardService } from '../../common/services/auth-guard.service';
 import { DashboardComponent } from '../../common/components/dashboard-main/dashboard.component';
 
-const Routes: Routes = [
+const ChildRoutes: Routes = [
   {
-    path: 'sign-up', 
+    path: 'sign-up',
     component: RegistrationComponent
   },
   {
-    path: 'dashboard', 
+    path: 'dashboard',
     component: DashboardComponent,
     children: [
       {
@@ -41,7 +41,7 @@ const Routes: Routes = [
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forChild(Routes)
+    RouterModule.forChild(ChildRoutes)
   ],
   exports: [
     RouterModule

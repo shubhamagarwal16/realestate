@@ -16,8 +16,8 @@ export class PropertylistComponent implements OnInit, OnChanges {
 
   constructor(
     private commonService: CommonService,
-    private loginService: LoginService, // used in template
-    private userService: UserService,
+    public loginService: LoginService, // used in template
+    public userService: UserService,
     private router: Router,
     private http: HttpClient
   ) { }

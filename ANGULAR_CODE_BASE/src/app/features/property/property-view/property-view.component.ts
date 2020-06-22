@@ -15,7 +15,9 @@ export class PropertyViewComponent implements OnInit {
     private commonService: CommonService
   ) { }
 
-  propertyDetail = {};
+  propertyDetail = {
+    title: ''
+  };
   imageDetail;
   env = environment;
 

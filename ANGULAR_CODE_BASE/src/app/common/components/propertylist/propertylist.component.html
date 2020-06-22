@@ -1,8 +1,8 @@
 <div class="row">
-  <div (click)="viewProperty(property.slug);"
-    *ngFor="let property of propertyList;index as propNum;trackBy: setMaxLength('propNum'+index)"
+  <!-- trackBy: setMaxLength('propNum'+index) -->
+  <div (click)="viewProperty(property.slug);" *ngFor="let property of propertyList;index as propNum;"
     class="col-md-{{blockSize}} pb-3 p-cursor" id="propNum{{propNum}}"
-    [ngStyle]="{ 'height': maxLength ? maxLength : 'initial' }" ng-init="setMaxLength('propNum'+ propNum)">
+    [ngStyle]="{ 'height': maxLength ? maxLength : 'initial' }">
     <!-- [ngClass]="{  routerLink="/users/property/view/{{property._id}}"
     'col-md-12': !blockView,
     'col-md-6': blockView

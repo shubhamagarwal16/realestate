@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
   images: Array<string>;
   cityList = [];
   propertyTypeList;
-  searchPropData = { propertyFor: 'sell' };
+  searchPropData = { propertyFor: 'sell', location: '' };
   hideOwnProperty = false;
 
   constructor(
@@ -33,8 +33,9 @@ export class HomeComponent implements OnInit {
     text$
       .debounceTime(200)
       .distinctUntilChanged()
-      .map(term => term.length < 2 ? [] : this.cityList.map(v => { return (v.name.toLowerCase().indexOf(term.toLowerCase()) > -1)? v.name : ''
-      }).filter(a => a).slice(0, 10) );
+      .map(term => term.length < 2 ? [] : this.cityList.map(v => {
+        return (v.name.toLowerCase().indexOf(term.toLowerCase()) > -1) ? v.name : ''
+      }).filter(a => a).slice(0, 10));
 
   ngOnInit() {
     this._http.get('https://picsum.photos/list')
@@ -66,10 +67,10 @@ export class HomeComponent implements OnInit {
       propertyFor: value.propertyFor,
       type: value.type
     };
-    
-    queryParamsTemp.city = this.cityList.map(e => { 
+
+    queryParamsTemp.city = this.cityList.map(e => {
       return e.name == value.city ? e._id : ''
-     }).filter(ele => ele);
+    }).filter(ele => ele);
 
     this.router.navigate(['/property/search'], {
       queryParams: queryParamsTemp //{ 'city': value.city, 'propertyFor': value.propertyFor, 'type': value.type }

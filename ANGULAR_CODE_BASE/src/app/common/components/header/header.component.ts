@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 // , ViewChild
 import { Router, ActivatedRoute } from '@angular/router';
-
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { LoginService } from '../../services/login.service';
 import { UserService } from '../../services/user.service';
@@ -17,8 +16,8 @@ export class HeaderComponent implements OnInit {
 
 
   constructor(
-    private loginService: LoginService,
-    private userService: UserService,
+    public loginService: LoginService,
+    public userService: UserService,
     private router: Router,
     private route: ActivatedRoute,
     private modalService: NgbModal,
@@ -54,8 +53,6 @@ export class HeaderComponent implements OnInit {
   }
 
   changeHeaderMessage(type, message) {
-    console.log('changeHeaderMessage');
-
     this.HeaderMessage = { type: type, message: message }
     var self = this;
     setTimeout(function () {

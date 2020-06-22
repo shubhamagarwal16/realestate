@@ -22,7 +22,7 @@ export class EditProfileComponent implements OnInit {
   };
   isEditing = false;
   stateList;
-  private cityList = [];
+  cityList = [];
   lastEdited = '';
 
   getcurrentUserDetails(userId) {

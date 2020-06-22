@@ -42,7 +42,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   stateList;
-  private cityList = [];
+  cityList = [];
 
   ngOnInit() {
     this.commonService.togglePageLoaderFn(false);
