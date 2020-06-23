@@ -6,10 +6,9 @@ orbs:
 jobs:
   FIREBASE-REACTJS-DEPLOY:
     docker:
-      - image: "circleci/node:10.16.3"
+      - image: circleci/node:12.9.1-browsers
     steps:
       - checkout
-      - run: node --version
       - run:
           name: Install npm modules
           command: |
@@ -20,7 +19,7 @@ jobs:
           name: Make build
           command: |
             cd REACT_CODE_BASE
-            npm run build
+            npm run build:prod
 
       - run:
           name: Firebase REACTJS Deploy
@@ -67,21 +66,6 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-
-      # - restore_cache:
-      #     key: 'v1-dependencies-{{ checksum "package.json" }}'
-
-      # - run:
-      #     name: Install npm modules
-      #     command: |
-      #       cd NODEJS_CODE_BASE
-      #       npm ci
-
-      # - save_cache:
-      #     paths:
-      #       - node_modules
-      #     key: 'v1-dependencies-{{ checksum "package.json" }}'
-
       - run:
           name: Deploy to heroku
           command: |
@@ -114,4 +98,3 @@ workflows:
           filters:
             branches:
               only: release-nodejs
-              # only: /release-nodejs\.*/
