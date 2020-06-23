@@ -52,7 +52,7 @@ app.use(function (req, res, next) {
 });
 
 app.get('/', (req, res) => {
-  const welcomeText = "<div style='text-align: center;'><h1>Welcome to Relestate.</h1><p>Server is up and running, visit <a href='https://github.com/shubhamagarwal16/realestate'>link</a> for more info.</p></div>";
+  const welcomeText = "<div style='text-align: center;'><h1>Welcome to Realestate.</h1><p>Server is up and running, visit <a href='https://github.com/shubhamagarwal16/realestate'>link</a> for more info.</p></div>";
   res.status(200).send(welcomeText);
 })
 
