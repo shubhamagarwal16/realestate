@@ -1,16 +1,15 @@
 import http from "./httpService";
-import { apiEndPoint } from "../config";
 
 export function get(url = "") {
-  return http.get(`${apiEndPoint}${url}`);
+  return http.get(`${process.env.REACT_APP_BASE_URL}${url}`);
 }
 export function post(url = "", params) {
-  return http.post(`${apiEndPoint}${url}`, params);
+  return http.post(`${process.env.REACT_APP_BASE_URL}${url}`, params);
 }
 
 export function showGFSImage(path) {
   if (!path) return "";
-  return `${apiEndPoint}/property/showGFSImage/${path}`;
+  return `${process.env.REACT_APP_BASE_URL}/property/showGFSImage/${path}`;
 }
 
 export async function renderStateList() {

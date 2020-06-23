@@ -22,7 +22,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "env-cmd -f .env react-scripts build",
+    "build:prod": "env-cmd -f .env.prod react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -42,6 +43,7 @@
     ]
   },
   "devDependencies": {
+    "env-cmd": "^10.1.0",
     "firebase-tools": "^8.4.2"
   }
 }
