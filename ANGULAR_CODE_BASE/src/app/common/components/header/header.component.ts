@@ -14,27 +14,28 @@ import { CommonService } from '../../services/common.service';
 })
 export class HeaderComponent implements OnInit {
 
+  isUserLoggedIn: Boolean = false;
 
   constructor(
-    public loginService: LoginService,
+    private loginService: LoginService,
     public userService: UserService,
     private router: Router,
     private route: ActivatedRoute,
     private modalService: NgbModal,
     private commonService: CommonService
-  ) { }
+  ) {
+    this.isUserLoggedIn = loginService.isLoggedIn();
+  }
 
   openloginModal() {
-    const modalRef = this.modalService.open(LoginModalComponent);
+    this.modalService.open(LoginModalComponent);
   }
 
   // ----- FORM
-
   headerDropdown: false;
   toggleMenuItems = false;
 
   // ------------- LOGIN
-
   // Main header alert message
   HeaderMessage = {
     type: '',
@@ -60,9 +61,24 @@ export class HeaderComponent implements OnInit {
     }, 5000);
   }
 
+  handleLogout() {
+    this.loginService.logOut()
+  }
+
   pageloaderStatus: boolean = true;
 
   ngOnInit() {
+    document.addEventListener('scroll', (event) => {
+      if (window.pageYOffset > 30) {
+        document.getElementById('logoImg').classList.add('smallLogo');
+        // document.getElementById('navbar').style.top = '35px'
+      }
+      else if (window.pageYOffset < 30) {
+        document.getElementById('logoImg').classList.remove('smallLogo');
+        // document.getElementById('navbar').style.top = '0px'
+      }
+    });
+
     this.route.queryParamMap.subscribe((data) => {
       if (data.get('action') === 'signUpsuccess') {
         this.changeHeaderMessage('success', 'Congratulations, you have been successfully registered, login to continue');
@@ -86,24 +102,5 @@ export class HeaderComponent implements OnInit {
 
     // Toggling Page Loader status
     this.commonService.togglePageLoader$.subscribe(data => this.pageloaderStatus = data);
-
-    //isAdmin
-    // if (this.userService.currentUser && this.userService.currentUser.user.isAdmin) {
-    //   this.navItems = [
-    //     { path: '/admin/dashboard', name: 'Dashboard' }
-    //   ];
-    // }
-    // else {
-    //   this.navItems = [
-    //     { path: '/users/dashboard', name: 'Dashboard' },
-    //     { path: '/users/property/new', name: 'Add New Property' },
-    //     { path: '/users/property/search', name: 'Find Property' },
-    //     { path: '/users/property/listing', name: 'My Listing' },
-    //     { path: '/users/profile/edit', name: 'My Profile' }
-    //   ];
-    // }
   }
-
-
-
 }

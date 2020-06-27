@@ -36,11 +36,9 @@ export class AppComponent {
     this._http.get(url)
       .subscribe(response => {
       }, (error) => {
-        console.log(error)
         if (error.status !== 200) {
-          alert('not working')
+          this.openErrorModal()
         }
-        this.openErrorModal()
       })
   }
 
