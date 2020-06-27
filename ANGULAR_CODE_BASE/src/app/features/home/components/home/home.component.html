@@ -9,11 +9,8 @@
     </ng-template>
   </ngb-carousel>
 
-  <div class="container searchProp">
-    <!-- <h4 class="text-danger">Search Property:</h4>
-    <hr class="hr"> -->
-
-    <form #searchData="ngForm" (ngSubmit)="searchProp(searchData.value)">
+  <div class="position-relative">
+    <form *ngIf="images" class="searchProp" #searchData="ngForm" (ngSubmit)="searchProp(searchData.value)">
       <ngb-tabset type="pills">
         <ngb-tab>
           <ng-template ngbTabTitle>
