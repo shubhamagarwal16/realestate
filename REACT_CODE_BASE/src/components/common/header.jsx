@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Form from "./form";
+import { connect } from 'react-redux'
 import { Dropdown, Alert } from "react-bootstrap";
 
 import LOGO from "../../assets/images/Logo_SA.png";
@@ -120,7 +121,7 @@ class Header extends Form {
         <header style={{ marginBottom: "0px" }} className="">
           <div className="container">
             <div className="row">
-              <div className="col-md-4">
+              <div className="col-6 col-md-4">
                 <Link to="/">
                   <img
                     src={LOGO}
@@ -130,7 +131,7 @@ class Header extends Form {
                   />
                 </Link>
               </div>
-              <div className="col-md-8">
+              <div className="col-6 col-md-8">
                 <div className="header-ryt text-right">
                   {/* <!-- <a routerLink="/" >Home</a>                  
                             <a routerLink="/" >Find Property</a> --> */}
@@ -231,8 +232,14 @@ class Header extends Form {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  };
+};
+
 export const togglePageLoader = () => {
   togglePageLoaderFlag = !togglePageLoaderFlag;
 };
 
-export default Header;
+export default connect(mapStateToProps)(Header);

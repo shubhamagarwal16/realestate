@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Redirect } from "react-router-dom";
 import { getCurrentUser } from "./../../services/authService";
 
-const ProtectedRoute = ({ component: Component, user, render, ...rest }) => {
+const ProtectedRoute = ({ component: Component, render, ...rest }) => {
   return (
     <Route
       {...rest}
@@ -16,7 +16,7 @@ const ProtectedRoute = ({ component: Component, user, render, ...rest }) => {
               }}
             />
           );
-        return Component ? <Component user={user} {...props} /> : render(props);
+        return Component ? <Component {...props} /> : render(props);
       }}
     />
   );

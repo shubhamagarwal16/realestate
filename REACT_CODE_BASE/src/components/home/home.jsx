@@ -16,13 +16,13 @@ class Home extends Component {
 
   getImages = async () => {
     try {
-      const { data: imgs } = await http.get("https://picsum.photos/list");
+      const { data: imgs } = await http.get("https://picsum.photos/v2/list?page=1&limit=3");
       const images = [1, 2, 3].map(() => {
         const randomId = imgs[Math.floor(Math.random() * imgs.length)].id;
         return `https://picsum.photos/900/500?image=${randomId}`;
       });
       this.setState({ images });
-    } catch (error) {}
+    } catch (error) { }
   };
 
   render() {
@@ -30,7 +30,7 @@ class Home extends Component {
     return (
       <React.Fragment>
         <div style={{ marginTop: "-50px" }}>
-          {images.length && (
+          {images.length ? (
             <Carousel>
               {images.map((item, index) => (
                 <Carousel.Item key={item + index}>
@@ -41,15 +41,15 @@ class Home extends Component {
                     alt="First slide"
                   />
                   <Carousel.Caption>
-                    <h3>First slide label</h3>
+                    {/* <h3>First slide label</h3>
                     <p>
                       Nulla vitae elit libero, a pharetra augue mollis interdum.
-                    </p>
+                    </p> */}
                   </Carousel.Caption>
                 </Carousel.Item>
               ))}
             </Carousel>
-          )}
+          ) : null}
         </div>
         <div className="container mt-5 mb-5">
           <h4 className="text-danger">Recent Postings:</h4>
