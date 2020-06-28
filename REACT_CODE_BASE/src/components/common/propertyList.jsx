@@ -111,8 +111,8 @@ class PropertyList extends Component {
                         <li>
                           <small>
                             {property.locality},
-                            {property.city && property.city.name || ''},{" "}
-                            {property.state && property.state.name || ''}
+                            {(property.city && property.city.name) || ''},{" "}
+                            {(property.state && property.state.name) || ''}
                           </small>
                         </li>
                         <li>
