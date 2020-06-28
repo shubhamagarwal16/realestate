@@ -1,39 +1,30 @@
 import React from "react";
 import PropertyList from "../common/propertyList";
+import { useSelector } from "react-redux";
 
-class UserDashboard extends React.Component {
-  state = {
-    queryParams: ""
-  };
+const UserDashboard = (props) => {
+  const [queryParams, setQueryParams] = React.useState('');
+  const user = useSelector(store => store.user) || {};
 
-  componentDidMount() {
-    this.setQueryParam();
-  }
+  React.useEffect(() => {
+    setQueryParam();
+  }, []) // eslint-disable-line
 
-  componentDidUpdate() {
-    if (!this.state.queryParams && this.props.user) this.setQueryParam();
-  }
-
-  setQueryParam = () => {
-    const { user } = this.props;
+  const setQueryParam = () => {
     const queryParams = user && user._id ? `?userId=${user._id}` : "";
-    this.setState({ queryParams });
+    setQueryParams(queryParams);
   };
 
-  render() {
-    const { queryParams } = this.state;
+  return (
+    <React.Fragment>
+      <div className="container">
+        <h4 className="text-danger">Your recent Postings:</h4>
+        <hr className="hr" />
 
-    return (
-      <React.Fragment>
-        <div className="container">
-          <h4 className="text-danger">Your recent Postings:</h4>
-          <hr className="hr" />
-
-          <PropertyList queryParams={queryParams} {...this.props} />
-        </div>
-      </React.Fragment>
-    );
-  }
+        <PropertyList queryParams={queryParams} {...props} />
+      </div>
+    </React.Fragment>
+  );
 }
 
 export default UserDashboard;

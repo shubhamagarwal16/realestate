@@ -20,7 +20,7 @@ const CommonUIAddons = props => {
 
 const addStateToProps = state => {
   return {
-    pageLoaderFlag: state.common.isPageLoaderActive
+    pageLoaderFlag: state.isPageLoaderActive
   };
 };
 

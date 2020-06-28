@@ -33,11 +33,10 @@ export function getJwt() {
 
 export function logOut() {
   try {
-    localStorage.removeItem("token");
+    localStorage.clear();
     return true;
   } catch (error) {
     console.log(error);
-    alert("---");
     return null;
   }
 }
