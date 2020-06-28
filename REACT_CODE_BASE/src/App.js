@@ -3,6 +3,8 @@ import { Route, Switch, Redirect, withRouter } from "react-router-dom";
 
 import "./App.css";
 import "font-awesome/css/font-awesome.css";
+import http from './services/httpService';
+import { Modal, Alert } from 'react-bootstrap'
 
 import Header from "./components/common/header";
 import Footer from "./components/common/footer";
@@ -68,9 +70,41 @@ const Routes = (props) => {
 const WithContainer = withRouter(Routes);
 
 const App = (props) => {
+
+  const [showModel, setShowModel] = React.useState(false);
+
+  const checkServerStatus = () => {
+    const url = `${process.env.REACT_APP_BASE_URL}`.split('/api')[0];
+    http.get(url)
+      .then(response => {
+        if (response && response.data) {
+          return true
+        }
+        setShowModel(true);
+        return false
+      })
+      .catch(error => {
+        console.log(error)
+        setShowModel(true);
+        return false
+      })
+  }
+
   return (
     <>
+      {checkServerStatus()}
       <WithContainer />
+
+      <Modal show={showModel} onHide={() => setShowModel(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Alert</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Alert variant="warning">
+            Their seems to be an issue with the server, try <a href="/">reloading</a>.
+          </Alert>
+        </Modal.Body>
+      </Modal>
     </>
   )
 }
