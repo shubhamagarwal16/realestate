@@ -1,14 +1,19 @@
 const initialState = {
-  isPageLoaderActive: false
+  isPageLoaderActive: false,
+  user: {}
 };
 
 const commonReducer = (state = initialState, action) => {
-  //   console.log("common reducer", action.value);
   switch (action.type) {
     case "TOGGLE_PAGELOADER":
       return {
         ...state,
         isPageLoaderActive: action.value
+      };
+    case "STORE_USER":
+      return {
+        ...state,
+        user: action.user
       };
     default:
       break;

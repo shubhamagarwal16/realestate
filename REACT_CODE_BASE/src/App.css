@@ -29,3 +29,18 @@ header {
 ​ .optionsBlock::-webkit-scrollbar-track-piece {
   background: #aaa;
 }
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 2em;
+  background: white;
+}
+::-webkit-scrollbar-track {
+  background: #fff;
+}
+::-webkit-scrollbar-thumb {
+  background: #aaa;
+}
+​ ::-webkit-scrollbar-thumb:hover {
+  background: #888;
+}

@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
       }).filter(a => a).slice(0, 10));
 
   ngOnInit() {
-    this._http.get('https://picsum.photos/list')
+    this._http.get('https://picsum.photos/v2/list?page=1&limit=3')
       .pipe(map((images: Array<{ id: number }>) => this._randomImageUrls(images)))
       .subscribe(images => {
         this.images = images;

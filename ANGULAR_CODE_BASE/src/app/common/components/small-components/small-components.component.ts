@@ -8,9 +8,9 @@ import { Component, OnInit, Input } from '@angular/core';
 export class SmallComponentsComponent implements OnInit {
 
   @Input('loaderActive') loaderActive = false;
-  @Input('componentName') componentName: String = '';
+  @Input('componentName') componentName: any = '';
   @Input('toolTipData') toolTipData: any = {};
-  
+
   constructor() { }
 
   ngOnInit() {
